@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "table.h"
+
+
+
+
+int add_symbole(char* name, char* type,  int value, int initialise, int profondeur) { 
+  int i, j;
+  entry* temporaryTable = tab_symboles;
+
+
+  while(temporaryTable != NULL) {
+	
+    if(strcmp(temporaryTable->name,name) == 0 ){    //case var name already exists
+      if(temporaryTable->profondeur == profondeur){		
+	printf("Error: Variable name in same profondeur already exists");
+	return -1;
+      }
+    }
+
+	
+
+    temporaryTable = temporaryTable->next;
+  }
+
+ //if(check_sym(name,profondeur)) add the function here if going to implement one
+  temporaryTable = malloc(sizeof(entry));
+  temporaryTable->name = malloc(sizeof(name));
+  temporaryTable->type = malloc(sizeof(type));
+  temporaryTable->name = name;
+  temporaryTable->type = type;
+  // add more here
+
+	return 1;
+
+}
+
+int delete_symbole(char* nameArg, int profArg) {
+  entry* entryCurrent = tab_symboles;
+  entry* entryNext = tab_symboles;
+
+
+   while(entryNext->next!= NULL) {
+	if(strcmp(entryNext->name,nameArg) == 0 ){
+	 
+	  if(entryNext->profondeur == profArg){		
+		printf("Found the element, removing\n");
+		free(entryNext);
+		entryCurrent->next=NULL;
+			return 1;
+		}
+
+      }
+		 
+		entryCurrent = entryNext ;		
+		entryNext = entryNext->next;                               //// error prone
+	}
+	return -1;
+}
+
+
+
+
+
+
+void print_table(){ //possibly add table as in param
+ entry* temporaryTable = tab_symboles;
+ while(temporaryTable != NULL){
+ printf("\n| %d %s %s %d %d |\n", temporaryTable->id, temporaryTable->name, temporaryTable->type, temporaryTable->initialise, temporaryTable->profondeur);
+temporaryTable = temporaryTable->next;
+ } 
+
+}
+
+
+/*
+entry** check_sym(char* name, int profondeur) {	
+entry** temporaryTable = tab_symboles;
+
+  while(temporaryTable != NULL) {	
+   if(strcmp(temporaryTable->name,name) == 0 ){    //case var name already exists
+      if(temporaryTable->profondeur == profondeur){		
+	printf("Error: Variable name in same profondeur already exists");
+	return NULL;
+      }
+    }
+    return temporaryTable = temporaryTable->next;
+  }
+}
+*/
+
+
+int main() {
+add_symbole("a", "int", 1, 0, 1);
+add_symbole("b", "int", 2, 0, 1);
+add_symbole("c", "int", 3, 1, 1);
+add_symbole("d", "int", 4, 0, 1);
+print_table();
+
+}
+
+
+

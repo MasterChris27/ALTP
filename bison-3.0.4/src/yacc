@@ -1,0 +1,2 @@
+#! /bin/sh
+exec '/home/boza/bison/bin/bison' -y "$@"

@@ -1,0 +1,13 @@
+#define 50 LIGNE
+#define 100 COLONNE
+
+struct entry {
+int id;
+char* name;
+char* type;
+int initialise;
+int profondeur;
+struct entry* next;
+} entry;
+
+entry** tab_symboles;
