@@ -56,21 +56,9 @@ int profondeur = 0;
 %left tADD tSUBTRACT
 %left tMULTIPLY tDIVIDE
 
-%type <nb>  tIF 
+%type <nb>  tIF tWHILE tFOR tPO tPC tFINSTR
 
 %%
-
-//$nr means the value of the nr entry
-
-//add strings ????
-//add while  !!!
-//table of symboles  !!!
-// some kind of calculus
-// add functions  !!!!
-
-// change the Instruction
-
-
 
 
 Main: tMAIN tPO tPC Body ;
@@ -104,28 +92,20 @@ Lastdeclaration: tVAR {add_symbol($1, type, 0, profondeur);};
 vartype : tINT { type = "int"; }
      | tCONST { type = "const"; };
 
-		
-
- //print f
 
 Print: tPRINTF tPO tVAR tPC tFINSTR {printf("Print not supported\n");};
 
 
 
 
-// IF    NO " ; " at the end !!!!
-
 If : tIF tPO Condition tPC{
 		int a = get_last_index(); //condition-index
 		queue_instruction("LOAD", 10, a);
 		queue_instruction("TMP", 1, 1);
 		$1 = get_latest_inst();
-		
-		printf("$1 innan: %d\n", $1);
 		delete_symbol();
 		
 	} Body {
-		printf("$1 efter: %d\n", $1);
 		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
 		queue_instruction("AFC", 11, -1);
 		queue_instruction("MUL", 10, 11);
@@ -140,7 +120,9 @@ If : tIF tPO Condition tPC{
 	;
 
 Else: tELSE Body
+	//| tELSE If
  	| ;
+
 
 Condition : 	
 
@@ -149,8 +131,8 @@ Condition :
 		int b = a-1;
 		queue_instruction("LOAD", 1, a);
 		queue_instruction("LOAD", 2, b);
-		queue_instruction("EQU", 1, 2);
-		queue_instruction("STORE", b, 1);
+		queue_instruction("EQU", 2, 1);
+		queue_instruction("STORE", b, 2);
 		delete_symbol();
 	}
 	| Expression tLESS Expression {
@@ -158,8 +140,8 @@ Condition :
 		int b = a-1;
 		queue_instruction("LOAD", 1, a);
 		queue_instruction("LOAD", 2, b);
-		queue_instruction("INF", 1, 2);
-		queue_instruction("STORE", b, 1);
+		queue_instruction("INF", 2, 1);
+		queue_instruction("STORE", b, 2);
 		delete_symbol();
 	}
 	| Expression tCHECKHIGHER Expression {
@@ -167,8 +149,8 @@ Condition :
 		int b = a-1;
 		queue_instruction("LOAD", 1, a);
 		queue_instruction("LOAD", 2, b);
-		queue_instruction("SUP", 1, 2);
-		queue_instruction("STORE", b, 1);
+		queue_instruction("SUP", 2, 1);
+		queue_instruction("STORE", b, 2);
 		delete_symbol();
 	}
 	| Expression tLESSEQUAL Expression {
@@ -176,88 +158,59 @@ Condition :
 		int b = a-1;
 		queue_instruction("LOAD", 1, a);
 		queue_instruction("LOAD", 2, b);
-		queue_instruction("INFE", 1, 2);
-		queue_instruction("STORE", b, 1);
+		queue_instruction("INFE", 2, 1);
+		queue_instruction("STORE", b, 2);
 		delete_symbol();
 	}
 	| Expression tMOREEQUAL Expression {
-		int a = get_last_index();
-		int b = a-1;
+		int a = get_last_index(); // right arg
+		int b = a-1;			// left arg
 		queue_instruction("LOAD", 1, a);
 		queue_instruction("LOAD", 2, b);
-		queue_instruction("SUPE", 1, 2);
-		queue_instruction("STORE", b, 1);
+		queue_instruction("SUPE", 2, 1);
+		queue_instruction("STORE", b, 2);
 		delete_symbol();
 	};
 
-// check for //conditions;
 
 
 
 //while
-While : tWHILE tPO{
-		int a=get_latest_inst(); //before all conditions // we can put B or something but idk if it will compile
-		 // we mark the beggining of the conditions
-		 queue_instruction("AFC",12,a); // register 12
-		}
-		
-		Condition tPC {
-			int b = get_last_index(); //condition-index after all conditions
-			queue_instruction("LOAD", 10, b); // add in place of 10 , 5+ prof
-			queue_instruction("TMP", 1, 1); //we add the unedited JMPC
-			int c = get_latest_inst();         
-			printf("$1 innan: %d\n", c);
-		 	queue_instruction("AFC",13,c); // register 13
-			delete_symbol();}
-		
-			Body{
-				int a= get_register_value(12);
-				int c= get_register_value(13);
-				printf("$1 efter: %d\n", a);
-				queue_instruction("JMP", a, 1); //we always jump back before the conditions
-				edit_instruction(c, "JMPC" , get_latest_inst(), 10); //we edit de JMPC from condition
-	}; // tRECHECK ?
+While : tWHILE {
+	$1 = get_latest_inst(); /* Hop to here to retry condition */
+	printf("$1 : %d\n", $1);
+	} tPO Condition tPC {
 
+	int a = get_last_index(); //condition-index after all conditions
+	queue_instruction("LOAD", 10, a); // add in place of 10 , 5+ prof
+	queue_instruction("TMP", 1, 1); //we add the unedited JMPC
+	$3 = get_latest_inst();         
+	delete_symbol();
 
+	} Body {
+		queue_instruction("JMP", $1, 1);
+		edit_instruction($3, "JMPC" , get_latest_inst(), 10);
 
-// for
-
-
-For : tFOR tPO { /* ?! profondeur++;*/    }
-	tINT tVAR { 
-	int a = get_last_index();   //we mark the variable 
 	} 
-		tEQUAL tINTNR tFINSTR {
-		int b=get_latest_inst();  //we mark the beggining of the conditions
-		queue_instruction("AFC",12,b);
-		} 
-			Condition tFINSTR {
-				queue_instruction("TMP",1,1);      //adding temporary JMPC
-				int c=get_latest_inst();
-				queue_instruction("AFC",13,c);
-				}
-					 increment tPC Body {  //we do the calculus in increment
-					   int b=get_register_value(12);
-					    int c =get_register_value(13);
-					   queue_instruction("JMP",b,10);     //we always go back to the spot before conditions to check the new variable value
-					   edit_instruction(c,"JMPC",get_latest_inst(),10);};  //we edit the unedited jmpc instruction
-
-increment : | tVAR tPLUSPLUS  {
-				 int x = find_symbol($1, profondeur);
-				 queue_instruction("LOAD", 1, x);
-				 queue_instruction("AFC", 2, 1);
-				 queue_instruction("ADD", 1, 2);
-				 queue_instruction("STORE", x, 1);}
-
-		| tVAR tMINUSMINUS{
-				 int y = find_symbol($1, profondeur);
-				 queue_instruction("LOAD", 1, y);
-				 queue_instruction("AFC", 2, 1);
-				 queue_instruction("SUB", 1, 2);
-				 queue_instruction("STORE", y, 1);};
 
 
 
+; 
+
+
+For : tFOR tPO Calcul {$1 = get_latest_inst();
+	}  
+		Condition {
+		int a = get_last_index(); //condition-index after all conditions
+		queue_instruction("LOAD", 10, a); // add in place of 10 , 5+ prof
+	 } Calcul tPC {
+		queue_instruction("TMP", 1, 1); //we add the unedited JMPC
+		$2 = get_latest_inst();         
+		delete_symbol();
+	} Body {
+		queue_instruction("JMP", $1, 1);
+		edit_instruction($2, "JMPC" , get_latest_inst(), 10);
+	};
 
 
 
