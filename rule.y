@@ -196,7 +196,7 @@ Condition :
 
 //while
 While : tWHILE tPO{
-		int a=get_last_inst(); //before all conditions // we can put B or something but idk if it will compile
+		int a=get_latest_inst(); //before all conditions // we can put B or something but idk if it will compile
 		 // we mark the beggining of the conditions
 		 queue_instruction("AFC",12,a); // register 12
 		}

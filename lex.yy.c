@@ -1,5 +1,5 @@
 
-#line 2 "lex.yy.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -481,8 +481,9 @@ char *yytext;
 #line 1 "compiler.l"
 #line 2 "compiler.l"
 #include "rule.tab.h"
-#line 484 "lex.yy.c"
-#line 485 "lex.yy.c"
+
+#line 486 "lex.yy.c"
+#line 487 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -699,10 +700,10 @@ YY_DECL
 		}
 
 	{
-#line 5 "compiler.l"
+#line 6 "compiler.l"
 
 
-#line 705 "lex.yy.c"
+#line 707 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -761,143 +762,143 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 7 "compiler.l"
+#line 8 "compiler.l"
 return tINT;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 8 "compiler.l"
+#line 9 "compiler.l"
 return tSTRING;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 9 "compiler.l"
+#line 10 "compiler.l"
 return tACO;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 10 "compiler.l"
+#line 11 "compiler.l"
 return tACC;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 11 "compiler.l"
+#line 12 "compiler.l"
 return tCONST;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 12 "compiler.l"
+#line 13 "compiler.l"
 return tADD;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 13 "compiler.l"
+#line 14 "compiler.l"
 return tSUBTRACT;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 14 "compiler.l"
+#line 15 "compiler.l"
 return tDIVIDE;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 15 "compiler.l"
+#line 16 "compiler.l"
 return tMULTIPLY;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 16 "compiler.l"
+#line 17 "compiler.l"
 return tEQUAL;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 17 "compiler.l"
+#line 18 "compiler.l"
 return tCHECKHIGHER;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 18 "compiler.l"
+#line 19 "compiler.l"
 return tCHECKEQ;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 19 "compiler.l"
+#line 20 "compiler.l"
 return tPO;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 20 "compiler.l"
+#line 21 "compiler.l"
 return tPC;
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 21 "compiler.l"
+#line 22 "compiler.l"
 ;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 22 "compiler.l"
+#line 23 "compiler.l"
 return tVIRGULE;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 23 "compiler.l"
+#line 24 "compiler.l"
 return tDOLLAR;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 24 "compiler.l"
+#line 25 "compiler.l"
 return tFINSTR;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 25 "compiler.l"
+#line 26 "compiler.l"
 return tIF;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 26 "compiler.l"
+#line 27 "compiler.l"
 return tELSE;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 27 "compiler.l"
+#line 28 "compiler.l"
 return tWHILE;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 28 "compiler.l"
+#line 29 "compiler.l"
 return tFOR;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 29 "compiler.l"
+#line 30 "compiler.l"
 return tPLUSPLUS;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 30 "compiler.l"
+#line 31 "compiler.l"
 return tMINUSMINUS;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 31 "compiler.l"
+#line 32 "compiler.l"
 return tLESS;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 32 "compiler.l"
+#line 33 "compiler.l"
 return tLESSEQUAL;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 33 "compiler.l"
+#line 34 "compiler.l"
 return tMOREEQUAL;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 38 "compiler.l"
+#line 39 "compiler.l"
 {
 						yylval.nb = atoi(yytext);
 						return tINTNR;
@@ -906,17 +907,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 44 "compiler.l"
+#line 45 "compiler.l"
 return tPRINTF;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 46 "compiler.l"
+#line 47 "compiler.l"
 return tMAIN;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 48 "compiler.l"
+#line 49 "compiler.l"
 {
 						yylval.str = strdup(yytext);
 				return tVAR;
@@ -924,10 +925,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 53 "compiler.l"
+#line 54 "compiler.l"
 ECHO;
 	YY_BREAK
-#line 930 "lex.yy.c"
+#line 932 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1932,4 +1933,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 53 "compiler.l"
+#line 54 "compiler.l"

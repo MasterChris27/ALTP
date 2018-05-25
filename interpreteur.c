@@ -1,3 +1,6 @@
+
+
+
 #include "interpreteur.h"
 
 Instruction instr[1024];
@@ -47,7 +50,7 @@ void printInst(int Index){
 
 void execute_all_instructions(){
 
-	for(currentInst; currentInst<indexInst; currentInst++){
+     for(currentInst; currentInst<indexInst; currentInst++){
 	printInst(currentInst);
 	instructionExecute(currentInst);
 	}

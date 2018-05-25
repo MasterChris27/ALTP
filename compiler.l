@@ -1,5 +1,6 @@
 %{
 #include "rule.tab.h"
+
 %}
 
 %%
