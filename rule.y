@@ -49,9 +49,14 @@ int profondeur = 0;
 %token tFOR
 %token tSTRING
 %token tCHECKHIGHER
+%token tLESS
+%token tLESSEQUAL
+%token tMOREEQUAL
 
 %left tADD tSUBTRACT
 %left tMULTIPLY tDIVIDE
+
+%type <nb>  tIF 
 
 %%
 
@@ -63,37 +68,38 @@ int profondeur = 0;
 // some kind of calculus
 // add functions  !!!!
 
-// change the INSTRS
+// change the Instruction
 
 
 
 
-Main: tMAIN tPO tPC BODY { printf("main found\n");};
+Main: tMAIN tPO tPC Body ;
 
-BODY: tACO INSTRS tACC {printf("Body found\n");}; // add here the profondeur
+Body: tACO Instruction tACC; // add here the profondeur
 
-INSTRS : INSTR INSTRS 
-	   | INSTR 
+Instruction : Instructions Instruction 
+	   | Instructions 
 	   | ;
 
-INSTR: Calcul tFINSTR {printf("Count Instr\n"); print_table();}
-	 | FORINSTR 
-     | WHILEINSTR
-     | PRINTINSTR
-     | DECLARATIONINSTR
-     | IFINSTR 
+Instructions: 
+	   Calcul 
+	 | For 
+     | While
+     | Print
+     | Declaration
+     | If 
 	 ;
 
-DECLARATIONINSTR: vartype declarations tFINSTR {printf("assigning found\n"); print_table();};
+Declaration: vartype Declarations tFINSTR ;
 
 
-declarations: multideclaration declarations {printf("declaring more variables\n");}
-			| lastdeclaration ;
+Declarations: Multideclaration Declarations
+			| Lastdeclaration ;
 
-multideclaration : tVAR tVIRGULE {add_symbol($1, type, 0, profondeur);};
+Multideclaration : tVAR tVIRGULE {add_symbol($1, type, 0, profondeur);};
 
 
-lastdeclaration: tVAR {add_symbol($1, type, 0, profondeur);};
+Lastdeclaration: tVAR {add_symbol($1, type, 0, profondeur);};
 
 vartype : tINT { type = "int"; }
      | tCONST { type = "const"; };
@@ -102,185 +108,266 @@ vartype : tINT { type = "int"; }
 
  //print f
 
-PRINTINSTR: tPRINTF tPO tVAR tPC tFINSTR {printf("instruction printf\n\n\n");};
+Print: tPRINTF tPO tVAR tPC tFINSTR {printf("Print not supported\n");};
 
 
 
 
 // IF    NO " ; " at the end !!!!
 
-IFINSTR : tIF condition BODY
-      | tIF condition BODY tELSE BODY{ printf("instruction if found\n");};
+If : tIF tPO Condition tPC{
+		int a = get_last_index(); //condition-index
+		queue_instruction("LOAD", 10, a);
+		queue_instruction("TMP", 1, 1);
+		$1 = get_latest_inst();
+		
+		printf("$1 innan: %d\n", $1);
+		delete_symbol();
+		
+	} Body {
+		printf("$1 efter: %d\n", $1);
+		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
+		queue_instruction("AFC", 11, -1);
+		queue_instruction("MUL", 10, 11);
+		queue_instruction("TMP", 1, 1);
+		$1 = get_latest_inst();
+		
+	} Else {	
+		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
+				
+}
 
-condition : tPO tVAR operation compare tPC;
-//		  | tPO tINTNR operation compare tPC;
+	;
+
+Else: tELSE Body
+ 	| ;
+
+Condition : 	
+
+	  Expression tCHECKEQ Expression {
+		int a = get_last_index();
+		int b = a-1;
+		queue_instruction("LOAD", 1, a);
+		queue_instruction("LOAD", 2, b);
+		queue_instruction("EQU", 1, 2);
+		queue_instruction("STORE", b, 1);
+		delete_symbol();
+	}
+	| Expression tLESS Expression {
+		int a = get_last_index();
+		int b = a-1;
+		queue_instruction("LOAD", 1, a);
+		queue_instruction("LOAD", 2, b);
+		queue_instruction("INF", 1, 2);
+		queue_instruction("STORE", b, 1);
+		delete_symbol();
+	}
+	| Expression tCHECKHIGHER Expression {
+		int a = get_last_index();
+		int b = a-1;
+		queue_instruction("LOAD", 1, a);
+		queue_instruction("LOAD", 2, b);
+		queue_instruction("SUP", 1, 2);
+		queue_instruction("STORE", b, 1);
+		delete_symbol();
+	}
+	| Expression tLESSEQUAL Expression {
+		int a = get_last_index();
+		int b = a-1;
+		queue_instruction("LOAD", 1, a);
+		queue_instruction("LOAD", 2, b);
+		queue_instruction("INFE", 1, 2);
+		queue_instruction("STORE", b, 1);
+		delete_symbol();
+	}
+	| Expression tMOREEQUAL Expression {
+		int a = get_last_index();
+		int b = a-1;
+		queue_instruction("LOAD", 1, a);
+		queue_instruction("LOAD", 2, b);
+		queue_instruction("SUPE", 1, 2);
+		queue_instruction("STORE", b, 1);
+		delete_symbol();
+	};
 
 // check for //conditions;
-operation: tCHECKEQ 
-         | tCHECKHIGHER;
-
-compare: tVAR
-       |tINTNR;
 
 
 
 //while
-WHILEINSTR : tWHILE condition BODY {printf("instruction while found\n");}; // tRECHECK ?
-
+While : tWHILE tPO{
+		int a=get_last_inst(); //before all conditions // we can put B or something but idk if it will compile
+		 // we mark the beggining of the conditions
+		 queue_instruction("AFC",12,a); // register 12
+		}
+		
+		Condition tPC {
+			int b = get_last_index(); //condition-index after all conditions
+			queue_instruction("LOAD", 10, b); // add in place of 10 , 5+ prof
+			queue_instruction("TMP", 1, 1); //we add the unedited JMPC
+			int c = get_latest_inst();         
+			printf("$1 innan: %d\n", c);
+		 	queue_instruction("AFC",13,c); // register 13
+			delete_symbol();}
+		
+			Body{
+				int a= get_register_value(12);
+				int c= get_register_value(13);
+				printf("$1 efter: %d\n", a);
+				queue_instruction("JMP", a, 1); //we always jump back before the conditions
+				edit_instruction(c, "JMPC" , get_latest_inst(), 10); //we edit de JMPC from condition
+	}; // tRECHECK ?
 
 
 
 // for
 
-FORINSTR : tFOR forDetail BODY ;   //tRECHECK
-forDetail : tPO init tFINSTR condition tFINSTR increment tPC; // does condition from if work ?
-init: tINT tVAR tEQUAL tINTNR tINTNR;
-increment : tVAR tPLUSPLUS 
-          |tVAR tMINUSMINUS ; // tVAR += better ?
+
+For : tFOR tPO { /* ?! profondeur++;*/    }
+	tINT tVAR { 
+	int a = get_last_index();   //we mark the variable 
+	} 
+		tEQUAL tINTNR tFINSTR {
+		int b=get_latest_inst();  //we mark the beggining of the conditions
+		queue_instruction("AFC",12,b);
+		} 
+			Condition tFINSTR {
+				queue_instruction("TMP",1,1);      //adding temporary JMPC
+				int c=get_latest_inst();
+				queue_instruction("AFC",13,c);
+				}
+					 increment tPC Body {  //we do the calculus in increment
+					   int b=get_register_value(12);
+					    int c =get_register_value(13);
+					   queue_instruction("JMP",b,10);     //we always go back to the spot before conditions to check the new variable value
+					   edit_instruction(c,"JMPC",get_latest_inst(),10);};  //we edit the unedited jmpc instruction
+
+increment : | tVAR tPLUSPLUS  {
+				 int x = find_symbol($1, profondeur);
+				 queue_instruction("LOAD", 1, x);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("ADD", 1, 2);
+				 queue_instruction("STORE", x, 1);}
+
+		| tVAR tMINUSMINUS{
+				 int y = find_symbol($1, profondeur);
+				 queue_instruction("LOAD", 1, y);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("SUB", 1, 2);
+				 queue_instruction("STORE", y, 1);};
+
+
+
 
 
 
 
  Calcul:
- 		tVAR tEQUAL Expression {
-					int a = find_symbol($1, profondeur);
-					int b = get_last_index();
-					printf("LOAD r1 %d\n", b);
-					printf("STORE %d, r1\n", a);
-					add_instruction("LOAD", 1, b);
-					add_instruction("STORE", a, 1);
-					delete_symbol();} 
+	 	  tVAR tEQUAL Expression tFINSTR {
+				 int a = find_symbol($1, profondeur);
+				 int b = get_last_index();
+				 queue_instruction("LOAD", 1, b);
+				 queue_instruction("STORE", a, 1);
+				 delete_symbol();} 
 
-    | tVAR tEQUAL tSUBTRACT Expression {
-					int a = find_symbol($1, profondeur);
-					int b = get_last_index();
-					printf("LOAD r1 %d\n", b);
-					printf("AFC r2, -1\n");
-					printf("MUL r1, r2\n");
-					printf("STORE %d, r1\n", a);
-					add_instruction("LOAD", 1, b);
-					add_instruction("AFC", 2, -1);
-					add_instruction("MUL", 1, 2);
-					add_instruction("STORE", a, 1);
-					delete_symbol();} 
+		| tVAR tEQUAL tSUBTRACT Expression tFINSTR {
+				 int a = find_symbol($1, profondeur);
+				 int b = get_last_index();
+				 queue_instruction("LOAD", 1, b);
+				 queue_instruction("AFC", 2, -1);
+				 queue_instruction("MUL", 1, 2);
+				 queue_instruction("STORE", a, 1);
+				 delete_symbol();} 
 
-    | tVAR tPLUSPLUS {
-					int a = find_symbol($1, profondeur);
-					printf("LOAD r1 %d\n", a);
-					printf("AFC r2, 1\n");
-					printf("ADD r1,r2\n");
-					printf("STORE %d,r1\n", a);
-					add_instruction("LOAD", 1, a);
-					add_instruction("AFC", 2, 1);
-					add_instruction("ADD", 1, 2);
-					add_instruction("STORE", a, 1);}
+		| tVAR tPLUSPLUS tFINSTR {
+				 int a = find_symbol($1, profondeur);
+				 queue_instruction("LOAD", 1, a);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("ADD", 1, 2);
+				 queue_instruction("STORE", a, 1);}
 
-	| tVAR tMINUSMINUS {
-					int a = find_symbol($1, profondeur);
-					printf("LOAD r1 %d\n", a);
-					printf("AFC r2, 1\n");
-					printf("SUB r1,r2\n");
-					printf("STORE %d,r1\n", a);
-					add_instruction("LOAD", 1, a);
-					add_instruction("AFC", 2, 1);
-					add_instruction("SUB", 1, 2);
-					add_instruction("STORE", a, 1);}
+		| tVAR tMINUSMINUS tFINSTR {
+				 int a = find_symbol($1, profondeur);
+				 queue_instruction("LOAD", 1, a);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("SUB", 1, 2);
+				 queue_instruction("STORE", a, 1);}
 
-    | tVAR tSUBTRACT tEQUAL Expression {
-					int a = find_symbol($1, profondeur);
-					int b = get_last_index();
-					add_instruction("LOAD", 1, a);
-					add_instruction("LOAD", 2, b);
-					add_instruction("SUB", 1, 2);
-					add_instruction("STORE", a, 1);
-					delete_symbol();}
+		| tVAR tSUBTRACT tEQUAL Expression tFINSTR {
+				 int a = find_symbol($1, profondeur);
+				 int b = get_last_index();
+				 queue_instruction("LOAD", 1, a);
+				 queue_instruction("LOAD", 2, b);
+				 queue_instruction("SUB", 1, 2);
+				 queue_instruction("STORE", a, 1);
+				 delete_symbol();}
 
-	| tVAR tADD tEQUAL Expression {
-					int a = find_symbol($1, profondeur);
-					int b = get_last_index();
-					add_instruction("LOAD", 1, a);
-					add_instruction("LOAD", 2, b);
-					add_instruction("ADD", 1, 2);
-					add_instruction("STORE", a, 1);
-					delete_symbol();}
+		| tVAR tADD tEQUAL Expression {
+				 int a = find_symbol($1, profondeur);
+				 int b = get_last_index();
+				 queue_instruction("LOAD", 1, a);
+				 queue_instruction("LOAD", 2, b);
+			   	 queue_instruction("ADD", 1, 2);
+				 queue_instruction("STORE", a, 1);
+				 delete_symbol();}
 ;
 
 
 Expression :
- 			Expression tADD Expression {
-					 	int a = get_last_index();
-						int b = a-1;
-						printf("LOAD r1 %d\n", a);
-						printf("LOAD r2 %d\n", b);
-						printf("ADD r1, r2 %d\n", a);
-						printf("STORE %d, r1\n", b);
-						add_instruction("LOAD", 1, a);
-						add_instruction("LOAD", 2, b);
-						add_instruction("ADD", 1, 2);
-						add_instruction("STORE", b, 1);
-						delete_symbol();//a
-
- }	  | Expression tSUBTRACT Expression {
-				 int a = get_last_index();
-			 	 int b = a-1;
-			 	 printf("LOAD r1 %d\n", a);
-			 	 printf("LOAD r2 %d\n", b);
-			 	 printf("SUB r1, r2 %d\n", a);
-			 	 printf("STORE %d, r1\n", b);
-				 add_instruction("LOAD", 1, a);
-			 	 add_instruction("LOAD", 2, b);
-				 add_instruction("SUB", 1, 2);
-				 add_instruction("STORE", b, 1);
-			 	 delete_symbol();
-
-
- } 		| Expression tDIVIDE Expression {
+ 	     Expression tADD Expression {
 				 int a = get_last_index();
 				 int b = a-1;
-				 printf("LOAD r1 %d\n", a);
-				 printf("LOAD r2 %d\n", b);
-				 printf("DIV r1, r2 %d\n", a);
-				 printf("STORE %d, r1\n", b);
-				 add_instruction("LOAD", 1, a);
-			 	 add_instruction("LOAD", 2, b);
-				 add_instruction("DIV", 1, 2);
-				 add_instruction("STORE", b, 1);
-				 delete_symbol();
+				 queue_instruction("LOAD", 1, a);
+				 queue_instruction("LOAD", 2, b);
+				 queue_instruction("ADD", 1, 2);
+			     queue_instruction("STORE", b, 1);
+				 delete_symbol(); }	  
 
+		| Expression tSUBTRACT Expression {
+				 int a = get_last_index();
+			 	 int b = a-1;
+				 queue_instruction("LOAD", 1, a);
+			 	 queue_instruction("LOAD", 2, b);
+				 queue_instruction("SUB", 1, 2);
+				 queue_instruction("STORE", b, 1);
+			 	 delete_symbol(); }
 
- }		| Expression tMULTIPLY Expression {
-	 			int a = get_last_index();
-				int b = a-1;
-				printf("LOAD r1 %d\n", a);
-				printf("LOAD r2 %d\n", b);
-				printf("MUL r1, r2 %d\n", a);
-				printf("STORE %d, r1\n", b);
-				add_instruction("LOAD", 1, a);
-				add_instruction("LOAD", 2, b);
-				add_instruction("MUL", 1, 2);
-				add_instruction("STORE", b, 1);
-				delete_symbol();
+ 		| Expression tDIVIDE Expression {
+				 int a = get_last_index();
+				 int b = a-1;
+				 queue_instruction("LOAD", 1, a);
+			 	 queue_instruction("LOAD", 2, b);
+				 queue_instruction("DIV", 1, 2);
+				 queue_instruction("STORE", b, 1);
+				 delete_symbol(); }		
 
-				 }
- 		  | tVAR {
+		| Expression tMULTIPLY Expression {
+		 		 int a = get_last_index();
+				 int b = a-1;
+				 queue_instruction("LOAD", 1, a);
+				 queue_instruction("LOAD", 2, b);
+				 queue_instruction("MUL", 1, 2);
+				 queue_instruction("STORE", b, 1);
+				 delete_symbol(); }
+
+ 		| tVAR {
 				add_temporary_symbol();
-				printf("LOAD r1, %d\n", find_symbol($1, profondeur));
-				printf("STORE %d, r1\n", get_last_index());
-	 			add_instruction("LOAD", 1, find_symbol($1, profondeur));
-				add_instruction("STORE", get_last_index(), 1);
-				}
+	 			queue_instruction("LOAD", 1, find_symbol($1, profondeur));
+				queue_instruction("STORE", get_last_index(), 1); }
 
-
-		  | tINTNR {
+		| tINTNR {
 				add_temporary_symbol();
-				printf("$1: %d\n", $1);
-				printf("AFC r1, %d\n", $1);
-				printf("STORE %d, r1\n", get_last_index());
-				add_instruction("AFC", 1, $1);
-				add_instruction("STORE", get_last_index(), 1);
-			}
+				queue_instruction("AFC", 1, $1);
+				queue_instruction("STORE", get_last_index(), 1); }
 
-			| tPO Expression tPC  
+		| tPO tSUBTRACT tINTNR tPC {
+				add_temporary_symbol();
+				queue_instruction("AFC", 1, $3);
+				queue_instruction("AFC", 2, -1);
+				queue_instruction("MUL", 1, 2);
+				queue_instruction("STORE", get_last_index(), 1); }
+
+		| tPO Expression tPC  
 
 
 			;

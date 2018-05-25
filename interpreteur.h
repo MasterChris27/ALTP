@@ -9,7 +9,7 @@ typedef struct Instruction{
 } Instruction;
 
 
-void add_instruction(char* operation, int a, int b);
+void queue_instruction(char* operation, int a, int b);
 
 void instructionExecute(int instructionIndex);
 
@@ -19,4 +19,10 @@ void printInst(int Index);
 
 void execute_all_instructions();
 
+int get_register_value(int tableIndex);
+
 int get_memory_value(int tableIndex);
+
+int get_latest_inst();
+
+void edit_instruction(int pos, char* op , int a, int b);

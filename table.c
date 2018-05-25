@@ -149,7 +149,6 @@ char* get_variable_name(int tableIndex){
 	{
 		if((current->profondeur == profondeur))
 		{
-			printf("Found the element\n");
 			return current->id;
 		
 	 	}
@@ -197,7 +196,6 @@ return 1
 */
 
 int delete_symbol() {
-printf("Found the element, removing\n");
 entry* tmp = tab_symbols;
 tab_symbols = tab_symbols->next;	
 free(tmp);

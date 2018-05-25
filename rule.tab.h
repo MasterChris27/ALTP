@@ -72,7 +72,10 @@ extern int yydebug;
     tVAR = 282,
     tFOR = 283,
     tSTRING = 284,
-    tCHECKHIGHER = 285
+    tCHECKHIGHER = 285,
+    tLESS = 286,
+    tLESSEQUAL = 287,
+    tMOREEQUAL = 288
   };
 #endif
 
@@ -81,12 +84,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 15 "rule.y" /* yacc.c:1909  */
+#line 16 "rule.y" /* yacc.c:1909  */
 
 	int nb;
 	char* str;
 
-#line 90 "rule.tab.h" /* yacc.c:1909  */
+#line 93 "rule.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
