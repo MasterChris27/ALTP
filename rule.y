@@ -53,6 +53,7 @@ int profondeur = 0;
 %token tLESSEQUAL
 %token tMOREEQUAL
 
+
 %left tADD tSUBTRACT
 %left tMULTIPLY tDIVIDE
 
@@ -84,10 +85,26 @@ Declaration: vartype Declarations tFINSTR ;
 Declarations: Multideclaration Declarations
 			| Lastdeclaration ;
 
-Multideclaration : tVAR tVIRGULE {add_symbol($1, type, 0, profondeur);};
+Multideclaration : tVAR tVIRGULE {add_symbol($1, type, 0,profondeur);}
+		| tVAR tEQUAL tINTNR tVIRGULE {
+		    add_symbol($1, type, 0, profondeur);
+		// we could change add symbol to return the address
+		    int a = find_symbol($1, profondeur);
+		    queue_instruction("AFC", 1, $3);
+		    queue_instruction("STORE", a, 1); 
+};
 
 
-Lastdeclaration: tVAR {add_symbol($1, type, 0, profondeur);};
+
+Lastdeclaration: tVAR {add_symbol($1, type, 0, profondeur);}
+		| tVAR tEQUAL tINTNR {
+				 add_symbol($1, type, 0, profondeur);
+		// we could change add symbol to return the address
+				 int a = find_symbol($1, profondeur);
+				 queue_instruction("AFC", 1, $3);
+				 queue_instruction("STORE", a, 1); 
+};
+
 
 vartype : tINT { type = "int"; }
      | tCONST { type = "const"; };
@@ -198,10 +215,14 @@ While : tWHILE {
 ; 
 
 
-For : tFOR tPO Calcul {$1 = get_latest_inst();
-	}  
-		Condition {
-		int a = get_last_index(); //condition-index after all conditions
+For : tFOR tPO {/*profondeur++;*/ } 
+
+	Declaration {
+		     $1 = get_latest_inst();
+		     printf("$1 : %d\n", $1);}  
+
+	Condition tFINSTR{
+	   int a = get_last_index(); //condition-index after all conditions
 		queue_instruction("LOAD", 10, a); // add in place of 10 , 5+ prof
 	 } Calcul tPC {
 		queue_instruction("TMP", 1, 1); //we add the unedited JMPC
@@ -210,6 +231,7 @@ For : tFOR tPO Calcul {$1 = get_latest_inst();
 	} Body {
 		queue_instruction("JMP", $1, 1);
 		edit_instruction($2, "JMPC" , get_latest_inst(), 10);
+	/*	profondeur--;*/
 	};
 
 

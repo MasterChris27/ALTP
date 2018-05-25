@@ -1,7 +1,24 @@
 main() {
-const g;
-int k,r;
-int i =3 ;
-k=-8 ;
-r=3*(2+5) ;
+int a,b,c=1,d,e,f,g;
+int i=2;
+a=1;
+b=4;
+
+if(a==b)
+	{c=2;}
+else
+	{d++;}
+
+while(a<=b) {
+
+e++;
+a++;
+
+}
+
+for(int j=2;i<=b;i++;){
+	g++;
+}
+
+
 }
