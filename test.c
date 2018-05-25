@@ -10,14 +10,13 @@ else
 	{d++;}
 
 while(a<=b) {
-
 e++;
 a++;
 
 }
 
-for(int j=2;i<=b;i++;){
-	g++;
+for(int j=2;j<=2;j++){
+	g=j;
 }
 
 

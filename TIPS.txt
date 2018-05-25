@@ -1,0 +1,12 @@
+
+
+Someties tokens are not added automaticly so we need to add them in compiler.l, rule.y and y.tab.h
+
+
+lex compiler.l
+
+yacc -d rule.y
+
+cc lex.yy.c y.tab.c -ll -ly
+
+./a.out<test.c

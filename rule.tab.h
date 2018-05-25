@@ -75,7 +75,9 @@ extern int yydebug;
     tCHECKHIGHER = 285,
     tLESS = 286,
     tLESSEQUAL = 287,
-    tMOREEQUAL = 288
+    tMOREEQUAL = 288,
+    tMINUSEQUAL = 287,
+    tPLUSEQUAL = 288
   };
 #endif
 

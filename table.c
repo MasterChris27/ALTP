@@ -10,9 +10,14 @@
 // delete_symbol - remove last symbol
 // find symbol - give name, and profondeur, get table index
 // get_last_address
+
+//get_curr_depth();
+// depth_increment(); operation for depth
+//depth_decrement();
 // symbol_initialise - give address, mark var as initialised
 
 int global_id = 0;
+int global_prof=0;
 
 
 int add_symbol(char* name, char* type,  int initialise, int profondeur) { 
@@ -139,6 +144,35 @@ char* get_variable_name(int tableIndex){
 	return current->name;
 }
 
+
+int get_curr_prof(){return global_prof;}
+int prof_increment(){global_prof++;}
+int prof_decrement(){global_prof--;}
+
+
+
+int delete_all_var(int prof){
+
+   entry* current = tab_symbols;
+
+ while(current != NULL){
+		if((current->profondeur == prof)){
+			entry* tmp = tab_symbols;
+			current = current->next;	
+			free(tmp);
+			global_id--;
+	 	}else{
+			return 1
+			}
+  }
+  return 0;
+
+}
+
+
+
+
+
  int find_symbol(char* nameArg, int profondeur){
 
    entry* current = tab_symbols;
@@ -155,16 +189,16 @@ char* get_variable_name(int tableIndex){
 	} else
 	{
 	current = current->next;
-    index++;
+    index++;  //what for ? uselss ...
 	}
   
 	
   }
   return -1;
 
-
-
 }
+
+
 
 void add_temporary_symbol() {
 

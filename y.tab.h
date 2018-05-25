@@ -75,7 +75,9 @@ extern int yydebug;
     tCHECKHIGHER = 285,
     tLESS = 286,
     tLESSEQUAL = 287,
-    tMOREEQUAL = 288
+    tMOREEQUAL = 288,
+    tMINUSEQUAL = 289,
+    tPLUSEQUAL = 290
   };
 #endif
 /* Tokens.  */
@@ -110,6 +112,8 @@ extern int yydebug;
 #define tLESS 286
 #define tLESSEQUAL 287
 #define tMOREEQUAL 288
+#define tMINUSEQUAL 289
+#define tPLUSEQUAL 290
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -121,7 +125,7 @@ union YYSTYPE
 	int nb;
 	char* str;
 
-#line 125 "y.tab.h" /* yacc.c:1909  */
+#line 129 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

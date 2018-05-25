@@ -52,12 +52,14 @@ int profondeur = 0;
 %token tLESS
 %token tLESSEQUAL
 %token tMOREEQUAL
+%token tMINUSEQUAL
+%token tPLUSEQUAL
 
 
 %left tADD tSUBTRACT
 %left tMULTIPLY tDIVIDE
 
-%type <nb>  tIF tWHILE tFOR tPO tPC tFINSTR
+%type <nb>  tIF tWHILE tFOR tPO tPC tFINSTR 
 
 %%
 
@@ -115,7 +117,7 @@ Print: tPRINTF tPO tVAR tPC tFINSTR {printf("Print not supported\n");};
 
 
 
-If : tIF tPO Condition tPC{
+If : tIF{/*prof_increment();printf("de ssssssssssssssssssssssssssspth is %d", profondeur);*/} tPO Condition tPC{
 		int a = get_last_index(); //condition-index
 		queue_instruction("LOAD", 10, a);
 		queue_instruction("TMP", 1, 1);
@@ -131,6 +133,8 @@ If : tIF tPO Condition tPC{
 		
 	} Else {	
 		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
+		//delete_all_var(profondeur);
+		//prof_decrement();
 				
 }
 
@@ -194,6 +198,8 @@ Condition :
 
 //while
 While : tWHILE {
+	//prof_increment();
+
 	$1 = get_latest_inst(); /* Hop to here to retry condition */
 	printf("$1 : %d\n", $1);
 	} tPO Condition tPC {
@@ -207,6 +213,8 @@ While : tWHILE {
 	} Body {
 		queue_instruction("JMP", $1, 1);
 		edit_instruction($3, "JMPC" , get_latest_inst(), 10);
+		//delete_all_var(profondeur);
+		//prof_decrement();
 
 	} 
 
@@ -215,7 +223,7 @@ While : tWHILE {
 ; 
 
 
-For : tFOR tPO {/*profondeur++;*/ } 
+For : tFOR tPO {/*prof_increment();*/}  // for increments before and one time before quitting because it should be before the last jmpc
 
 	Declaration {
 		     $1 = get_latest_inst();
@@ -224,15 +232,33 @@ For : tFOR tPO {/*profondeur++;*/ }
 	Condition tFINSTR{
 	   int a = get_last_index(); //condition-index after all conditions
 		queue_instruction("LOAD", 10, a); // add in place of 10 , 5+ prof
-	 } Calcul tPC {
+	 } increment tPC {
 		queue_instruction("TMP", 1, 1); //we add the unedited JMPC
 		$2 = get_latest_inst();         
 		delete_symbol();
 	} Body {
 		queue_instruction("JMP", $1, 1);
 		edit_instruction($2, "JMPC" , get_latest_inst(), 10);
-	/*	profondeur--;*/
+
+		//delete_all_var(profondeur);
+		//prof_decrement();
 	};
+
+
+increment : tVAR tPLUSPLUS  {
+			int x = find_symbol($1, profondeur);
+				 queue_instruction("LOAD", 1, x);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("ADD", 1, 2);
+				 queue_instruction("STORE", x, 1);}
+
+	| tVAR tMINUSMINUS{
+		     int y = find_symbol($1, profondeur);
+				 queue_instruction("LOAD", 1, y);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("SUB", 1, 2);
+			queue_instruction("STORE", y, 1);} ;
+
 
 
 
@@ -268,7 +294,7 @@ For : tFOR tPO {/*profondeur++;*/ }
 				 queue_instruction("SUB", 1, 2);
 				 queue_instruction("STORE", a, 1);}
 
-		| tVAR tSUBTRACT tEQUAL Expression tFINSTR {
+		| tVAR tMINUSEQUAL Expression tFINSTR {
 				 int a = find_symbol($1, profondeur);
 				 int b = get_last_index();
 				 queue_instruction("LOAD", 1, a);
@@ -277,7 +303,7 @@ For : tFOR tPO {/*profondeur++;*/ }
 				 queue_instruction("STORE", a, 1);
 				 delete_symbol();}
 
-		| tVAR tADD tEQUAL Expression {
+		| tVAR tPLUSEQUAL Expression tFINSTR{
 				 int a = find_symbol($1, profondeur);
 				 int b = get_last_index();
 				 queue_instruction("LOAD", 1, a);

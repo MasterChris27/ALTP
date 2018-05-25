@@ -20,6 +20,7 @@ entry* tab_symbols;
 // return_val - give name and profondeur - get val -- removed
 // delete_symbol - give name and profondeur - remove symbol   removed
 // delete_symbol - remove last symbol
+// delete_all_var  delete all variable at givven depth
 // find symbol - give name, and profondeur, get table index
 // get_last_address
 // symbol_initialise - give address, mark var as initialised
@@ -35,7 +36,13 @@ void add_temporary_symbol();
 
 int delete_symbol();
 
+int delete_all_var(int prof);
+
 int get_last_index();
+
+int get_curr_prof();
+int prof_increment();
+int prof_decrement();
 
 void print_table();
 

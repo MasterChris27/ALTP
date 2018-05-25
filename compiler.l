@@ -29,10 +29,14 @@ while	return tWHILE;
 for		return tFOR;
 "++"	return tPLUSPLUS;
 "--"	return tMINUSMINUS;
+
 "<" 	return tLESS;
 "<=" 	return tLESSEQUAL;
 ">="	return tMOREEQUAL;
 
+
+"-="	return tMINUSEQUAL;
+"+="	return tPLUSEQUAL;
 
 
 
