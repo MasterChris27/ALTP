@@ -3,6 +3,7 @@
 Instruction instr[1024];
 int indexInst = 0;
 int currentInst=0;
+int reg_start=4;
 int registers[12];  /* R0 - R11 */
 int memory[1024];
 
@@ -29,6 +30,14 @@ void edit_instruction(int pos, char* op , int a, int b) {
 
 int get_latest_inst(){
 	return(indexInst-1);
+}
+
+int get_reg_index_depth(int i){
+return reg_start +i;
+}
+
+int get_reg_val(int i){
+return registers[i];
 }
 
 
@@ -72,15 +81,21 @@ void instructionExecute(int instructionIndex){
 			registers[instr[instructionIndex].a] = 0;
 		}
 
-
+	
 
 	} else if(strcmp(instr[instructionIndex].operation, "STORE") == 0){
 		memory[instr[instructionIndex].a] = registers[instr[instructionIndex].b];
+
+	} else if(strcmp(instr[instructionIndex].operation, "RSTORE") == 0){
+		memory[registers[instr[instructionIndex].a]] = registers[instr[instructionIndex].b];
 
 
 
 	} else if(strcmp(instr[instructionIndex].operation, "LOAD") == 0){
 		registers[instr[instructionIndex].a] = memory[instr[instructionIndex].b];
+
+	} else if(strcmp(instr[instructionIndex].operation, "RTOR") == 0){  // load to R[a] value from R[b]
+		registers[instr[instructionIndex].a] = registers[instr[instructionIndex].b];
 
 
 

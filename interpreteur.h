@@ -23,6 +23,10 @@ int get_register_value(int tableIndex);
 
 int get_memory_value(int tableIndex);
 
+int get_reg_index_depth(int i);
+
+int get_reg_val(int i);
+
 int get_latest_inst();
 
 void edit_instruction(int pos, char* op , int a, int b);

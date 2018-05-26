@@ -219,76 +219,60 @@ While : tWHILE {
 
 	} 
 
+
+
 ; 
 
-For :   tFOR tPO {
-			prof_increment();}  //incrementing the depth
-	DeclCalc {
-		    	$1 = get_latest_inst();}  
+
+For : tFOR tPO {prof_increment();}  // for increments before and one time before quitting because it should be before the last jmpc
+
+	Declaration {
+		     $1 = get_latest_inst();
+		     $2=get_last_index();
+		     printf("$1 in for is : %d\n", $1);}  
 
 	Condition tFINSTR{
-	   		int a = get_last_index(); //condition-index after all conditions
-			queue_instruction("LOAD", 10, a);} // add in place of 10 , 5+ prof
-
-	tVAR tPLUSPLUS tPC  {
-			$2= find_symbol($9, get_curr_prof());
-			queue_instruction("TMP", 1, 1); //we add the unedited JMPC 
-			$7 = get_latest_inst();         
-			delete_symbol();}
-	Body {	
-			//we add here the code for incrementing but targeting the variable that has to be targeted
-			queue_instruction("LOAD", 1, $2);
-			queue_instruction("AFC", 2, 1);
-			queue_instruction("ADD", 1, 2);
-			queue_instruction("STORE", $2, 1);
-			//we updated the value of the value incremented and now we can jump to the condition
-			queue_instruction("JMP", $1, 1);
-			edit_instruction($7, "JMPC" , get_latest_inst(), 10);
+	   int a = get_last_index(); //condition-index after all conditions
+		queue_instruction("LOAD", 10, a); // add in place of 10 , 5+ prof
+	 } tVAR tPLUSPLUS tPC {
+		queue_instruction("TMP", 1, 1); //we add the unedited JMPC
+		$10 = get_latest_inst();         
+		delete_symbol();
+	} Body {
+				 queue_instruction("LOAD", 1, $2);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("ADD", 1, 2);
+				 queue_instruction("STORE", $2, 1);
 
 
-			delete_all_var(get_curr_prof());
-			prof_decrement();}
+		queue_instruction("JMP", $1, 1);
+		edit_instruction($10, "JMPC" , get_latest_inst(), 10);
 
-
-    | 	tFOR tPO {
-			prof_increment();}  // incrementing the depth
-	DeclCalc {
-		        $1 = get_latest_inst();}
-	Condition tFINSTR{
-	   		int a = get_last_index(); //condition-index after all conditions
-			queue_instruction("LOAD", 10, a);} // add in place of 10 , 5+ prof
-	tVAR tMINUSMINUS tPC  {
-			$2= find_symbol($9, get_curr_prof());
-			queue_instruction("TMP", 1, 1); //we add the unedited JMPC 
-			$7 = get_latest_inst();         
-			delete_symbol();}
-	Body {
-
-			queue_instruction("LOAD", 1,$2);
-			queue_instruction("AFC", 2, 1);  // increment part
- 			queue_instruction("SUB", 1, 2);
-			queue_instruction("STORE", $2, 1);
-
-			queue_instruction("JMP", $1, 1);
-			edit_instruction($7, "JMPC" , get_latest_inst(), 10);
-
-
-			delete_all_var(get_curr_prof());
-			prof_decrement(); };
-
-
-DeclCalc : Declaration |Calcul;
+		delete_all_var(get_curr_prof());
+		prof_decrement();
+	};
 
 
 
 
+/*
+increment : tVAR tPLUSPLUS  {
+			int x = find_symbol($1, get_curr_prof());
+				 queue_instruction("LOAD", 1, x);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("ADD", 1, 2);
+				 queue_instruction("STORE", x, 1);}
+
+	| tVAR tMINUSMINUS{
+		     int y = find_symbol($1, get_curr_prof());
+				 queue_instruction("LOAD", 1, y);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("SUB", 1, 2);
+			queue_instruction("STORE", y, 1);} ;
 
 
 
-
-
-
-
+*/
 
  Calcul:
 	 	  tVAR tEQUAL Expression tFINSTR {

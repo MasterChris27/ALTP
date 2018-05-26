@@ -125,6 +125,7 @@ int delete_all_var(int prof){
    int index = 0;
 
  while(current != NULL){
+
     if((current->name != NULL) && (strcmp(current->name,nameArg) == 0))
 	{
 		//if((current->profondeur == profondeur))   we don care if the variable is in the same prof with all. 
@@ -141,6 +142,7 @@ int delete_all_var(int prof){
   
 	
   }
+printf("\n Error : Variable -> %s <- not declared !\n",nameArg);
   return -1;
 
 }

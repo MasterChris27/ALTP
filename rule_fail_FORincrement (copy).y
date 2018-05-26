@@ -10,6 +10,7 @@
 
 
 char* type;
+int reg_depth=4;//starting registry
 %}
 
 %union {
@@ -53,8 +54,9 @@ char* type;
 %token tMOREEQUAL
 %token tMINUSEQUAL
 %token tPLUSEQUAL
-
-
+%token tFUNCNAME  // the functions have to have at least 2 chars and un underscore as name followed by(  . ex: ab_(
+			// generates conflict with main()
+%token tRETURN
 %left tADD tSUBTRACT
 %left tMULTIPLY tDIVIDE
 
@@ -63,8 +65,45 @@ char* type;
 %%
 
 
-Main: tMAIN tPO tPC Body ;
 
+
+
+Main:  tMAIN tPO tPC Body ;
+
+/*
+Function : Functions Function 
+	   | Functions 
+	   | ;
+
+
+Functions:CalculFunction;
+
+CalculFunction : vartype tFUNCNAME tPC Body
+
+/*
+Param : MultiParam Param
+	|LastParam
+	|;
+
+MultiParam : vartype tVAR tVIRGULE;
+LastParam : vartype tVAR;
+
+
+//Params : Param NextParam;
+//NextParam : tVIRGULE Param NextParam 
+//	    |;
+//Param : vartype tVAR{/* here we do the math for each var};
+
+
+FuncBody : tACO FuncInst tACC;
+
+FuncInst : Instruction
+	 | Instruction FuncReturn
+	 | FuncReturn;
+	// | FuncReturn FuncInst;  // this is gonna be complicated
+
+FuncReturn : tRETURN Expression tFINSTR;
+*/
 Body: tACO Instruction tACC; // add here the get_curr_prof()
 
 Instruction : Instructions Instruction 
@@ -217,76 +256,78 @@ While : tWHILE {
 		delete_all_var(get_curr_prof());
 		prof_decrement();
 
-	} 
+	}; 
 
-; 
 
-For :   tFOR tPO {
-			prof_increment();}  //incrementing the depth
-	DeclCalc {
-		    	$1 = get_latest_inst();}  
+
+
+
+
+
+
+
+
+
+
+For : tFOR tPO {prof_increment();}  // for increments before and one time before quitting because it should be before the last jmpc
+
+	Declaration {
+		     $1 = get_last_index();
+		     printf("before condition address : %d\n", $1);}   //3
 
 	Condition tFINSTR{
-	   		int a = get_last_index(); //condition-index after all conditions
-			queue_instruction("LOAD", 10, a);} // add in place of 10 , 5+ prof
+	   int a = get_last_index(); //condition-index after all conditions
+	   queue_instruction("LOAD", 10, a);
+	   queue_instruction("TMP", 1, 1); 
+	   $2 = get_latest_inst();  
+	printf("after condition address condition address : %d\n", get_latest_inst());//12
+	 } tVAR tPLUSPLUS tPC  { 
+		    printf("after getting the name of the variable from increment %d\n", $2); //13   or 12 ? 
+	} Body {
+//we add here the code for incrementing but targeting the variable that has to be targeted
 
-	tVAR tPLUSPLUS tPC  {
-			$2= find_symbol($9, get_curr_prof());
-			queue_instruction("TMP", 1, 1); //we add the unedited JMPC 
-			$7 = get_latest_inst();         
-			delete_symbol();}
-	Body {	
-			//we add here the code for incrementing but targeting the variable that has to be targeted
-			queue_instruction("LOAD", 1, $2);
+		     printf("address of var : %d\n", 2); 
+			int j=reg_depth+get_curr_prof(); 
+
+		     printf("address of var : %d\n", $1); 
+			queue_instruction("LOAD", 1, $1); 
 			queue_instruction("AFC", 2, 1);
-			queue_instruction("ADD", 1, 2);
-			queue_instruction("STORE", $2, 1);
-			//we updated the value of the value incremented and now we can jump to the condition
-			queue_instruction("JMP", $1, 1);
-			edit_instruction($7, "JMPC" , get_latest_inst(), 10);
-
-
-			delete_all_var(get_curr_prof());
-			prof_decrement();}
-
-
-    | 	tFOR tPO {
-			prof_increment();}  // incrementing the depth
-	DeclCalc {
-		        $1 = get_latest_inst();}
-	Condition tFINSTR{
-	   		int a = get_last_index(); //condition-index after all conditions
-			queue_instruction("LOAD", 10, a);} // add in place of 10 , 5+ prof
-	tVAR tMINUSMINUS tPC  {
-			$2= find_symbol($9, get_curr_prof());
-			queue_instruction("TMP", 1, 1); //we add the unedited JMPC 
-			$7 = get_latest_inst();         
-			delete_symbol();}
-	Body {
-
-			queue_instruction("LOAD", 1,$2);
-			queue_instruction("AFC", 2, 1);  // increment part
- 			queue_instruction("SUB", 1, 2);
-			queue_instruction("STORE", $2, 1);
-
-			queue_instruction("JMP", $1, 1);
-			edit_instruction($7, "JMPC" , get_latest_inst(), 10);
-
-
-			delete_all_var(get_curr_prof());
-			prof_decrement(); };
-
-
-DeclCalc : Declaration |Calcul;
+			queue_instruction("ADD", 1, 2); 
+			queue_instruction("STORE", $1, 1);
 
 
 
 
+		     int sm = get_latest_inst();
+		     printf("after code and increment has been added : %d\n", sm); //25
+		 	 //we add the unedited JMPC  at index 26
+		//we updated the value of the value incremented and now we can jump to the condition
+		queue_instruction("JMP", $1, 1);
+		edit_instruction($2, "JMPC" , get_latest_inst(), 10);
+		delete_all_var(get_curr_prof());
+		prof_decrement();   
+		printf("error 2 hss is %d  %d\n\n",j,get_curr_prof());  //5 and 0;
+	};
+
+/*
+increment : tVAR tPLUSPLUS  {
+				int a= find_symbol($1, get_curr_prof());
+				int y=reg_depth+get_curr_prof();// the address stored in one of the registers of depth reg_depth-10
+				print_table();
+				printf("Address var in table in increment in FOR is %d\n\n",a);
+				queue_instruction("LOAD",y,a);
+				printf("register  is %d\n\n",y);
+				printf("Asigning toreg[5] value of variable %d\n\n",a);}
 
 
+	| tVAR tMINUSMINUS{
+		     int y = find_symbol($1, get_curr_prof());
+				 queue_instruction("LOAD", 1, y);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("SUB", 1, 2);
+			queue_instruction("STORE", y, 1);} ;
 
-
-
+*/
 
 
 
@@ -427,6 +468,5 @@ int main() {
 		printf("var: %s, value: %d\n", get_variable_name(i), get_memory_value(i));
 	}
 }
-
 
 
