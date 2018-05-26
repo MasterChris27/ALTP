@@ -10,7 +10,6 @@
 
 
 char* type;
-int profondeur = 0;
 %}
 
 %union {
@@ -66,7 +65,7 @@ int profondeur = 0;
 
 Main: tMAIN tPO tPC Body ;
 
-Body: tACO Instruction tACC; // add here the profondeur
+Body: tACO Instruction tACC; // add here the get_curr_prof()
 
 Instruction : Instructions Instruction 
 	   | Instructions 
@@ -87,22 +86,22 @@ Declaration: vartype Declarations tFINSTR ;
 Declarations: Multideclaration Declarations
 			| Lastdeclaration ;
 
-Multideclaration : tVAR tVIRGULE {add_symbol($1, type, 0,profondeur);}
+Multideclaration : tVAR tVIRGULE {add_symbol($1, type, 0,get_curr_prof());}
 		| tVAR tEQUAL tINTNR tVIRGULE {
-		    add_symbol($1, type, 0, profondeur);
+		    add_symbol($1, type, 0, get_curr_prof());
 		// we could change add symbol to return the address
-		    int a = find_symbol($1, profondeur);
+		    int a = find_symbol($1, get_curr_prof());
 		    queue_instruction("AFC", 1, $3);
 		    queue_instruction("STORE", a, 1); 
 };
 
 
 
-Lastdeclaration: tVAR {add_symbol($1, type, 0, profondeur);}
+Lastdeclaration: tVAR {add_symbol($1, type, 0, get_curr_prof());}
 		| tVAR tEQUAL tINTNR {
-				 add_symbol($1, type, 0, profondeur);
+				 add_symbol($1, type, 0, get_curr_prof());
 		// we could change add symbol to return the address
-				 int a = find_symbol($1, profondeur);
+				 int a = find_symbol($1, get_curr_prof());
 				 queue_instruction("AFC", 1, $3);
 				 queue_instruction("STORE", a, 1); 
 };
@@ -117,7 +116,7 @@ Print: tPRINTF tPO tVAR tPC tFINSTR {printf("Print not supported\n");};
 
 
 
-If : tIF{/*prof_increment();printf("de ssssssssssssssssssssssssssspth is %d", profondeur);*/} tPO Condition tPC{
+If : tIF{prof_increment();} tPO Condition tPC{
 		int a = get_last_index(); //condition-index
 		queue_instruction("LOAD", 10, a);
 		queue_instruction("TMP", 1, 1);
@@ -133,8 +132,8 @@ If : tIF{/*prof_increment();printf("de ssssssssssssssssssssssssssspth is %d", pr
 		
 	} Else {	
 		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
-		//delete_all_var(profondeur);
-		//prof_decrement();
+		delete_all_var(get_curr_prof());
+		prof_decrement();
 				
 }
 
@@ -148,6 +147,8 @@ Else: tELSE Body
 Condition : 	
 
 	  Expression tCHECKEQ Expression {
+
+		printf("we are in condition after finding it at depth %d \n\n", get_curr_prof());
 		int a = get_last_index();
 		int b = a-1;
 		queue_instruction("LOAD", 1, a);
@@ -198,10 +199,9 @@ Condition :
 
 //while
 While : tWHILE {
-	//prof_increment();
-
+	prof_increment();
 	$1 = get_latest_inst(); /* Hop to here to retry condition */
-	printf("$1 : %d\n", $1);
+	//printf("$1 in while is : : %d\n", $1);
 	} tPO Condition tPC {
 
 	int a = get_last_index(); //condition-index after all conditions
@@ -213,8 +213,9 @@ While : tWHILE {
 	} Body {
 		queue_instruction("JMP", $1, 1);
 		edit_instruction($3, "JMPC" , get_latest_inst(), 10);
-		//delete_all_var(profondeur);
-		//prof_decrement();
+
+		delete_all_var(get_curr_prof());
+		prof_decrement();
 
 	} 
 
@@ -223,11 +224,11 @@ While : tWHILE {
 ; 
 
 
-For : tFOR tPO {/*prof_increment();*/}  // for increments before and one time before quitting because it should be before the last jmpc
+For : tFOR tPO {prof_increment();}  // for increments before and one time before quitting because it should be before the last jmpc
 
 	Declaration {
 		     $1 = get_latest_inst();
-		     printf("$1 : %d\n", $1);}  
+		     printf("$1 in for is : %d\n", $1);}  
 
 	Condition tFINSTR{
 	   int a = get_last_index(); //condition-index after all conditions
@@ -240,20 +241,20 @@ For : tFOR tPO {/*prof_increment();*/}  // for increments before and one time be
 		queue_instruction("JMP", $1, 1);
 		edit_instruction($2, "JMPC" , get_latest_inst(), 10);
 
-		//delete_all_var(profondeur);
-		//prof_decrement();
+		delete_all_var(get_curr_prof());
+		prof_decrement();
 	};
 
 
 increment : tVAR tPLUSPLUS  {
-			int x = find_symbol($1, profondeur);
+			int x = find_symbol($1, get_curr_prof());
 				 queue_instruction("LOAD", 1, x);
 				 queue_instruction("AFC", 2, 1);
 				 queue_instruction("ADD", 1, 2);
 				 queue_instruction("STORE", x, 1);}
 
 	| tVAR tMINUSMINUS{
-		     int y = find_symbol($1, profondeur);
+		     int y = find_symbol($1, get_curr_prof());
 				 queue_instruction("LOAD", 1, y);
 				 queue_instruction("AFC", 2, 1);
 				 queue_instruction("SUB", 1, 2);
@@ -265,14 +266,14 @@ increment : tVAR tPLUSPLUS  {
 
  Calcul:
 	 	  tVAR tEQUAL Expression tFINSTR {
-				 int a = find_symbol($1, profondeur);
+				 int a = find_symbol($1, get_curr_prof());
 				 int b = get_last_index();
 				 queue_instruction("LOAD", 1, b);
 				 queue_instruction("STORE", a, 1);
 				 delete_symbol();} 
 
 		| tVAR tEQUAL tSUBTRACT Expression tFINSTR {
-				 int a = find_symbol($1, profondeur);
+				 int a = find_symbol($1, get_curr_prof());
 				 int b = get_last_index();
 				 queue_instruction("LOAD", 1, b);
 				 queue_instruction("AFC", 2, -1);
@@ -281,21 +282,21 @@ increment : tVAR tPLUSPLUS  {
 				 delete_symbol();} 
 
 		| tVAR tPLUSPLUS tFINSTR {
-				 int a = find_symbol($1, profondeur);
+				 int a = find_symbol($1, get_curr_prof());
 				 queue_instruction("LOAD", 1, a);
 				 queue_instruction("AFC", 2, 1);
 				 queue_instruction("ADD", 1, 2);
 				 queue_instruction("STORE", a, 1);}
 
 		| tVAR tMINUSMINUS tFINSTR {
-				 int a = find_symbol($1, profondeur);
+				 int a = find_symbol($1, get_curr_prof());
 				 queue_instruction("LOAD", 1, a);
 				 queue_instruction("AFC", 2, 1);
 				 queue_instruction("SUB", 1, 2);
 				 queue_instruction("STORE", a, 1);}
 
 		| tVAR tMINUSEQUAL Expression tFINSTR {
-				 int a = find_symbol($1, profondeur);
+				 int a = find_symbol($1, get_curr_prof());
 				 int b = get_last_index();
 				 queue_instruction("LOAD", 1, a);
 				 queue_instruction("LOAD", 2, b);
@@ -304,7 +305,7 @@ increment : tVAR tPLUSPLUS  {
 				 delete_symbol();}
 
 		| tVAR tPLUSEQUAL Expression tFINSTR{
-				 int a = find_symbol($1, profondeur);
+				 int a = find_symbol($1, get_curr_prof());
 				 int b = get_last_index();
 				 queue_instruction("LOAD", 1, a);
 				 queue_instruction("LOAD", 2, b);
@@ -353,7 +354,9 @@ Expression :
 
  		| tVAR {
 				add_temporary_symbol();
-	 			queue_instruction("LOAD", 1, find_symbol($1, profondeur));
+
+
+	 			queue_instruction("LOAD", 1, find_symbol($1, get_curr_prof()));
 				queue_instruction("STORE", get_last_index(), 1); }
 
 		| tINTNR {

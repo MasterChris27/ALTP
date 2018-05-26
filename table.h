@@ -41,8 +41,8 @@ int delete_all_var(int prof);
 int get_last_index();
 
 int get_curr_prof();
-int prof_increment();
-int prof_decrement();
+void prof_increment();
+void prof_decrement();
 
 void print_table();
 

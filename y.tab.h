@@ -120,7 +120,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 16 "rule.y" /* yacc.c:1909  */
+#line 15 "rule.y" /* yacc.c:1909  */
 
 	int nb;
 	char* str;

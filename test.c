@@ -1,22 +1,29 @@
 main() {
-int a,b,c=1,d,e,f,g;
-int i=2;
-a=1;
-b=4;
+int a,b,c,d,e,f,g;
 
-if(a==b)
-	{c=2;}
+if(b==a){
+	int sm=3;	 
+	c=sm;}
 else
 	{d++;}
 
-while(a<=b) {
-e++;
-a++;
+while(b<c){
+
+int sm=52;
+if(b==2){
+	b=sm;}
+else{
+b++;
+a++;}
 
 }
 
-for(int j=2;j<=2;j++){
-	g=j;
+
+for(int x=0;i<a;i++){
+	int sm=2;
+	x=x+sm;
+g=x;
+
 }
 
 

@@ -44,8 +44,8 @@ void printInst(int Index){
 void execute_all_instructions(){
 
 	for(currentInst; currentInst<indexInst; currentInst++){
-	printInst(currentInst);
-	printf("currentInst: %d\n", currentInst);
+	//printInst(currentInst);
+	//printf("currentInst: %d\n", currentInst);
 	instructionExecute(currentInst);
 	}
 
@@ -108,15 +108,15 @@ void instructionExecute(int instructionIndex){
 
 
 	} else if(strcmp(instr[instructionIndex].operation, "INFE") == 0){
-		printf("registers[instr[instructionIndex].a]: %d\n", registers[instr[instructionIndex].a]);
-		printf("registers[instr[instructionIndex].b]: %d\n", registers[instr[instructionIndex].b]);
+		//printf("registers[instr[instructionIndex].a]: %d\n", registers[instr[instructionIndex].a]);
+		//printf("registers[instr[instructionIndex].b]: %d\n", registers[instr[instructionIndex].b]);
 		if(registers[instr[instructionIndex].a] <= registers[instr[instructionIndex].b]){
 			registers[instr[instructionIndex].a] = 1;
 		} else{
 			registers[instr[instructionIndex].a] = -1;
 		}
 
-printf("result: %d\n", registers[instr[instructionIndex].a]);
+	//printf("result: %d\n", registers[instr[instructionIndex].a]);
 	} else if(strcmp(instr[instructionIndex].operation, "SUP") == 0){
 		if(registers[instr[instructionIndex].a] > registers[instr[instructionIndex].b]){
 			registers[instr[instructionIndex].a] = 1;
@@ -138,7 +138,7 @@ printf("result: %d\n", registers[instr[instructionIndex].a]);
 
 
 	} else if(strcmp(instr[instructionIndex].operation, "JMPC") == 0){
-		printf("jump cond: %d\n",registers[instr[instructionIndex].b]);
+		//printf("jump cond: %d\n",registers[instr[instructionIndex].b]);
 		if(registers[instr[instructionIndex].b] == -1){ //so to say: Condition is not Ok.			
 			currentInst= instr[instructionIndex].a;
 		}
