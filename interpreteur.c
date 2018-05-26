@@ -86,16 +86,14 @@ void instructionExecute(int instructionIndex){
 	} else if(strcmp(instr[instructionIndex].operation, "STORE") == 0){
 		memory[instr[instructionIndex].a] = registers[instr[instructionIndex].b];
 
-	} else if(strcmp(instr[instructionIndex].operation, "RSTORE") == 0){
-		memory[registers[instr[instructionIndex].a]] = registers[instr[instructionIndex].b];
+	
 
 
 
 	} else if(strcmp(instr[instructionIndex].operation, "LOAD") == 0){
 		registers[instr[instructionIndex].a] = memory[instr[instructionIndex].b];
 
-	} else if(strcmp(instr[instructionIndex].operation, "RTOR") == 0){  // load to R[a] value from R[b]
-		registers[instr[instructionIndex].a] = registers[instr[instructionIndex].b];
+	
 
 
 
