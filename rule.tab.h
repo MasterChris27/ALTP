@@ -77,7 +77,9 @@ extern int yydebug;
     tLESSEQUAL = 287,
     tMOREEQUAL = 288,
     tMINUSEQUAL = 287,
-    tPLUSEQUAL = 288
+    tPLUSEQUAL = 288,
+    tRETURN = 290,
+    tFUNCNAME = 289
   };
 #endif
 

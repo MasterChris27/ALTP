@@ -53,8 +53,9 @@ char* type;
 %token tMOREEQUAL
 %token tMINUSEQUAL
 %token tPLUSEQUAL
-
-
+%token tFUNCNAME  // the functions have to have at least 2 chars and un underscore as name followed by(  . ex: ab_(
+			// generates conflict with main()
+%token tRETURN
 %left tADD tSUBTRACT
 %left tMULTIPLY tDIVIDE
 
@@ -63,7 +64,44 @@ char* type;
 %%
 
 
-Main: tMAIN tPO tPC Body ;
+
+
+
+Main: Function tMAIN tPO tPC Body ;
+
+
+Function : Functions Function 
+	   | Functions 
+	   | ;
+
+
+Functions:CalculFunction;
+
+CalculFunction : vartype tFUNCNAME tPC Body
+
+/*
+Param : MultiParam Param
+	|LastParam
+	|;
+
+MultiParam : vartype tVAR tVIRGULE;
+LastParam : vartype tVAR;
+*/
+
+//Params : Param NextParam;
+//NextParam : tVIRGULE Param NextParam 
+//	    |;
+//Param : vartype tVAR{/* here we do the math for each var*/};
+
+
+FuncBody : tACO FuncInst tACC;
+
+FuncInst : Instruction
+	 | Instruction FuncReturn
+	 | FuncReturn;
+	// | FuncReturn FuncInst;  // this is gonna be complicated
+
+FuncReturn : tRETURN Expression tFINSTR;
 
 Body: tACO Instruction tACC; // add here the get_curr_prof()
 
@@ -233,13 +271,22 @@ For : tFOR tPO {prof_increment();}  // for increments before and one time before
 	Condition tFINSTR{
 	   int a = get_last_index(); //condition-index after all conditions
 		queue_instruction("LOAD", 10, a); // add in place of 10 , 5+ prof
-	 } increment tPC {
-		queue_instruction("TMP", 1, 1); //we add the unedited JMPC
-		$2 = get_latest_inst();         
-		delete_symbol();
+	 } tVAR tPLUSPLUS tPC  {
+			$8= find_symbol($6, get_curr_prof());
+				 
+				$2 = get_latest_inst();         
+				delete_symbol();
 	} Body {
+//we add here the code for incrementing but targeting the variable that has to be targeted
+			queue_instruction("LOAD", 1, $8);
+			queue_instruction("AFC", 2, 1);
+			queue_instruction("ADD", 1, 2);
+			queue_instruction("STORE", $8, 1);
+		 	queue_instruction("TMP", 1, 1); //we add the unedited JMPC
+		//we updated the value of the value incremented and now we can jump to the condition
 		queue_instruction("JMP", $1, 1);
 		edit_instruction($2, "JMPC" , get_latest_inst(), 10);
+
 
 		delete_all_var(get_curr_prof());
 		prof_decrement();

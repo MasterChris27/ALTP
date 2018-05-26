@@ -77,7 +77,9 @@ extern int yydebug;
     tLESSEQUAL = 287,
     tMOREEQUAL = 288,
     tMINUSEQUAL = 289,
-    tPLUSEQUAL = 290
+    tPLUSEQUAL = 290,
+    tFUNCNAME = 291,
+    tRETURN = 292
   };
 #endif
 /* Tokens.  */
@@ -114,6 +116,8 @@ extern int yydebug;
 #define tMOREEQUAL 288
 #define tMINUSEQUAL 289
 #define tPLUSEQUAL 290
+#define tFUNCNAME 291
+#define tRETURN 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -125,7 +129,7 @@ union YYSTYPE
 	int nb;
 	char* str;
 
-#line 129 "y.tab.h" /* yacc.c:1909  */
+#line 133 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
