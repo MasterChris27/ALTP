@@ -53,6 +53,7 @@ char* type;
 %token tMOREEQUAL
 %token tMINUSEQUAL
 %token tPLUSEQUAL
+%token tRETURN
 
 
 %left tADD tSUBTRACT
@@ -63,7 +64,24 @@ char* type;
 %%
 
 
-Main: tMAIN tPO tPC Body ;
+Main: Function tMAIN tPO tPC Body ;
+
+//adding type to the function
+Function : vartype tVAR {add_symbol($2, type, 0, get_curr_prof());prof_increment();} tPO Params tPC FuncBody tFINSTR
+	  | ;
+
+Params : Param NextParam | ;
+NextParam : tVIRGULE Param | ;
+Param : vartype tVAR {add_symbol($2, type, 0, get_curr_prof());}
+
+FuncBody : tACO FuncInstr tACC;
+
+FuncInstr : FuncInstrs FuncInstr
+	    | FuncInstrs
+	    | ;
+FuncInstrs :Calcul | For|Declaration |If | RetVal |;
+
+RetVal : tRETURN Expression tFINSTR ;
 
 Body: tACO Instruction tACC; // add here the get_curr_prof()
 

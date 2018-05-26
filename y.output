@@ -7,1416 +7,1749 @@ Terminals unused in grammar
 
 Rules useless in parser due to conflicts
 
-   41 $@10: %empty
+   19 FuncInstrs: %empty
+
+   60 $@11: %empty
 
 
-State 16 conflicts: 1 reduce/reduce
-State 32 conflicts: 3 reduce/reduce
+State 24 conflicts: 1 reduce/reduce
+State 44 conflicts: 3 reduce/reduce
+State 51 conflicts: 6 shift/reduce, 1 reduce/reduce
+State 74 conflicts: 6 shift/reduce, 1 reduce/reduce
 
 
 Grammar
 
     0 $accept: Main $end
 
-    1 Main: tMAIN tPO tPC Body
+    1 Main: Function tMAIN tPO tPC Body
 
-    2 Body: tACO Instruction tACC
+    2 $@1: %empty
 
-    3 Instruction: Instructions Instruction
-    4            | Instructions
-    5            | %empty
+    3 Function: vartype tVAR $@1 tPO Params tPC FuncBody tFINSTR
+    4         | %empty
 
-    6 Instructions: Calcul
-    7             | For
-    8             | While
-    9             | Print
-   10             | Declaration
-   11             | If
+    5 Params: Param NextParam
+    6       | %empty
 
-   12 Declaration: vartype Declarations tFINSTR
+    7 NextParam: tVIRGULE Param
+    8          | %empty
 
-   13 Declarations: Multideclaration Declarations
-   14             | Lastdeclaration
+    9 Param: vartype tVAR
 
-   15 Multideclaration: tVAR tVIRGULE
-   16                 | tVAR tEQUAL tINTNR tVIRGULE
+   10 FuncBody: tACO FuncInstr tACC
 
-   17 Lastdeclaration: tVAR
-   18                | tVAR tEQUAL tINTNR
+   11 FuncInstr: FuncInstrs FuncInstr
+   12          | FuncInstrs
+   13          | %empty
 
-   19 vartype: tINT
-   20        | tCONST
+   14 FuncInstrs: Calcul
+   15           | For
+   16           | Declaration
+   17           | If
+   18           | RetVal
+   19           | %empty
 
-   21 Print: tPRINTF tPO tVAR tPC tFINSTR
+   20 RetVal: tRETURN Expression tFINSTR
 
-   22 $@1: %empty
+   21 Body: tACO Instruction tACC
 
-   23 $@2: %empty
+   22 Instruction: Instructions Instruction
+   23            | Instructions
+   24            | %empty
 
-   24 $@3: %empty
+   25 Instructions: Calcul
+   26             | For
+   27             | While
+   28             | Print
+   29             | Declaration
+   30             | If
 
-   25 If: tIF $@1 tPO Condition tPC $@2 Body $@3 Else
+   31 Declaration: vartype Declarations tFINSTR
 
-   26 Else: tELSE Body
-   27     | %empty
+   32 Declarations: Multideclaration Declarations
+   33             | Lastdeclaration
 
-   28 Condition: Expression tCHECKEQ Expression
-   29          | Expression tLESS Expression
-   30          | Expression tCHECKHIGHER Expression
-   31          | Expression tLESSEQUAL Expression
-   32          | Expression tMOREEQUAL Expression
+   34 Multideclaration: tVAR tVIRGULE
+   35                 | tVAR tEQUAL tINTNR tVIRGULE
 
-   33 $@4: %empty
+   36 Lastdeclaration: tVAR
+   37                | tVAR tEQUAL tINTNR
 
-   34 $@5: %empty
+   38 vartype: tINT
+   39        | tCONST
 
-   35 While: tWHILE $@4 tPO Condition tPC $@5 Body
+   40 Print: tPRINTF tPO tVAR tPC tFINSTR
 
-   36 $@6: %empty
+   41 $@2: %empty
 
-   37 $@7: %empty
+   42 $@3: %empty
 
-   38 $@8: %empty
+   43 $@4: %empty
 
-   39 $@9: %empty
+   44 If: tIF $@2 tPO Condition tPC $@3 Body $@4 Else
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body
+   45 Else: tELSE Body
+   46     | %empty
 
-   41 $@10: %empty
+   47 Condition: Expression tCHECKEQ Expression
+   48          | Expression tLESS Expression
+   49          | Expression tCHECKHIGHER Expression
+   50          | Expression tLESSEQUAL Expression
+   51          | Expression tMOREEQUAL Expression
 
-   42 $@11: %empty
+   52 $@5: %empty
 
-   43 $@12: %empty
+   53 $@6: %empty
 
-   44 $@13: %empty
+   54 While: tWHILE $@5 tPO Condition tPC $@6 Body
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body
+   55 $@7: %empty
 
-   46 DeclCalc: Declaration
-   47         | Calcul
+   56 $@8: %empty
 
-   48 Calcul: tVAR tEQUAL Expression tFINSTR
-   49       | tVAR tEQUAL tSUBTRACT Expression tFINSTR
-   50       | tVAR tPLUSPLUS tFINSTR
-   51       | tVAR tMINUSMINUS tFINSTR
-   52       | tVAR tMINUSEQUAL Expression tFINSTR
-   53       | tVAR tPLUSEQUAL Expression tFINSTR
+   57 $@9: %empty
 
-   54 Expression: Expression tADD Expression
-   55           | Expression tSUBTRACT Expression
-   56           | Expression tDIVIDE Expression
-   57           | Expression tMULTIPLY Expression
-   58           | tVAR
-   59           | tINTNR
-   60           | tPO tSUBTRACT tINTNR tPC
-   61           | tPO Expression tPC
+   58 $@10: %empty
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body
+
+   60 $@11: %empty
+
+   61 $@12: %empty
+
+   62 $@13: %empty
+
+   63 $@14: %empty
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body
+
+   65 DeclCalc: Declaration
+   66         | Calcul
+
+   67 Calcul: tVAR tEQUAL Expression tFINSTR
+   68       | tVAR tEQUAL tSUBTRACT Expression tFINSTR
+   69       | tVAR tPLUSPLUS tFINSTR
+   70       | tVAR tMINUSMINUS tFINSTR
+   71       | tVAR tMINUSEQUAL Expression tFINSTR
+   72       | tVAR tPLUSEQUAL Expression tFINSTR
+
+   73 Expression: Expression tADD Expression
+   74           | Expression tSUBTRACT Expression
+   75           | Expression tDIVIDE Expression
+   76           | Expression tMULTIPLY Expression
+   77           | tVAR
+   78           | tINTNR
+   79           | tPO tSUBTRACT tINTNR tPC
+   80           | tPO Expression tPC
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-tINT (258) 19
-tACO (259) 2
-tACC (260) 2
-tCONST (261) 20
-tADD (262) 54
-tSUBTRACT (263) 49 55 60
-tDIVIDE (264) 56
-tMULTIPLY (265) 57
-tEQUAL (266) 16 18 48 49
-tPLUSPLUS (267) 40 50
-tMINUSMINUS (268) 45 51
-tIF (269) 25
-tELSE (270) 26
-tCHECKEQ (271) 28
-tPO (272) 1 21 25 35 40 45 60 61
-tPC (273) 1 21 25 35 40 45 60 61
+tINT (258) 38
+tACO (259) 10 21
+tACC (260) 10 21
+tCONST (261) 39
+tADD (262) 73
+tSUBTRACT (263) 68 74 79
+tDIVIDE (264) 75
+tMULTIPLY (265) 76
+tEQUAL (266) 35 37 67 68
+tPLUSPLUS (267) 59 69
+tMINUSMINUS (268) 64 70
+tIF (269) 44
+tELSE (270) 45
+tCHECKEQ (271) 47
+tPO (272) 1 3 40 44 54 59 64 79 80
+tPC (273) 1 3 40 44 54 59 64 79 80
 tTAB (274)
-tVIRGULE (275) 15 16
+tVIRGULE (275) 7 34 35
 tDOLLAR (276)
-tFINSTR (277) 12 21 40 45 48 49 50 51 52 53
-tINTNR (278) 16 18 59 60
-tWHILE (279) 35
-tPRINTF (280) 21
+tFINSTR (277) 3 20 31 40 59 64 67 68 69 70 71 72
+tINTNR (278) 35 37 78 79
+tWHILE (279) 54
+tPRINTF (280) 40
 tMAIN (281) 1
-tVAR (282) 15 16 17 18 21 40 45 48 49 50 51 52 53 58
-tFOR (283) 40 45
+tVAR (282) 3 9 34 35 36 37 40 59 64 67 68 69 70 71 72 77
+tFOR (283) 59 64
 tSTRING (284)
-tCHECKHIGHER (285) 30
-tLESS (286) 29
-tLESSEQUAL (287) 31
-tMOREEQUAL (288) 32
-tMINUSEQUAL (289) 52
-tPLUSEQUAL (290) 53
+tCHECKHIGHER (285) 49
+tLESS (286) 48
+tLESSEQUAL (287) 50
+tMOREEQUAL (288) 51
+tMINUSEQUAL (289) 71
+tPLUSEQUAL (290) 72
+tRETURN (291) 20
 
 
 Nonterminals, with rules where they appear
 
-$accept (36)
+$accept (37)
     on left: 0
-Main (37)
+Main (38)
     on left: 1, on right: 0
-Body (38)
-    on left: 2, on right: 1 25 26 35 40 45
-Instruction (39)
-    on left: 3 4 5, on right: 2 3
-Instructions (40)
-    on left: 6 7 8 9 10 11, on right: 3 4
-Declaration (41)
-    on left: 12, on right: 10 46
-Declarations (42)
-    on left: 13 14, on right: 12 13
-Multideclaration (43)
-    on left: 15 16, on right: 13
-Lastdeclaration (44)
-    on left: 17 18, on right: 14
-vartype (45)
-    on left: 19 20, on right: 12
-Print (46)
-    on left: 21, on right: 9
-If (47)
-    on left: 25, on right: 11
-$@1 (48)
-    on left: 22, on right: 25
-$@2 (49)
-    on left: 23, on right: 25
-$@3 (50)
-    on left: 24, on right: 25
-Else (51)
-    on left: 26 27, on right: 25
-Condition (52)
-    on left: 28 29 30 31 32, on right: 25 35 40 45
-While (53)
-    on left: 35, on right: 8
-$@4 (54)
-    on left: 33, on right: 35
-$@5 (55)
-    on left: 34, on right: 35
-For (56)
-    on left: 40 45, on right: 7
-$@6 (57)
-    on left: 36, on right: 40
-$@7 (58)
-    on left: 37, on right: 40
-$@8 (59)
-    on left: 38, on right: 40
-$@9 (60)
-    on left: 39, on right: 40
-$@10 (61)
-    on left: 41, on right: 45
-$@11 (62)
-    on left: 42, on right: 45
-$@12 (63)
-    on left: 43, on right: 45
-$@13 (64)
-    on left: 44, on right: 45
-DeclCalc (65)
-    on left: 46 47, on right: 40 45
-Calcul (66)
-    on left: 48 49 50 51 52 53, on right: 6 47
-Expression (67)
-    on left: 54 55 56 57 58 59 60 61, on right: 28 29 30 31 32 48 49
-    52 53 54 55 56 57 61
+Function (39)
+    on left: 3 4, on right: 1
+$@1 (40)
+    on left: 2, on right: 3
+Params (41)
+    on left: 5 6, on right: 3
+NextParam (42)
+    on left: 7 8, on right: 5
+Param (43)
+    on left: 9, on right: 5 7
+FuncBody (44)
+    on left: 10, on right: 3
+FuncInstr (45)
+    on left: 11 12 13, on right: 10 11
+FuncInstrs (46)
+    on left: 14 15 16 17 18 19, on right: 11 12
+RetVal (47)
+    on left: 20, on right: 18
+Body (48)
+    on left: 21, on right: 1 44 45 54 59 64
+Instruction (49)
+    on left: 22 23 24, on right: 21 22
+Instructions (50)
+    on left: 25 26 27 28 29 30, on right: 22 23
+Declaration (51)
+    on left: 31, on right: 16 29 65
+Declarations (52)
+    on left: 32 33, on right: 31 32
+Multideclaration (53)
+    on left: 34 35, on right: 32
+Lastdeclaration (54)
+    on left: 36 37, on right: 33
+vartype (55)
+    on left: 38 39, on right: 3 9 31
+Print (56)
+    on left: 40, on right: 28
+If (57)
+    on left: 44, on right: 17 30
+$@2 (58)
+    on left: 41, on right: 44
+$@3 (59)
+    on left: 42, on right: 44
+$@4 (60)
+    on left: 43, on right: 44
+Else (61)
+    on left: 45 46, on right: 44
+Condition (62)
+    on left: 47 48 49 50 51, on right: 44 54 59 64
+While (63)
+    on left: 54, on right: 27
+$@5 (64)
+    on left: 52, on right: 54
+$@6 (65)
+    on left: 53, on right: 54
+For (66)
+    on left: 59 64, on right: 15 26
+$@7 (67)
+    on left: 55, on right: 59
+$@8 (68)
+    on left: 56, on right: 59
+$@9 (69)
+    on left: 57, on right: 59
+$@10 (70)
+    on left: 58, on right: 59
+$@11 (71)
+    on left: 60, on right: 64
+$@12 (72)
+    on left: 61, on right: 64
+$@13 (73)
+    on left: 62, on right: 64
+$@14 (74)
+    on left: 63, on right: 64
+DeclCalc (75)
+    on left: 65 66, on right: 59 64
+Calcul (76)
+    on left: 67 68 69 70 71 72, on right: 14 25 66
+Expression (77)
+    on left: 73 74 75 76 77 78 79 80, on right: 20 47 48 49 50 51 67
+    68 71 72 73 74 75 76 80
 
 
 State 0
 
     0 $accept: . Main $end
 
-    tMAIN  shift, and go to state 1
+    tINT    shift, and go to state 1
+    tCONST  shift, and go to state 2
 
-    Main  go to state 2
+    $default  reduce using rule 4 (Function)
+
+    Main      go to state 3
+    Function  go to state 4
+    vartype   go to state 5
 
 
 State 1
 
-    1 Main: tMAIN . tPO tPC Body
+   38 vartype: tINT .
 
-    tPO  shift, and go to state 3
+    $default  reduce using rule 38 (vartype)
 
 
 State 2
 
-    0 $accept: Main . $end
+   39 vartype: tCONST .
 
-    $end  shift, and go to state 4
+    $default  reduce using rule 39 (vartype)
 
 
 State 3
 
-    1 Main: tMAIN tPO . tPC Body
+    0 $accept: Main . $end
 
-    tPC  shift, and go to state 5
+    $end  shift, and go to state 6
 
 
 State 4
+
+    1 Main: Function . tMAIN tPO tPC Body
+
+    tMAIN  shift, and go to state 7
+
+
+State 5
+
+    3 Function: vartype . tVAR $@1 tPO Params tPC FuncBody tFINSTR
+
+    tVAR  shift, and go to state 8
+
+
+State 6
 
     0 $accept: Main $end .
 
     $default  accept
 
 
-State 5
-
-    1 Main: tMAIN tPO tPC . Body
-
-    tACO  shift, and go to state 6
-
-    Body  go to state 7
-
-
-State 6
-
-    2 Body: tACO . Instruction tACC
-
-    tINT     shift, and go to state 8
-    tCONST   shift, and go to state 9
-    tIF      shift, and go to state 10
-    tWHILE   shift, and go to state 11
-    tPRINTF  shift, and go to state 12
-    tVAR     shift, and go to state 13
-    tFOR     shift, and go to state 14
-
-    $default  reduce using rule 5 (Instruction)
-
-    Instruction   go to state 15
-    Instructions  go to state 16
-    Declaration   go to state 17
-    vartype       go to state 18
-    Print         go to state 19
-    If            go to state 20
-    While         go to state 21
-    For           go to state 22
-    Calcul        go to state 23
-
-
 State 7
 
-    1 Main: tMAIN tPO tPC Body .
+    1 Main: Function tMAIN . tPO tPC Body
 
-    $default  reduce using rule 1 (Main)
+    tPO  shift, and go to state 9
 
 
 State 8
 
-   19 vartype: tINT .
+    3 Function: vartype tVAR . $@1 tPO Params tPC FuncBody tFINSTR
 
-    $default  reduce using rule 19 (vartype)
+    $default  reduce using rule 2 ($@1)
+
+    $@1  go to state 10
 
 
 State 9
 
-   20 vartype: tCONST .
+    1 Main: Function tMAIN tPO . tPC Body
 
-    $default  reduce using rule 20 (vartype)
+    tPC  shift, and go to state 11
 
 
 State 10
 
-   25 If: tIF . $@1 tPO Condition tPC $@2 Body $@3 Else
+    3 Function: vartype tVAR $@1 . tPO Params tPC FuncBody tFINSTR
 
-    $default  reduce using rule 22 ($@1)
-
-    $@1  go to state 24
+    tPO  shift, and go to state 12
 
 
 State 11
 
-   35 While: tWHILE . $@4 tPO Condition tPC $@5 Body
+    1 Main: Function tMAIN tPO tPC . Body
 
-    $default  reduce using rule 33 ($@4)
+    tACO  shift, and go to state 13
 
-    $@4  go to state 25
+    Body  go to state 14
 
 
 State 12
 
-   21 Print: tPRINTF . tPO tVAR tPC tFINSTR
+    3 Function: vartype tVAR $@1 tPO . Params tPC FuncBody tFINSTR
 
-    tPO  shift, and go to state 26
+    tINT    shift, and go to state 1
+    tCONST  shift, and go to state 2
+
+    $default  reduce using rule 6 (Params)
+
+    Params   go to state 15
+    Param    go to state 16
+    vartype  go to state 17
 
 
 State 13
 
-   48 Calcul: tVAR . tEQUAL Expression tFINSTR
-   49       | tVAR . tEQUAL tSUBTRACT Expression tFINSTR
-   50       | tVAR . tPLUSPLUS tFINSTR
-   51       | tVAR . tMINUSMINUS tFINSTR
-   52       | tVAR . tMINUSEQUAL Expression tFINSTR
-   53       | tVAR . tPLUSEQUAL Expression tFINSTR
+   21 Body: tACO . Instruction tACC
 
-    tEQUAL       shift, and go to state 27
-    tPLUSPLUS    shift, and go to state 28
-    tMINUSMINUS  shift, and go to state 29
-    tMINUSEQUAL  shift, and go to state 30
-    tPLUSEQUAL   shift, and go to state 31
+    tINT     shift, and go to state 1
+    tCONST   shift, and go to state 2
+    tIF      shift, and go to state 18
+    tWHILE   shift, and go to state 19
+    tPRINTF  shift, and go to state 20
+    tVAR     shift, and go to state 21
+    tFOR     shift, and go to state 22
+
+    $default  reduce using rule 24 (Instruction)
+
+    Instruction   go to state 23
+    Instructions  go to state 24
+    Declaration   go to state 25
+    vartype       go to state 26
+    Print         go to state 27
+    If            go to state 28
+    While         go to state 29
+    For           go to state 30
+    Calcul        go to state 31
 
 
 State 14
 
-   40 For: tFOR . tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body
-   45    | tFOR . tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body
+    1 Main: Function tMAIN tPO tPC Body .
 
-    tPO  shift, and go to state 32
+    $default  reduce using rule 1 (Main)
 
 
 State 15
 
-    2 Body: tACO Instruction . tACC
+    3 Function: vartype tVAR $@1 tPO Params . tPC FuncBody tFINSTR
 
-    tACC  shift, and go to state 33
+    tPC  shift, and go to state 32
 
 
 State 16
 
-    3 Instruction: Instructions . Instruction
-    4            | Instructions .
+    5 Params: Param . NextParam
 
-    tINT     shift, and go to state 8
-    tCONST   shift, and go to state 9
-    tIF      shift, and go to state 10
-    tWHILE   shift, and go to state 11
-    tPRINTF  shift, and go to state 12
-    tVAR     shift, and go to state 13
-    tFOR     shift, and go to state 14
+    tVIRGULE  shift, and go to state 33
 
-    tACC      reduce using rule 4 (Instruction)
-    tACC      [reduce using rule 5 (Instruction)]
-    $default  reduce using rule 4 (Instruction)
+    $default  reduce using rule 8 (NextParam)
 
-    Instruction   go to state 34
-    Instructions  go to state 16
-    Declaration   go to state 17
-    vartype       go to state 18
-    Print         go to state 19
-    If            go to state 20
-    While         go to state 21
-    For           go to state 22
-    Calcul        go to state 23
+    NextParam  go to state 34
 
 
 State 17
 
-   10 Instructions: Declaration .
+    9 Param: vartype . tVAR
 
-    $default  reduce using rule 10 (Instructions)
+    tVAR  shift, and go to state 35
 
 
 State 18
 
-   12 Declaration: vartype . Declarations tFINSTR
+   44 If: tIF . $@2 tPO Condition tPC $@3 Body $@4 Else
 
-    tVAR  shift, and go to state 35
+    $default  reduce using rule 41 ($@2)
 
-    Declarations      go to state 36
-    Multideclaration  go to state 37
-    Lastdeclaration   go to state 38
+    $@2  go to state 36
 
 
 State 19
 
-    9 Instructions: Print .
+   54 While: tWHILE . $@5 tPO Condition tPC $@6 Body
 
-    $default  reduce using rule 9 (Instructions)
+    $default  reduce using rule 52 ($@5)
+
+    $@5  go to state 37
 
 
 State 20
 
-   11 Instructions: If .
+   40 Print: tPRINTF . tPO tVAR tPC tFINSTR
 
-    $default  reduce using rule 11 (Instructions)
+    tPO  shift, and go to state 38
 
 
 State 21
 
-    8 Instructions: While .
+   67 Calcul: tVAR . tEQUAL Expression tFINSTR
+   68       | tVAR . tEQUAL tSUBTRACT Expression tFINSTR
+   69       | tVAR . tPLUSPLUS tFINSTR
+   70       | tVAR . tMINUSMINUS tFINSTR
+   71       | tVAR . tMINUSEQUAL Expression tFINSTR
+   72       | tVAR . tPLUSEQUAL Expression tFINSTR
 
-    $default  reduce using rule 8 (Instructions)
+    tEQUAL       shift, and go to state 39
+    tPLUSPLUS    shift, and go to state 40
+    tMINUSMINUS  shift, and go to state 41
+    tMINUSEQUAL  shift, and go to state 42
+    tPLUSEQUAL   shift, and go to state 43
 
 
 State 22
 
-    7 Instructions: For .
+   59 For: tFOR . tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body
+   64    | tFOR . tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body
 
-    $default  reduce using rule 7 (Instructions)
+    tPO  shift, and go to state 44
 
 
 State 23
 
-    6 Instructions: Calcul .
+   21 Body: tACO Instruction . tACC
 
-    $default  reduce using rule 6 (Instructions)
+    tACC  shift, and go to state 45
 
 
 State 24
 
-   25 If: tIF $@1 . tPO Condition tPC $@2 Body $@3 Else
+   22 Instruction: Instructions . Instruction
+   23            | Instructions .
 
-    tPO  shift, and go to state 39
+    tINT     shift, and go to state 1
+    tCONST   shift, and go to state 2
+    tIF      shift, and go to state 18
+    tWHILE   shift, and go to state 19
+    tPRINTF  shift, and go to state 20
+    tVAR     shift, and go to state 21
+    tFOR     shift, and go to state 22
+
+    tACC      reduce using rule 23 (Instruction)
+    tACC      [reduce using rule 24 (Instruction)]
+    $default  reduce using rule 23 (Instruction)
+
+    Instruction   go to state 46
+    Instructions  go to state 24
+    Declaration   go to state 25
+    vartype       go to state 26
+    Print         go to state 27
+    If            go to state 28
+    While         go to state 29
+    For           go to state 30
+    Calcul        go to state 31
 
 
 State 25
 
-   35 While: tWHILE $@4 . tPO Condition tPC $@5 Body
+   29 Instructions: Declaration .
 
-    tPO  shift, and go to state 40
+    $default  reduce using rule 29 (Instructions)
 
 
 State 26
 
-   21 Print: tPRINTF tPO . tVAR tPC tFINSTR
+   31 Declaration: vartype . Declarations tFINSTR
 
-    tVAR  shift, and go to state 41
+    tVAR  shift, and go to state 47
+
+    Declarations      go to state 48
+    Multideclaration  go to state 49
+    Lastdeclaration   go to state 50
 
 
 State 27
 
-   48 Calcul: tVAR tEQUAL . Expression tFINSTR
-   49       | tVAR tEQUAL . tSUBTRACT Expression tFINSTR
+   28 Instructions: Print .
 
-    tSUBTRACT  shift, and go to state 42
-    tPO        shift, and go to state 43
-    tINTNR     shift, and go to state 44
-    tVAR       shift, and go to state 45
-
-    Expression  go to state 46
+    $default  reduce using rule 28 (Instructions)
 
 
 State 28
 
-   50 Calcul: tVAR tPLUSPLUS . tFINSTR
+   30 Instructions: If .
 
-    tFINSTR  shift, and go to state 47
+    $default  reduce using rule 30 (Instructions)
 
 
 State 29
 
-   51 Calcul: tVAR tMINUSMINUS . tFINSTR
+   27 Instructions: While .
 
-    tFINSTR  shift, and go to state 48
+    $default  reduce using rule 27 (Instructions)
 
 
 State 30
 
-   52 Calcul: tVAR tMINUSEQUAL . Expression tFINSTR
+   26 Instructions: For .
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 49
+    $default  reduce using rule 26 (Instructions)
 
 
 State 31
 
-   53 Calcul: tVAR tPLUSEQUAL . Expression tFINSTR
+   25 Instructions: Calcul .
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 50
+    $default  reduce using rule 25 (Instructions)
 
 
 State 32
 
-   40 For: tFOR tPO . $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body
-   45    | tFOR tPO . $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body
+    3 Function: vartype tVAR $@1 tPO Params tPC . FuncBody tFINSTR
 
-    tINT      reduce using rule 36 ($@6)
-    tINT      [reduce using rule 41 ($@10)]
-    tCONST    reduce using rule 36 ($@6)
-    tCONST    [reduce using rule 41 ($@10)]
-    tVAR      reduce using rule 36 ($@6)
-    tVAR      [reduce using rule 41 ($@10)]
-    $default  reduce using rule 36 ($@6)
+    tACO  shift, and go to state 51
 
-    $@6   go to state 51
-    $@10  go to state 52
+    FuncBody  go to state 52
 
 
 State 33
 
-    2 Body: tACO Instruction tACC .
+    7 NextParam: tVIRGULE . Param
 
-    $default  reduce using rule 2 (Body)
+    tINT    shift, and go to state 1
+    tCONST  shift, and go to state 2
+
+    Param    go to state 53
+    vartype  go to state 17
 
 
 State 34
 
-    3 Instruction: Instructions Instruction .
+    5 Params: Param NextParam .
 
-    $default  reduce using rule 3 (Instruction)
+    $default  reduce using rule 5 (Params)
 
 
 State 35
 
-   15 Multideclaration: tVAR . tVIRGULE
-   16                 | tVAR . tEQUAL tINTNR tVIRGULE
-   17 Lastdeclaration: tVAR .
-   18                | tVAR . tEQUAL tINTNR
+    9 Param: vartype tVAR .
 
-    tEQUAL    shift, and go to state 53
-    tVIRGULE  shift, and go to state 54
-
-    $default  reduce using rule 17 (Lastdeclaration)
+    $default  reduce using rule 9 (Param)
 
 
 State 36
 
-   12 Declaration: vartype Declarations . tFINSTR
+   44 If: tIF $@2 . tPO Condition tPC $@3 Body $@4 Else
 
-    tFINSTR  shift, and go to state 55
+    tPO  shift, and go to state 54
 
 
 State 37
 
-   13 Declarations: Multideclaration . Declarations
+   54 While: tWHILE $@5 . tPO Condition tPC $@6 Body
 
-    tVAR  shift, and go to state 35
-
-    Declarations      go to state 56
-    Multideclaration  go to state 37
-    Lastdeclaration   go to state 38
+    tPO  shift, and go to state 55
 
 
 State 38
 
-   14 Declarations: Lastdeclaration .
+   40 Print: tPRINTF tPO . tVAR tPC tFINSTR
 
-    $default  reduce using rule 14 (Declarations)
+    tVAR  shift, and go to state 56
 
 
 State 39
 
-   25 If: tIF $@1 tPO . Condition tPC $@2 Body $@3 Else
+   67 Calcul: tVAR tEQUAL . Expression tFINSTR
+   68       | tVAR tEQUAL . tSUBTRACT Expression tFINSTR
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Condition   go to state 57
-    Expression  go to state 58
-
-
-State 40
-
-   35 While: tWHILE $@4 tPO . Condition tPC $@5 Body
-
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Condition   go to state 59
-    Expression  go to state 58
-
-
-State 41
-
-   21 Print: tPRINTF tPO tVAR . tPC tFINSTR
-
-    tPC  shift, and go to state 60
-
-
-State 42
-
-   49 Calcul: tVAR tEQUAL tSUBTRACT . Expression tFINSTR
-
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
+    tSUBTRACT  shift, and go to state 57
+    tPO        shift, and go to state 58
+    tINTNR     shift, and go to state 59
+    tVAR       shift, and go to state 60
 
     Expression  go to state 61
 
 
+State 40
+
+   69 Calcul: tVAR tPLUSPLUS . tFINSTR
+
+    tFINSTR  shift, and go to state 62
+
+
+State 41
+
+   70 Calcul: tVAR tMINUSMINUS . tFINSTR
+
+    tFINSTR  shift, and go to state 63
+
+
+State 42
+
+   71 Calcul: tVAR tMINUSEQUAL . Expression tFINSTR
+
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
+
+    Expression  go to state 64
+
+
 State 43
 
-   60 Expression: tPO . tSUBTRACT tINTNR tPC
-   61           | tPO . Expression tPC
+   72 Calcul: tVAR tPLUSEQUAL . Expression tFINSTR
 
-    tSUBTRACT  shift, and go to state 62
-    tPO        shift, and go to state 43
-    tINTNR     shift, and go to state 44
-    tVAR       shift, and go to state 45
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    Expression  go to state 63
+    Expression  go to state 65
 
 
 State 44
 
-   59 Expression: tINTNR .
+   59 For: tFOR tPO . $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body
+   64    | tFOR tPO . $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body
 
-    $default  reduce using rule 59 (Expression)
+    tINT      reduce using rule 55 ($@7)
+    tINT      [reduce using rule 60 ($@11)]
+    tCONST    reduce using rule 55 ($@7)
+    tCONST    [reduce using rule 60 ($@11)]
+    tVAR      reduce using rule 55 ($@7)
+    tVAR      [reduce using rule 60 ($@11)]
+    $default  reduce using rule 55 ($@7)
+
+    $@7   go to state 66
+    $@11  go to state 67
 
 
 State 45
 
-   58 Expression: tVAR .
+   21 Body: tACO Instruction tACC .
 
-    $default  reduce using rule 58 (Expression)
+    $default  reduce using rule 21 (Body)
 
 
 State 46
 
-   48 Calcul: tVAR tEQUAL Expression . tFINSTR
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   22 Instruction: Instructions Instruction .
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-    tFINSTR    shift, and go to state 68
+    $default  reduce using rule 22 (Instruction)
 
 
 State 47
 
-   50 Calcul: tVAR tPLUSPLUS tFINSTR .
+   34 Multideclaration: tVAR . tVIRGULE
+   35                 | tVAR . tEQUAL tINTNR tVIRGULE
+   36 Lastdeclaration: tVAR .
+   37                | tVAR . tEQUAL tINTNR
 
-    $default  reduce using rule 50 (Calcul)
+    tEQUAL    shift, and go to state 68
+    tVIRGULE  shift, and go to state 69
+
+    $default  reduce using rule 36 (Lastdeclaration)
 
 
 State 48
 
-   51 Calcul: tVAR tMINUSMINUS tFINSTR .
+   31 Declaration: vartype Declarations . tFINSTR
 
-    $default  reduce using rule 51 (Calcul)
+    tFINSTR  shift, and go to state 70
 
 
 State 49
 
-   52 Calcul: tVAR tMINUSEQUAL Expression . tFINSTR
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   32 Declarations: Multideclaration . Declarations
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-    tFINSTR    shift, and go to state 69
+    tVAR  shift, and go to state 47
+
+    Declarations      go to state 71
+    Multideclaration  go to state 49
+    Lastdeclaration   go to state 50
 
 
 State 50
 
-   53 Calcul: tVAR tPLUSEQUAL Expression . tFINSTR
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   33 Declarations: Lastdeclaration .
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-    tFINSTR    shift, and go to state 70
+    $default  reduce using rule 33 (Declarations)
 
 
 State 51
 
-   40 For: tFOR tPO $@6 . DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body
+   10 FuncBody: tACO . FuncInstr tACC
 
-    tINT    shift, and go to state 8
-    tCONST  shift, and go to state 9
-    tVAR    shift, and go to state 13
+    tINT     shift, and go to state 1
+    tCONST   shift, and go to state 2
+    tIF      shift, and go to state 18
+    tVAR     shift, and go to state 21
+    tFOR     shift, and go to state 22
+    tRETURN  shift, and go to state 72
 
-    Declaration  go to state 71
-    vartype      go to state 18
-    DeclCalc     go to state 72
-    Calcul       go to state 73
+    tINT      [reduce using rule 19 (FuncInstrs)]
+    tACC      reduce using rule 13 (FuncInstr)
+    tACC      [reduce using rule 19 (FuncInstrs)]
+    tCONST    [reduce using rule 19 (FuncInstrs)]
+    tIF       [reduce using rule 19 (FuncInstrs)]
+    tVAR      [reduce using rule 19 (FuncInstrs)]
+    tFOR      [reduce using rule 19 (FuncInstrs)]
+    tRETURN   [reduce using rule 19 (FuncInstrs)]
+    $default  reduce using rule 13 (FuncInstr)
+
+    FuncInstr    go to state 73
+    FuncInstrs   go to state 74
+    RetVal       go to state 75
+    Declaration  go to state 76
+    vartype      go to state 26
+    If           go to state 77
+    For          go to state 78
+    Calcul       go to state 79
 
 
 State 52
 
-   45 For: tFOR tPO $@10 . DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body
+    3 Function: vartype tVAR $@1 tPO Params tPC FuncBody . tFINSTR
 
-    tINT    shift, and go to state 8
-    tCONST  shift, and go to state 9
-    tVAR    shift, and go to state 13
-
-    Declaration  go to state 71
-    vartype      go to state 18
-    DeclCalc     go to state 74
-    Calcul       go to state 73
+    tFINSTR  shift, and go to state 80
 
 
 State 53
 
-   16 Multideclaration: tVAR tEQUAL . tINTNR tVIRGULE
-   18 Lastdeclaration: tVAR tEQUAL . tINTNR
+    7 NextParam: tVIRGULE Param .
 
-    tINTNR  shift, and go to state 75
+    $default  reduce using rule 7 (NextParam)
 
 
 State 54
 
-   15 Multideclaration: tVAR tVIRGULE .
+   44 If: tIF $@2 tPO . Condition tPC $@3 Body $@4 Else
 
-    $default  reduce using rule 15 (Multideclaration)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
+
+    Condition   go to state 81
+    Expression  go to state 82
 
 
 State 55
 
-   12 Declaration: vartype Declarations tFINSTR .
+   54 While: tWHILE $@5 tPO . Condition tPC $@6 Body
 
-    $default  reduce using rule 12 (Declaration)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
+
+    Condition   go to state 83
+    Expression  go to state 82
 
 
 State 56
 
-   13 Declarations: Multideclaration Declarations .
+   40 Print: tPRINTF tPO tVAR . tPC tFINSTR
 
-    $default  reduce using rule 13 (Declarations)
+    tPC  shift, and go to state 84
 
 
 State 57
 
-   25 If: tIF $@1 tPO Condition . tPC $@2 Body $@3 Else
+   68 Calcul: tVAR tEQUAL tSUBTRACT . Expression tFINSTR
 
-    tPC  shift, and go to state 76
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
+
+    Expression  go to state 85
 
 
 State 58
 
-   28 Condition: Expression . tCHECKEQ Expression
-   29          | Expression . tLESS Expression
-   30          | Expression . tCHECKHIGHER Expression
-   31          | Expression . tLESSEQUAL Expression
-   32          | Expression . tMOREEQUAL Expression
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   79 Expression: tPO . tSUBTRACT tINTNR tPC
+   80           | tPO . Expression tPC
 
-    tADD          shift, and go to state 64
-    tSUBTRACT     shift, and go to state 65
-    tDIVIDE       shift, and go to state 66
-    tMULTIPLY     shift, and go to state 67
-    tCHECKEQ      shift, and go to state 77
-    tCHECKHIGHER  shift, and go to state 78
-    tLESS         shift, and go to state 79
-    tLESSEQUAL    shift, and go to state 80
-    tMOREEQUAL    shift, and go to state 81
-
-
-State 59
-
-   35 While: tWHILE $@4 tPO Condition . tPC $@5 Body
-
-    tPC  shift, and go to state 82
-
-
-State 60
-
-   21 Print: tPRINTF tPO tVAR tPC . tFINSTR
-
-    tFINSTR  shift, and go to state 83
-
-
-State 61
-
-   49 Calcul: tVAR tEQUAL tSUBTRACT Expression . tFINSTR
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
-
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-    tFINSTR    shift, and go to state 84
-
-
-State 62
-
-   60 Expression: tPO tSUBTRACT . tINTNR tPC
-
-    tINTNR  shift, and go to state 85
-
-
-State 63
-
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
-   61           | tPO Expression . tPC
-
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-    tPC        shift, and go to state 86
-
-
-State 64
-
-   54 Expression: Expression tADD . Expression
-
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
+    tSUBTRACT  shift, and go to state 86
+    tPO        shift, and go to state 58
+    tINTNR     shift, and go to state 59
+    tVAR       shift, and go to state 60
 
     Expression  go to state 87
 
 
+State 59
+
+   78 Expression: tINTNR .
+
+    $default  reduce using rule 78 (Expression)
+
+
+State 60
+
+   77 Expression: tVAR .
+
+    $default  reduce using rule 77 (Expression)
+
+
+State 61
+
+   67 Calcul: tVAR tEQUAL Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+    tFINSTR    shift, and go to state 92
+
+
+State 62
+
+   69 Calcul: tVAR tPLUSPLUS tFINSTR .
+
+    $default  reduce using rule 69 (Calcul)
+
+
+State 63
+
+   70 Calcul: tVAR tMINUSMINUS tFINSTR .
+
+    $default  reduce using rule 70 (Calcul)
+
+
+State 64
+
+   71 Calcul: tVAR tMINUSEQUAL Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+    tFINSTR    shift, and go to state 93
+
+
 State 65
 
-   55 Expression: Expression tSUBTRACT . Expression
+   72 Calcul: tVAR tPLUSEQUAL Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 88
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+    tFINSTR    shift, and go to state 94
 
 
 State 66
 
-   56 Expression: Expression tDIVIDE . Expression
+   59 For: tFOR tPO $@7 . DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
+    tINT    shift, and go to state 1
+    tCONST  shift, and go to state 2
+    tVAR    shift, and go to state 21
 
-    Expression  go to state 89
+    Declaration  go to state 95
+    vartype      go to state 26
+    DeclCalc     go to state 96
+    Calcul       go to state 97
 
 
 State 67
 
-   57 Expression: Expression tMULTIPLY . Expression
+   64 For: tFOR tPO $@11 . DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
+    tINT    shift, and go to state 1
+    tCONST  shift, and go to state 2
+    tVAR    shift, and go to state 21
 
-    Expression  go to state 90
+    Declaration  go to state 95
+    vartype      go to state 26
+    DeclCalc     go to state 98
+    Calcul       go to state 97
 
 
 State 68
 
-   48 Calcul: tVAR tEQUAL Expression tFINSTR .
+   35 Multideclaration: tVAR tEQUAL . tINTNR tVIRGULE
+   37 Lastdeclaration: tVAR tEQUAL . tINTNR
 
-    $default  reduce using rule 48 (Calcul)
+    tINTNR  shift, and go to state 99
 
 
 State 69
 
-   52 Calcul: tVAR tMINUSEQUAL Expression tFINSTR .
+   34 Multideclaration: tVAR tVIRGULE .
 
-    $default  reduce using rule 52 (Calcul)
+    $default  reduce using rule 34 (Multideclaration)
 
 
 State 70
 
-   53 Calcul: tVAR tPLUSEQUAL Expression tFINSTR .
+   31 Declaration: vartype Declarations tFINSTR .
 
-    $default  reduce using rule 53 (Calcul)
+    $default  reduce using rule 31 (Declaration)
 
 
 State 71
 
-   46 DeclCalc: Declaration .
+   32 Declarations: Multideclaration Declarations .
 
-    $default  reduce using rule 46 (DeclCalc)
+    $default  reduce using rule 32 (Declarations)
 
 
 State 72
 
-   40 For: tFOR tPO $@6 DeclCalc . $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body
+   20 RetVal: tRETURN . Expression tFINSTR
 
-    $default  reduce using rule 37 ($@7)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $@7  go to state 91
+    Expression  go to state 100
 
 
 State 73
 
-   47 DeclCalc: Calcul .
+   10 FuncBody: tACO FuncInstr . tACC
 
-    $default  reduce using rule 47 (DeclCalc)
+    tACC  shift, and go to state 101
 
 
 State 74
 
-   45 For: tFOR tPO $@10 DeclCalc . $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body
+   11 FuncInstr: FuncInstrs . FuncInstr
+   12          | FuncInstrs .
 
-    $default  reduce using rule 42 ($@11)
+    tINT     shift, and go to state 1
+    tCONST   shift, and go to state 2
+    tIF      shift, and go to state 18
+    tVAR     shift, and go to state 21
+    tFOR     shift, and go to state 22
+    tRETURN  shift, and go to state 72
 
-    $@11  go to state 92
+    tINT      [reduce using rule 19 (FuncInstrs)]
+    tACC      reduce using rule 12 (FuncInstr)
+    tACC      [reduce using rule 13 (FuncInstr)]
+    tACC      [reduce using rule 19 (FuncInstrs)]
+    tCONST    [reduce using rule 19 (FuncInstrs)]
+    tIF       [reduce using rule 19 (FuncInstrs)]
+    tVAR      [reduce using rule 19 (FuncInstrs)]
+    tFOR      [reduce using rule 19 (FuncInstrs)]
+    tRETURN   [reduce using rule 19 (FuncInstrs)]
+    $default  reduce using rule 12 (FuncInstr)
+
+    FuncInstr    go to state 102
+    FuncInstrs   go to state 74
+    RetVal       go to state 75
+    Declaration  go to state 76
+    vartype      go to state 26
+    If           go to state 77
+    For          go to state 78
+    Calcul       go to state 79
 
 
 State 75
 
-   16 Multideclaration: tVAR tEQUAL tINTNR . tVIRGULE
-   18 Lastdeclaration: tVAR tEQUAL tINTNR .
+   18 FuncInstrs: RetVal .
 
-    tVIRGULE  shift, and go to state 93
-
-    $default  reduce using rule 18 (Lastdeclaration)
+    $default  reduce using rule 18 (FuncInstrs)
 
 
 State 76
 
-   25 If: tIF $@1 tPO Condition tPC . $@2 Body $@3 Else
+   16 FuncInstrs: Declaration .
 
-    $default  reduce using rule 23 ($@2)
-
-    $@2  go to state 94
+    $default  reduce using rule 16 (FuncInstrs)
 
 
 State 77
 
-   28 Condition: Expression tCHECKEQ . Expression
+   17 FuncInstrs: If .
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 95
+    $default  reduce using rule 17 (FuncInstrs)
 
 
 State 78
 
-   30 Condition: Expression tCHECKHIGHER . Expression
+   15 FuncInstrs: For .
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 96
+    $default  reduce using rule 15 (FuncInstrs)
 
 
 State 79
 
-   29 Condition: Expression tLESS . Expression
+   14 FuncInstrs: Calcul .
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 97
+    $default  reduce using rule 14 (FuncInstrs)
 
 
 State 80
 
-   31 Condition: Expression tLESSEQUAL . Expression
+    3 Function: vartype tVAR $@1 tPO Params tPC FuncBody tFINSTR .
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 98
+    $default  reduce using rule 3 (Function)
 
 
 State 81
 
-   32 Condition: Expression tMOREEQUAL . Expression
+   44 If: tIF $@2 tPO Condition . tPC $@3 Body $@4 Else
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Expression  go to state 99
+    tPC  shift, and go to state 103
 
 
 State 82
 
-   35 While: tWHILE $@4 tPO Condition tPC . $@5 Body
+   47 Condition: Expression . tCHECKEQ Expression
+   48          | Expression . tLESS Expression
+   49          | Expression . tCHECKHIGHER Expression
+   50          | Expression . tLESSEQUAL Expression
+   51          | Expression . tMOREEQUAL Expression
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    $default  reduce using rule 34 ($@5)
-
-    $@5  go to state 100
+    tADD          shift, and go to state 88
+    tSUBTRACT     shift, and go to state 89
+    tDIVIDE       shift, and go to state 90
+    tMULTIPLY     shift, and go to state 91
+    tCHECKEQ      shift, and go to state 104
+    tCHECKHIGHER  shift, and go to state 105
+    tLESS         shift, and go to state 106
+    tLESSEQUAL    shift, and go to state 107
+    tMOREEQUAL    shift, and go to state 108
 
 
 State 83
 
-   21 Print: tPRINTF tPO tVAR tPC tFINSTR .
+   54 While: tWHILE $@5 tPO Condition . tPC $@6 Body
 
-    $default  reduce using rule 21 (Print)
+    tPC  shift, and go to state 109
 
 
 State 84
 
-   49 Calcul: tVAR tEQUAL tSUBTRACT Expression tFINSTR .
+   40 Print: tPRINTF tPO tVAR tPC . tFINSTR
 
-    $default  reduce using rule 49 (Calcul)
+    tFINSTR  shift, and go to state 110
 
 
 State 85
 
-   60 Expression: tPO tSUBTRACT tINTNR . tPC
+   68 Calcul: tVAR tEQUAL tSUBTRACT Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    tPC  shift, and go to state 101
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+    tFINSTR    shift, and go to state 111
 
 
 State 86
 
-   61 Expression: tPO Expression tPC .
+   79 Expression: tPO tSUBTRACT . tINTNR tPC
 
-    $default  reduce using rule 61 (Expression)
+    tINTNR  shift, and go to state 112
 
 
 State 87
 
-   54 Expression: Expression . tADD Expression
-   54           | Expression tADD Expression .
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+   80           | tPO Expression . tPC
 
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-
-    $default  reduce using rule 54 (Expression)
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+    tPC        shift, and go to state 113
 
 
 State 88
 
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   55           | Expression tSUBTRACT Expression .
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   73 Expression: Expression tADD . Expression
 
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $default  reduce using rule 55 (Expression)
+    Expression  go to state 114
 
 
 State 89
 
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   56           | Expression tDIVIDE Expression .
-   57           | Expression . tMULTIPLY Expression
+   74 Expression: Expression tSUBTRACT . Expression
 
-    $default  reduce using rule 56 (Expression)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
+
+    Expression  go to state 115
 
 
 State 90
 
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
-   57           | Expression tMULTIPLY Expression .
+   75 Expression: Expression tDIVIDE . Expression
 
-    $default  reduce using rule 57 (Expression)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
+
+    Expression  go to state 116
 
 
 State 91
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 . Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body
+   76 Expression: Expression tMULTIPLY . Expression
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    Condition   go to state 102
-    Expression  go to state 58
+    Expression  go to state 117
 
 
 State 92
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 . Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body
+   67 Calcul: tVAR tEQUAL Expression tFINSTR .
 
-    tPO     shift, and go to state 43
-    tINTNR  shift, and go to state 44
-    tVAR    shift, and go to state 45
-
-    Condition   go to state 103
-    Expression  go to state 58
+    $default  reduce using rule 67 (Calcul)
 
 
 State 93
 
-   16 Multideclaration: tVAR tEQUAL tINTNR tVIRGULE .
+   71 Calcul: tVAR tMINUSEQUAL Expression tFINSTR .
 
-    $default  reduce using rule 16 (Multideclaration)
+    $default  reduce using rule 71 (Calcul)
 
 
 State 94
 
-   25 If: tIF $@1 tPO Condition tPC $@2 . Body $@3 Else
+   72 Calcul: tVAR tPLUSEQUAL Expression tFINSTR .
 
-    tACO  shift, and go to state 6
-
-    Body  go to state 104
+    $default  reduce using rule 72 (Calcul)
 
 
 State 95
 
-   28 Condition: Expression tCHECKEQ Expression .
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   65 DeclCalc: Declaration .
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-
-    $default  reduce using rule 28 (Condition)
+    $default  reduce using rule 65 (DeclCalc)
 
 
 State 96
 
-   30 Condition: Expression tCHECKHIGHER Expression .
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   59 For: tFOR tPO $@7 DeclCalc . $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
+    $default  reduce using rule 56 ($@8)
 
-    $default  reduce using rule 30 (Condition)
+    $@8  go to state 118
 
 
 State 97
 
-   29 Condition: Expression tLESS Expression .
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   66 DeclCalc: Calcul .
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
-
-    $default  reduce using rule 29 (Condition)
+    $default  reduce using rule 66 (DeclCalc)
 
 
 State 98
 
-   31 Condition: Expression tLESSEQUAL Expression .
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   64 For: tFOR tPO $@11 DeclCalc . $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
+    $default  reduce using rule 61 ($@12)
 
-    $default  reduce using rule 31 (Condition)
+    $@12  go to state 119
 
 
 State 99
 
-   32 Condition: Expression tMOREEQUAL Expression .
-   54 Expression: Expression . tADD Expression
-   55           | Expression . tSUBTRACT Expression
-   56           | Expression . tDIVIDE Expression
-   57           | Expression . tMULTIPLY Expression
+   35 Multideclaration: tVAR tEQUAL tINTNR . tVIRGULE
+   37 Lastdeclaration: tVAR tEQUAL tINTNR .
 
-    tADD       shift, and go to state 64
-    tSUBTRACT  shift, and go to state 65
-    tDIVIDE    shift, and go to state 66
-    tMULTIPLY  shift, and go to state 67
+    tVIRGULE  shift, and go to state 120
 
-    $default  reduce using rule 32 (Condition)
+    $default  reduce using rule 37 (Lastdeclaration)
 
 
 State 100
 
-   35 While: tWHILE $@4 tPO Condition tPC $@5 . Body
+   20 RetVal: tRETURN Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    tACO  shift, and go to state 6
-
-    Body  go to state 105
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+    tFINSTR    shift, and go to state 121
 
 
 State 101
 
-   60 Expression: tPO tSUBTRACT tINTNR tPC .
+   10 FuncBody: tACO FuncInstr tACC .
 
-    $default  reduce using rule 60 (Expression)
+    $default  reduce using rule 10 (FuncBody)
 
 
 State 102
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition . tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body
+   11 FuncInstr: FuncInstrs FuncInstr .
 
-    tFINSTR  shift, and go to state 106
+    $default  reduce using rule 11 (FuncInstr)
 
 
 State 103
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition . tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body
+   44 If: tIF $@2 tPO Condition tPC . $@3 Body $@4 Else
 
-    tFINSTR  shift, and go to state 107
+    $default  reduce using rule 42 ($@3)
+
+    $@3  go to state 122
 
 
 State 104
 
-   25 If: tIF $@1 tPO Condition tPC $@2 Body . $@3 Else
+   47 Condition: Expression tCHECKEQ . Expression
 
-    $default  reduce using rule 24 ($@3)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $@3  go to state 108
+    Expression  go to state 123
 
 
 State 105
 
-   35 While: tWHILE $@4 tPO Condition tPC $@5 Body .
+   49 Condition: Expression tCHECKHIGHER . Expression
 
-    $default  reduce using rule 35 (While)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
+
+    Expression  go to state 124
 
 
 State 106
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR . $@8 tVAR tPLUSPLUS tPC $@9 Body
+   48 Condition: Expression tLESS . Expression
 
-    $default  reduce using rule 38 ($@8)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $@8  go to state 109
+    Expression  go to state 125
 
 
 State 107
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR . $@12 tVAR tMINUSMINUS tPC $@13 Body
+   50 Condition: Expression tLESSEQUAL . Expression
 
-    $default  reduce using rule 43 ($@12)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $@12  go to state 110
+    Expression  go to state 126
 
 
 State 108
 
-   25 If: tIF $@1 tPO Condition tPC $@2 Body $@3 . Else
+   51 Condition: Expression tMOREEQUAL . Expression
 
-    tELSE  shift, and go to state 111
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $default  reduce using rule 27 (Else)
-
-    Else  go to state 112
+    Expression  go to state 127
 
 
 State 109
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 . tVAR tPLUSPLUS tPC $@9 Body
+   54 While: tWHILE $@5 tPO Condition tPC . $@6 Body
 
-    tVAR  shift, and go to state 113
+    $default  reduce using rule 53 ($@6)
+
+    $@6  go to state 128
 
 
 State 110
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 . tVAR tMINUSMINUS tPC $@13 Body
+   40 Print: tPRINTF tPO tVAR tPC tFINSTR .
 
-    tVAR  shift, and go to state 114
+    $default  reduce using rule 40 (Print)
 
 
 State 111
 
-   26 Else: tELSE . Body
+   68 Calcul: tVAR tEQUAL tSUBTRACT Expression tFINSTR .
 
-    tACO  shift, and go to state 6
-
-    Body  go to state 115
+    $default  reduce using rule 68 (Calcul)
 
 
 State 112
 
-   25 If: tIF $@1 tPO Condition tPC $@2 Body $@3 Else .
+   79 Expression: tPO tSUBTRACT tINTNR . tPC
 
-    $default  reduce using rule 25 (If)
+    tPC  shift, and go to state 129
 
 
 State 113
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR . tPLUSPLUS tPC $@9 Body
+   80 Expression: tPO Expression tPC .
 
-    tPLUSPLUS  shift, and go to state 116
+    $default  reduce using rule 80 (Expression)
 
 
 State 114
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR . tMINUSMINUS tPC $@13 Body
+   73 Expression: Expression . tADD Expression
+   73           | Expression tADD Expression .
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    tMINUSMINUS  shift, and go to state 117
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+
+    $default  reduce using rule 73 (Expression)
 
 
 State 115
 
-   26 Else: tELSE Body .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   74           | Expression tSUBTRACT Expression .
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    $default  reduce using rule 26 (Else)
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+
+    $default  reduce using rule 74 (Expression)
 
 
 State 116
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS . tPC $@9 Body
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   75           | Expression tDIVIDE Expression .
+   76           | Expression . tMULTIPLY Expression
 
-    tPC  shift, and go to state 118
+    $default  reduce using rule 75 (Expression)
 
 
 State 117
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS . tPC $@13 Body
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+   76           | Expression tMULTIPLY Expression .
 
-    tPC  shift, and go to state 119
+    $default  reduce using rule 76 (Expression)
 
 
 State 118
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC . $@9 Body
+   59 For: tFOR tPO $@7 DeclCalc $@8 . Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body
 
-    $default  reduce using rule 39 ($@9)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $@9  go to state 120
+    Condition   go to state 130
+    Expression  go to state 82
 
 
 State 119
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC . $@13 Body
+   64 For: tFOR tPO $@11 DeclCalc $@12 . Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body
 
-    $default  reduce using rule 44 ($@13)
+    tPO     shift, and go to state 58
+    tINTNR  shift, and go to state 59
+    tVAR    shift, and go to state 60
 
-    $@13  go to state 121
+    Condition   go to state 131
+    Expression  go to state 82
 
 
 State 120
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 . Body
+   35 Multideclaration: tVAR tEQUAL tINTNR tVIRGULE .
 
-    tACO  shift, and go to state 6
-
-    Body  go to state 122
+    $default  reduce using rule 35 (Multideclaration)
 
 
 State 121
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 . Body
+   20 RetVal: tRETURN Expression tFINSTR .
 
-    tACO  shift, and go to state 6
-
-    Body  go to state 123
+    $default  reduce using rule 20 (RetVal)
 
 
 State 122
 
-   40 For: tFOR tPO $@6 DeclCalc $@7 Condition tFINSTR $@8 tVAR tPLUSPLUS tPC $@9 Body .
+   44 If: tIF $@2 tPO Condition tPC $@3 . Body $@4 Else
 
-    $default  reduce using rule 40 (For)
+    tACO  shift, and go to state 13
+
+    Body  go to state 132
 
 
 State 123
 
-   45 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tMINUSMINUS tPC $@13 Body .
+   47 Condition: Expression tCHECKEQ Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    $default  reduce using rule 45 (For)
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+
+    $default  reduce using rule 47 (Condition)
+
+
+State 124
+
+   49 Condition: Expression tCHECKHIGHER Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+
+    $default  reduce using rule 49 (Condition)
+
+
+State 125
+
+   48 Condition: Expression tLESS Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+
+    $default  reduce using rule 48 (Condition)
+
+
+State 126
+
+   50 Condition: Expression tLESSEQUAL Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+
+    $default  reduce using rule 50 (Condition)
+
+
+State 127
+
+   51 Condition: Expression tMOREEQUAL Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       shift, and go to state 88
+    tSUBTRACT  shift, and go to state 89
+    tDIVIDE    shift, and go to state 90
+    tMULTIPLY  shift, and go to state 91
+
+    $default  reduce using rule 51 (Condition)
+
+
+State 128
+
+   54 While: tWHILE $@5 tPO Condition tPC $@6 . Body
+
+    tACO  shift, and go to state 13
+
+    Body  go to state 133
+
+
+State 129
+
+   79 Expression: tPO tSUBTRACT tINTNR tPC .
+
+    $default  reduce using rule 79 (Expression)
+
+
+State 130
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition . tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body
+
+    tFINSTR  shift, and go to state 134
+
+
+State 131
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition . tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body
+
+    tFINSTR  shift, and go to state 135
+
+
+State 132
+
+   44 If: tIF $@2 tPO Condition tPC $@3 Body . $@4 Else
+
+    $default  reduce using rule 43 ($@4)
+
+    $@4  go to state 136
+
+
+State 133
+
+   54 While: tWHILE $@5 tPO Condition tPC $@6 Body .
+
+    $default  reduce using rule 54 (While)
+
+
+State 134
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR . $@9 tVAR tPLUSPLUS tPC $@10 Body
+
+    $default  reduce using rule 57 ($@9)
+
+    $@9  go to state 137
+
+
+State 135
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR . $@13 tVAR tMINUSMINUS tPC $@14 Body
+
+    $default  reduce using rule 62 ($@13)
+
+    $@13  go to state 138
+
+
+State 136
+
+   44 If: tIF $@2 tPO Condition tPC $@3 Body $@4 . Else
+
+    tELSE  shift, and go to state 139
+
+    $default  reduce using rule 46 (Else)
+
+    Else  go to state 140
+
+
+State 137
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 . tVAR tPLUSPLUS tPC $@10 Body
+
+    tVAR  shift, and go to state 141
+
+
+State 138
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 . tVAR tMINUSMINUS tPC $@14 Body
+
+    tVAR  shift, and go to state 142
+
+
+State 139
+
+   45 Else: tELSE . Body
+
+    tACO  shift, and go to state 13
+
+    Body  go to state 143
+
+
+State 140
+
+   44 If: tIF $@2 tPO Condition tPC $@3 Body $@4 Else .
+
+    $default  reduce using rule 44 (If)
+
+
+State 141
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR . tPLUSPLUS tPC $@10 Body
+
+    tPLUSPLUS  shift, and go to state 144
+
+
+State 142
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR . tMINUSMINUS tPC $@14 Body
+
+    tMINUSMINUS  shift, and go to state 145
+
+
+State 143
+
+   45 Else: tELSE Body .
+
+    $default  reduce using rule 45 (Else)
+
+
+State 144
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS . tPC $@10 Body
+
+    tPC  shift, and go to state 146
+
+
+State 145
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS . tPC $@14 Body
+
+    tPC  shift, and go to state 147
+
+
+State 146
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC . $@10 Body
+
+    $default  reduce using rule 58 ($@10)
+
+    $@10  go to state 148
+
+
+State 147
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC . $@14 Body
+
+    $default  reduce using rule 63 ($@14)
+
+    $@14  go to state 149
+
+
+State 148
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 . Body
+
+    tACO  shift, and go to state 13
+
+    Body  go to state 150
+
+
+State 149
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 . Body
+
+    tACO  shift, and go to state 13
+
+    Body  go to state 151
+
+
+State 150
+
+   59 For: tFOR tPO $@7 DeclCalc $@8 Condition tFINSTR $@9 tVAR tPLUSPLUS tPC $@10 Body .
+
+    $default  reduce using rule 59 (For)
+
+
+State 151
+
+   64 For: tFOR tPO $@11 DeclCalc $@12 Condition tFINSTR $@13 tVAR tMINUSMINUS tPC $@14 Body .
+
+    $default  reduce using rule 64 (For)
