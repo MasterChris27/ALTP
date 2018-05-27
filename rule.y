@@ -86,6 +86,7 @@ DeclFunction :vartype tVAR {
 	   	tPO Params tPC FuncBody tFINSTR  // we increment the prof so that we never use the variable stored in lvl 0
 	      | ; // no function
 
+
 Params : Param NextParam | ;
 NextParam : tVIRGULE Param | ;
 Param : vartype tVAR {add_symbol($2, type, 0, get_curr_prof()); }
