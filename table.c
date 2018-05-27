@@ -23,20 +23,21 @@ int global_prof=0;
 int add_symbol(char* name, char* type,  int initialise, int profondeur) { 
 
   entry* tempTable = tab_symbols;
-
 	//printf(tempTable->name);
 if(name!=NULL){   // if var is not temp
 	while(tempTable != NULL) {
-    if(strcmp(tempTable->name,name) == 0 ){    //case var name already exists
-      if(tempTable->profondeur == profondeur){		
-	     printf("Error: Variable name in same profondeur already exists\n");
-	return -1;
-      }		
-    }
-   tempTable = tempTable->next;
-  }
+    		if(strcmp(tempTable->name,name) == 0 ){    //case var name already exists
+      			if(tempTable->profondeur == profondeur){		
+	    			printf("Error: Variable name in same profondeur already exists\n");
+				return -1;
+      			}		
+   		 }
+
+   		tempTable = tempTable->next;
+  	}
+
+		
 }
-  
   //if(check_sym(name,profondeur)) add the function here if going to implement one
   entry* new = malloc(sizeof(entry));
   new->name = malloc(sizeof(name));
@@ -73,7 +74,6 @@ entry* current = tab_symbols;
 }
 
 
-
 char* get_variable_name(int tableIndex){
    	entry* current = tab_symbols;
 	for(int i = 0; i<global_id-tableIndex-1; i++){
@@ -94,7 +94,42 @@ void prof_increment(){global_prof++;}
 void prof_decrement(){global_prof--;}
 
 
+void update_last_entry(){
 
+   entry* current = tab_symbols;
+	
+
+}
+/*
+int delete_all_var(int prof){
+
+   entry* current = tab_symbols;
+   entry* next_entry = tab_symbols->next;
+
+
+ while(current != NULL){
+		if((current->profondeur == prof)){
+			entry* tmp = tab_symbols;
+			current = current->next;	
+			free(tmp);
+			global_id--;
+	 	} else if (next_entry->profondeur==prof){
+			entry* tmp = next_entry;
+			next_entry = next_entry->next;	
+			current->next=next_entry;
+			free(tmp);
+			global_id--;
+		}else if (current->profondeur != prof){
+			tab_symbols = current;
+			return 0;
+			}
+  }
+  return 0;
+
+}
+
+*/
+/*original delete all var*/
 
 int delete_all_var(int prof){
 
@@ -114,7 +149,7 @@ int delete_all_var(int prof){
   return 0;
 
 }
-
+ 
 
 
 
@@ -128,37 +163,13 @@ int delete_all_var(int prof){
 
     if((current->name != NULL) && (strcmp(current->name,nameArg) == 0))
 	{
-		//if((current->profondeur != 0)) { // if the variable is in lvl 0(func level) we don't see it with this function
+		//if((current->profondeur != 0)) { // we should go as deep as possible
 			return current->id;	
 	 	//}
 	} else
 	{
 	current = current->next;
     index++;  //what for ? uselss ...
-	}
-	
-  }
-printf("\n Error : Variable -> %s <- not declared !\n",nameArg);
-  return -1;
-
-}
-
-
-
- int find_func_symbol(char* nameArg, int profondeur){
-
-   entry* current = tab_symbols;
-   int index = 0;
-
- while(current != NULL){
-
-    if((current->name != NULL) && (strcmp(current->name,nameArg) == 0)){
-		if((current->profondeur == 0))   {  //we return only variables that are stored in the function level
-			return current->id;	
-	 	}
-	} else{
-	  current = current->next;
-   	  index++;  //what for ? uselss ...
 	}
 	
   }
@@ -191,8 +202,10 @@ return 1;
 //************************************ get_last_address() ok
 
 int get_last_index(){
-
+if(global_id>0)
   return global_id-1;
+else
+   return global_id;
 }
 
 //************************************

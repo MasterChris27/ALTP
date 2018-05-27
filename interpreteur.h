@@ -16,6 +16,7 @@ void instructionExecute(int instructionIndex);
 int get_last_inst(void);
 
 void printInst(int Index);
+void printAllInst();
 
 void execute_all_instructions();
 

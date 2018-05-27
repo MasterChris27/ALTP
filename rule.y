@@ -63,31 +63,65 @@ char* type;
 
 %%
 
+// the hardcoded 2 is 1 time happening as it is for the first case of the function
+//might be a problem if we don have a function tough              same with the delete_symbol
+Main: DeclFunction { 
+			//edit_instruction(2,"JMP",get_latest_inst(),0);
+		} tMAIN { 
+			//delete_symbol();print_table();
 
-Main: DeclFunction tMAIN tPO tPC Body ;
+		}tPO tPC Body {} ;
 
 //adding type to the function
-DeclFunction : vartype tVAR {add_symbol($2, type, 0, get_curr_prof()); prof_increment();}
-	   tPO Params tPC FuncBody tFINSTR {delete_all_var(get_curr_prof());prof_decrement();} // we increment the prof so that we never use the variable stored in lvl 0
-	| ;
+DeclFunction :vartype tVAR {
+			add_symbol($2, type, 0, get_curr_prof()); 
+			int a= get_last_index();
+			int b=2 + get_latest_inst(); // we add 2 as we added 2 new instructions that should not be repeated , returns -1 so we have to add 3
+			queue_instruction("AFC",1,b); 
+			queue_instruction("STORE",a,1); 
+			queue_instruction("TMPJMP",1,1); 
+			//printf("Debug %s\n\n",$1);
+			
+			prof_increment();}
+	   	tPO Params tPC FuncBody tFINSTR  // we increment the prof so that we never use the variable stored in lvl 0
+	      | ; // no function
 
 Params : Param NextParam | ;
 NextParam : tVIRGULE Param | ;
-Param : vartype tVAR {add_symbol($2, type, 0, get_curr_prof()); };
+Param : vartype tVAR {add_symbol($2, type, 0, get_curr_prof()); }
+	| tVAR  {		int a= find_symbol($1, get_curr_prof());
+				add_symbol($1, type, 0, get_curr_prof()); 
+				int b= get_last_index();
+	 			queue_instruction("LOAD", 1, a);
+				queue_instruction("STORE", b, 1); };
 
 //adaugam variabilele scriem apoi instructiunile in functie de numele lor dupa care le stergem . 
 // Cand apelam functia acestea vor fi create in ultimul nivel dupa care vom folosi numele oferite in declararea parametrilor
 
-FuncBody : tACO FuncInstr tACC;
+FuncBody : tACO FuncInstr  tACC;
 
 FuncInstr : FuncInstrs FuncInstr
 	    | FuncInstrs
 	    | ;
-FuncInstrs :Calcul | For|Declaration |If | RetVal ;
+FuncInstrs : Instructions| RetVal;  
+	// can add tRETURN to the function , used tSTRING in place of return
+RetVal : tSTRING tINTNR tFINSTR {  //we create a temp variable wich has the value of the return
+					print_table();
+					
+				delete_all_var(get_curr_prof());
+				prof_decrement();
+				//we want to store the variable at a lower level so we can retrieve it afterwards in the Calcul !
+					print_table();
+					add_symbol("funcReturn", "int", 0, get_curr_prof());
+					int a= get_last_index();
+					queue_instruction("AFC",1,$2);
+					queue_instruction("STORE",a,1);
+					queue_instruction("RET",1,1); 
 
-RetVal : tRETURN Expression tFINSTR ;
+					/* if it is an expression we need to decrement the prof so that the expression gets saved to another depth and then make the delete all var function search to delete only those particular variables*/
+		};
 
-Body: tACO Instruction tACC; // add here the get_curr_prof()
+Body: tACO Instruction {printf("Debug mode\n\n");} tACC; // add here the get_curr_prof()
 
 Instruction : Instructions Instruction 
 	   | Instructions 
@@ -99,8 +133,7 @@ Instructions:
      | While
      | Print
      | Declaration
-     | If 
-	 ;
+     | If ;
 
 Declaration: vartype Declarations tFINSTR ;
 
@@ -402,8 +435,6 @@ Expression :
 
  		| tVAR {
 				add_temporary_symbol();
-
-
 	 			queue_instruction("LOAD", 1, find_symbol($1, get_curr_prof()));
 				queue_instruction("STORE", get_last_index(), 1); }
 
@@ -411,6 +442,9 @@ Expression :
 				add_temporary_symbol();
 				queue_instruction("AFC", 1, $1);
 				queue_instruction("STORE", get_last_index(), 1); }
+		| Function {
+				//we always have the result in the last var ? 
+			 }
 
 		| tPO tSUBTRACT tINTNR tPC {
 				add_temporary_symbol();
@@ -424,6 +458,10 @@ Expression :
 
 			;
 
+
+Function : tVAR tPO{/*connected*/} Param tPC{
+	
+		queue_instruction("CALL",find_symbol($1,0),0);} ;
 
 %%
 
@@ -442,10 +480,13 @@ int main() {
 
 
 
+//exit(-1);
 	yyparse();
 	execute_all_instructions();
 	print_table();
+
 	for(int i=0; i<=get_last_index(); i++){
+
 		printf("var: %s, value: %d\n", get_variable_name(i), get_memory_value(i));
 	}
 }

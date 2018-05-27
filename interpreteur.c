@@ -23,6 +23,16 @@ void queue_instruction(char* operation, int a, int b){
 
 
 
+void printAllInst(){
+	int i=0;
+	while(i<indexInst){
+	printInst(i);
+	i++;
+	//printf("main %d\n\n",i);
+}	
+
+}
+
 void edit_instruction(int pos, char* op , int a, int b) {   
 	strcpy(instr[pos].operation, op);
 	instr[pos].a = a;
@@ -30,7 +40,10 @@ void edit_instruction(int pos, char* op , int a, int b) {
 }
 
 int get_latest_inst(){
+	if(indexInst>0)
 	return(indexInst-1);
+else 
+	return indexInst;
 }
 
 int get_reg_index_depth(int i){
@@ -54,8 +67,8 @@ void printInst(int Index){
 void execute_all_instructions(){
 
 	for(currentInst; currentInst<indexInst; currentInst++){
-	//printInst(currentInst);
-	//printf("currentInst: %d\n", currentInst);
+	printInst(currentInst);
+	printf("currentInst: %d\n", currentInst);
 	instructionExecute(currentInst);
 	}
 

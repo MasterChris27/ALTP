@@ -39,7 +39,8 @@ int delete_symbol();
 int delete_all_var(int prof);
 
 int get_last_index();
-int find_func_symbol(char* nameArg, int profondeur); // prof is taken into consideration
+
+void update_last_entry();
 
 int get_curr_prof();
 void prof_increment();

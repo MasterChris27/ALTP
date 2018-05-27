@@ -1,14 +1,14 @@
 
-int ads(int x,int s){
-
-int c=3; 
-int a=2;
-a=c;
-
-
-};
 
 main() {
 
+int a=1;
+int b;
 
+if(a==1){
+b=3;}
+int i=0; 
+for(i=0;i<b;i++){
+	a=a+i;
+}
 }
