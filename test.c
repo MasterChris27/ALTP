@@ -1,8 +1,11 @@
 
 int ads(int x,int s){
 
-for(int i=0;i<=x;i++){
-}
+int c=3; 
+int a=2;
+a=c;
+
+
 };
 
 main() {

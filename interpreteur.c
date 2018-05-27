@@ -5,6 +5,8 @@ int indexInst = 0;
 int currentInst=0;
 int reg_start=4;
 int registers[12];  /* R0 - R11 */
+int recursivity_register[8];
+int recursivity_depth=0;
 int memory[1024];
 
 
@@ -19,13 +21,12 @@ void queue_instruction(char* operation, int a, int b){
 	
 }
 
-void edit_instruction(int pos, char* op , int a, int b) {   
-	
 
+
+void edit_instruction(int pos, char* op , int a, int b) {   
 	strcpy(instr[pos].operation, op);
 	instr[pos].a = a;
 	instr[pos].b = b;
-
 }
 
 int get_latest_inst(){
@@ -60,101 +61,110 @@ void execute_all_instructions(){
 
 }
 
-void instructionExecute(int instructionIndex){
+void instructionExecute(int i){
 
-	if(strcmp(instr[instructionIndex].operation, "ADD") == 0){
-		registers[instr[instructionIndex].a] += registers[instr[instructionIndex].b] ;
-
-
-	} else if(strcmp(instr[instructionIndex].operation, "SUB") == 0){
-		registers[instr[instructionIndex].a] -= registers[instr[instructionIndex].b] ;
+	if(strcmp(instr[i].operation, "ADD") == 0){
+		registers[instr[i].a] += registers[instr[i].b] ;
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "MUL") == 0){
-		registers[instr[instructionIndex].a] *= registers[instr[instructionIndex].b] ;
+	} else if(strcmp(instr[i].operation, "SUB") == 0){
+		registers[instr[i].a] -= registers[instr[i].b] ;
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "DIV") == 0){
-		if( registers[instr[instructionIndex].b] != 0 ){
-			registers[instr[instructionIndex].a] /= registers[instr[instructionIndex].b] ;
+	} else if(strcmp(instr[i].operation, "MUL") == 0){
+		registers[instr[i].a] *= registers[instr[i].b] ;
+
+
+	} else if(strcmp(instr[i].operation, "DIV") == 0){
+		if( registers[instr[i].b] != 0 ){
+			registers[instr[i].a] /= registers[instr[i].b] ;
 		}else{
-			registers[instr[instructionIndex].a] = 0;
+			registers[instr[i].a] = 0;
 		}
 
 	
 
-	} else if(strcmp(instr[instructionIndex].operation, "STORE") == 0){
-		memory[instr[instructionIndex].a] = registers[instr[instructionIndex].b];
-
-	
-
-
-
-	} else if(strcmp(instr[instructionIndex].operation, "LOAD") == 0){
-		registers[instr[instructionIndex].a] = memory[instr[instructionIndex].b];
+	} else if(strcmp(instr[i].operation, "STORE") == 0){
+		memory[instr[i].a] = registers[instr[i].b];
 
 	
 
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "AFC") == 0){
-		registers[instr[instructionIndex].a] = instr[instructionIndex].b;
+	} else if(strcmp(instr[i].operation, "LOAD") == 0){
+		registers[instr[i].a] = memory[instr[i].b];
+
+	
 
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "EQU") == 0){
-		if(registers[instr[instructionIndex].a] == registers[instr[instructionIndex].b]){
-			registers[instr[instructionIndex].a] = 1; // equality betw our values
+	} else if(strcmp(instr[i].operation, "AFC") == 0){
+		registers[instr[i].a] = instr[i].b;
+
+
+
+	} else if(strcmp(instr[i].operation, "EQU") == 0){
+		if(registers[instr[i].a] == registers[instr[i].b]){
+			registers[instr[i].a] = 1; // equality betw our values
 		} else{
-			registers[instr[instructionIndex].a] = -1; // not equality
+			registers[instr[i].a] = -1; // not equality
 		}
 
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "INF") == 0){
-		if(registers[instr[instructionIndex].a] < registers[instr[instructionIndex].b]){
-			registers[instr[instructionIndex].a] = 1;
+	} else if(strcmp(instr[i].operation, "INF") == 0){
+		if(registers[instr[i].a] < registers[instr[i].b]){
+			registers[instr[i].a] = 1;
 		} else{
-			registers[instr[instructionIndex].a] = -1;
+			registers[instr[i].a] = -1;
 		}
 
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "INFE") == 0){
-		//printf("registers[instr[instructionIndex].a]: %d\n", registers[instr[instructionIndex].a]);
-		//printf("registers[instr[instructionIndex].b]: %d\n", registers[instr[instructionIndex].b]);
-		if(registers[instr[instructionIndex].a] <= registers[instr[instructionIndex].b]){
-			registers[instr[instructionIndex].a] = 1;
+	} else if(strcmp(instr[i].operation, "INFE") == 0){
+		//printf("registers[instr[i].a]: %d\n", registers[instr[i].a]);
+		//printf("registers[instr[i].b]: %d\n", registers[instr[i].b]);
+		if(registers[instr[i].a] <= registers[instr[i].b]){
+			registers[instr[i].a] = 1;
 		} else{
-			registers[instr[instructionIndex].a] = -1;
+			registers[instr[i].a] = -1;
 		}
 
-	//printf("result: %d\n", registers[instr[instructionIndex].a]);
-	} else if(strcmp(instr[instructionIndex].operation, "SUP") == 0){
-		if(registers[instr[instructionIndex].a] > registers[instr[instructionIndex].b]){
-			registers[instr[instructionIndex].a] = 1;
+	//printf("result: %d\n", registers[instr[i].a]);
+	} else if(strcmp(instr[i].operation, "SUP") == 0){
+		if(registers[instr[i].a] > registers[instr[i].b]){
+			registers[instr[i].a] = 1;
 		} else{
-			registers[instr[instructionIndex].a] = -1;
+			registers[instr[i].a] = -1;
 		}
 
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "SUPE") == 0){
-		if(registers[instr[instructionIndex].a] >= registers[instr[instructionIndex].b]){
-			registers[instr[instructionIndex].a] = 1;
+	} else if(strcmp(instr[i].operation, "SUPE") == 0){
+		if(registers[instr[i].a] >= registers[instr[i].b]){
+			registers[instr[i].a] = 1;
 		} else{
-			registers[instr[instructionIndex].a] = -1;
+			registers[instr[i].a] = -1;
 		}
-	} else if(strcmp(instr[instructionIndex].operation, "JMP") == 0){
-		currentInst = instr[instructionIndex].a;
+	} else if(strcmp(instr[i].operation, "JMP") == 0){
+		currentInst = instr[i].a;
 
 
 
-	} else if(strcmp(instr[instructionIndex].operation, "JMPC") == 0){
-		//printf("jump cond: %d\n",registers[instr[instructionIndex].b]);
-		if(registers[instr[instructionIndex].b] == -1){ //so to say: Condition is not Ok.			
-			currentInst= instr[instructionIndex].a;
+	} else if(strcmp(instr[i].operation, "JMPC") == 0){
+		//printf("jump cond: %d\n",registers[instr[i].b]);
+		if(registers[instr[i].b] == -1){ //so to say: Condition is not Ok.			
+			currentInst= instr[i].a;
 		}
+	} else if(strcmp(instr[i].operation, "CALL") == 0){	
+		
+			currentInst= instr[i].a; // jump at designated address
+		        recursivity_register[recursivity_depth]=instr[i].b; // storing the return address
+			recursivity_depth++;
+	} else if(strcmp(instr[i].operation, "RET") == 0){	
+		
+			recursivity_depth--;
+			currentInst= recursivity_register[recursivity_depth]; // jump at designated address
 	} 
 
 }

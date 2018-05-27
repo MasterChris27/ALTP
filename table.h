@@ -30,7 +30,7 @@ int add_symbol(char* name, char* type,  int initialise, int profondeur);
 
 void symbol_initialise(int index);
 
-int find_symbol(char* nameArg, int profondeur);
+int find_symbol(char* nameArg, int profondeur); // prof isnt taken into consideration
 
 void add_temporary_symbol();
 
@@ -39,6 +39,7 @@ int delete_symbol();
 int delete_all_var(int prof);
 
 int get_last_index();
+int find_func_symbol(char* nameArg, int profondeur); // prof is taken into consideration
 
 int get_curr_prof();
 void prof_increment();

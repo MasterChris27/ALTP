@@ -64,22 +64,26 @@ char* type;
 %%
 
 
-Main: Function tMAIN tPO tPC Body ;
+Main: DeclFunction tMAIN tPO tPC Body ;
 
 //adding type to the function
-Function : vartype tVAR {add_symbol($2, type, 0, get_curr_prof());prof_increment();} tPO Params tPC FuncBody tFINSTR
-	  | ;
+DeclFunction : vartype tVAR {add_symbol($2, type, 0, get_curr_prof()); prof_increment();}
+	   tPO Params tPC FuncBody tFINSTR {delete_all_var(get_curr_prof());prof_decrement();} // we increment the prof so that we never use the variable stored in lvl 0
+	| ;
 
 Params : Param NextParam | ;
 NextParam : tVIRGULE Param | ;
-Param : vartype tVAR {add_symbol($2, type, 0, get_curr_prof());}
+Param : vartype tVAR {add_symbol($2, type, 0, get_curr_prof()); };
+
+//adaugam variabilele scriem apoi instructiunile in functie de numele lor dupa care le stergem . 
+// Cand apelam functia acestea vor fi create in ultimul nivel dupa care vom folosi numele oferite in declararea parametrilor
 
 FuncBody : tACO FuncInstr tACC;
 
 FuncInstr : FuncInstrs FuncInstr
 	    | FuncInstrs
 	    | ;
-FuncInstrs :Calcul | For|Declaration |If | RetVal |;
+FuncInstrs :Calcul | For|Declaration |If | RetVal ;
 
 RetVal : tRETURN Expression tFINSTR ;
 

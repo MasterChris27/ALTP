@@ -128,24 +128,46 @@ int delete_all_var(int prof){
 
     if((current->name != NULL) && (strcmp(current->name,nameArg) == 0))
 	{
-		//if((current->profondeur == profondeur))   we don care if the variable is in the same prof with all. 
-						 	// we take the deepest one that is named like that 
-		//{
-			return current->id;
-		
+		//if((current->profondeur != 0)) { // if the variable is in lvl 0(func level) we don't see it with this function
+			return current->id;	
 	 	//}
 	} else
 	{
 	current = current->next;
     index++;  //what for ? uselss ...
 	}
-  
 	
   }
 printf("\n Error : Variable -> %s <- not declared !\n",nameArg);
   return -1;
 
 }
+
+
+
+ int find_func_symbol(char* nameArg, int profondeur){
+
+   entry* current = tab_symbols;
+   int index = 0;
+
+ while(current != NULL){
+
+    if((current->name != NULL) && (strcmp(current->name,nameArg) == 0)){
+		if((current->profondeur == 0))   {  //we return only variables that are stored in the function level
+			return current->id;	
+	 	}
+	} else{
+	  current = current->next;
+   	  index++;  //what for ? uselss ...
+	}
+	
+  }
+printf("\n Error : Variable -> %s <- not declared !\n",nameArg);
+  return -1;
+
+}
+
+
 
 
 
