@@ -68,7 +68,7 @@ char* type;
 Main: DeclFunction { 
 			//edit_instruction(2,"JMP",get_latest_inst(),0);
 		} tMAIN { 
-			//delete_symbol();print_table();
+		//	delete_symbol();print_table();
 
 		}tPO tPC Body {} ;
 
@@ -180,14 +180,16 @@ If : tIF{prof_increment();} tPO Condition tPC{
 		delete_symbol();
 		
 	} Body {
-		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
-		queue_instruction("AFC", 11, -1);
-		queue_instruction("MUL", 10, 11);
 		queue_instruction("TMP", 1, 1);
+		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
+		//queue_instruction("AFC", 11, -1);
+		//queue_instruction("MUL", 10, 11);
+		//queue_instruction("TMP", 1, 1);
 		$1 = get_latest_inst();
 		
 	} Else {	
-		edit_instruction($1, "JMPC" , get_latest_inst(), 10);
+		//edit_instruction($1, "JMPC" , get_latest_inst(), 10);
+		edit_instruction($1, "JMP" , get_latest_inst(), 10);
 		delete_all_var(get_curr_prof());
 		prof_decrement();
 				
@@ -483,7 +485,13 @@ int main() {
 
 //exit(-1);
 	yyparse();
+
+//	printALllInst();
+//	printf("\n\n");
+
 	execute_all_instructions();
+
+printAllInst();
 	print_table();
 
 	for(int i=0; i<=get_last_index(); i++){

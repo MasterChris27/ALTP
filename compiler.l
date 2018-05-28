@@ -37,7 +37,7 @@ for		return tFOR;
 
 "-="	return tMINUSEQUAL;
 "+="	return tPLUSEQUAL;
-return  return tRETURN;
+"return"  return tRETURN;
 
 
 
