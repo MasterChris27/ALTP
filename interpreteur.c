@@ -4,7 +4,7 @@ Instruction instr[1024];
 int indexInst = 0;
 int currentInst=0;
 int reg_start=4;
-int registers[12];  /* R0 - R11 */
+int registers[16];  /* R0 - R11 */
 int recursivity_register[8];
 int recursivity_depth=0;
 int memory[1024];
@@ -38,6 +38,9 @@ void edit_instruction(int pos, char* op , int a, int b) {
 	instr[pos].a = a;
 	instr[pos].b = b;
 }
+
+
+
 
 int get_latest_inst(){
 	if(indexInst>0)
@@ -97,17 +100,19 @@ void instructionExecute(int i){
 
 	
 
-	} else if(strcmp(instr[i].operation, "STORE") == 0){
-		memory[instr[i].a] = registers[instr[i].b];
+	} else if(strcmp(instr[i].operation, "STORE") == 0){  // STORE X Y we store at @ stored in Rx the value from Ry
+		//memory[instr[i].a] = registers[instr[i].b];
 
+		memory[registers[instr[i].a]] = registers[instr[i].b];
 	
 
 
 
-	} else if(strcmp(instr[i].operation, "LOAD") == 0){
-		registers[instr[i].a] = memory[instr[i].b];
+	} else if(strcmp(instr[i].operation, "LOAD") == 0){ // LOAD X Y we load the val from Rx at @ stored in Ry
+		//registers[instr[i].a] = memory[instr[i].b];
 
-	
+		registers[instr[i].a] = memory[registers[instr[i].b]];//
+
 
 
 

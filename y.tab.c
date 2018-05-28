@@ -457,11 +457,11 @@ union yyalloc
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  37
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  46
+#define YYNNTS  45
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  84
+#define YYNRULES  83
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  158
+#define YYNSTATES  157
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -511,15 +511,15 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    68,    68,    70,    68,    76,    76,    87,    89,    89,
-      90,    90,    91,    92,   101,   103,   104,   105,   106,   106,
-     108,   124,   124,   126,   127,   128,   131,   132,   133,   134,
-     135,   136,   138,   141,   142,   144,   145,   155,   156,   165,
-     166,   169,   174,   174,   181,   174,   197,   199,   204,   215,
-     224,   233,   242,   256,   260,   256,   279,   281,   284,   288,
-     279,   308,   310,   312,   315,   308,   335,   335,   349,   356,
-     365,   372,   379,   388,   400,   409,   418,   427,   436,   441,
-     445,   449,   456,   462,   462
+       0,    68,    68,    70,    68,    76,    76,    98,   101,   101,
+     102,   102,   103,   105,   122,   124,   125,   126,   127,   127,
+     129,   149,   151,   152,   153,   156,   157,   158,   159,   160,
+     161,   163,   166,   167,   169,   170,   184,   185,   198,   199,
+     202,   207,   207,   218,   207,   236,   238,   243,   264,   282,
+     300,   317,   340,   344,   340,   367,   369,   372,   378,   367,
+     401,   403,   405,   411,   401,   435,   435,   449,   462,   477,
+     489,   498,   517,   539,   555,   571,   587,   602,   614,   622,
+     626,   637,   643,   643
 };
 #endif
 
@@ -535,12 +535,12 @@ static const char *const yytname[] =
   "tVAR", "tFOR", "tSTRING", "tCHECKHIGHER", "tLESS", "tLESSEQUAL",
   "tMOREEQUAL", "tMINUSEQUAL", "tPLUSEQUAL", "tRETURN", "$accept", "Main",
   "$@1", "$@2", "DeclFunction", "$@3", "Params", "NextParam", "Param",
-  "FuncBody", "FuncInstr", "FuncInstrs", "RetVal", "Body", "$@4",
-  "Instruction", "Instructions", "Declaration", "Declarations",
-  "Multideclaration", "Lastdeclaration", "vartype", "Print", "If", "$@5",
-  "$@6", "$@7", "Else", "Condition", "While", "$@8", "$@9", "For", "$@10",
-  "$@11", "$@12", "$@13", "$@14", "$@15", "$@16", "$@17", "DeclCalc",
-  "Calcul", "Expression", "Function", "$@18", YY_NULLPTR
+  "FuncBody", "FuncInstr", "FuncInstrs", "RetVal", "Body", "Instruction",
+  "Instructions", "Declaration", "Declarations", "Multideclaration",
+  "Lastdeclaration", "vartype", "Print", "If", "$@4", "$@5", "$@6", "Else",
+  "Condition", "While", "$@7", "$@8", "For", "$@9", "$@10", "$@11", "$@12",
+  "$@13", "$@14", "$@15", "$@16", "DeclCalc", "Calcul", "Expression",
+  "Function", "$@17", YY_NULLPTR
 };
 #endif
 
@@ -556,10 +556,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -123
+#define YYPACT_NINF -122
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-123)))
+  (!!((Yystate) == (-122)))
 
 #define YYTABLE_NINF -1
 
@@ -570,22 +570,22 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      71,  -123,  -123,    11,  -123,    -8,  -123,    -1,  -123,  -123,
-      29,    37,     2,    57,  -123,    65,    59,    69,    94,    96,
-       2,  -123,  -123,    62,  -123,    28,    84,  -123,  -123,  -123,
-     103,    32,   104,  -123,    62,  -123,    99,  -123,  -123,  -123,
-    -123,  -123,    89,   117,    28,  -123,  -123,  -123,   110,   111,
-     107,    61,   113,   114,   102,   102,  -123,   132,  -123,    15,
-     116,    99,  -123,   118,  -123,  -123,   102,   102,   121,   102,
-      74,  -123,   124,    63,  -123,  -123,  -123,    85,    95,    24,
-      24,  -123,   119,  -123,  -123,  -123,  -123,   125,     8,   126,
-     127,   101,   122,   106,  -123,   102,   102,   102,   102,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,   128,  -123,   102,   102,
-     102,   102,   102,  -123,  -123,  -123,   129,  -123,     2,     4,
-       4,  -123,  -123,   102,   102,  -123,    94,   123,   123,   123,
-     123,   123,    94,  -123,   133,   130,   131,  -123,  -123,  -123,
-    -123,  -123,   135,   134,   136,    94,  -123,   142,   143,  -123,
-     137,   139,  -123,  -123,    94,    94,  -123,  -123
+      64,  -122,  -122,    13,  -122,    -8,  -122,    11,  -122,  -122,
+      26,    27,    28,    34,  -122,    36,    49,    44,    68,    77,
+      28,  -122,  -122,    62,  -122,    50,    58,  -122,  -122,  -122,
+      66,    16,    74,    80,    62,  -122,    73,  -122,  -122,  -122,
+    -122,  -122,    78,   110,    50,  -122,  -122,  -122,    85,    99,
+     107,    65,   102,   114,    91,    91,  -122,  -122,  -122,    -6,
+     116,    73,  -122,   117,  -122,  -122,    91,    91,   122,    91,
+      76,  -122,   124,    87,  -122,  -122,  -122,    97,   103,    39,
+      39,   120,  -122,  -122,  -122,  -122,   126,     8,   127,   125,
+     113,   128,   119,  -122,    91,    91,    91,    91,  -122,  -122,
+    -122,  -122,  -122,  -122,  -122,   129,  -122,    91,    91,    91,
+      91,    91,  -122,  -122,  -122,   130,  -122,    28,    -1,    -1,
+    -122,  -122,    91,    91,  -122,    68,   123,   123,   123,   123,
+     123,    68,  -122,   132,   131,   133,  -122,  -122,  -122,  -122,
+    -122,   137,   115,   134,    68,  -122,   142,   143,  -122,   139,
+     140,  -122,  -122,    68,    68,  -122,  -122
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -593,42 +593,42 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       7,    39,    40,     0,     2,     0,     1,     0,     5,     3,
+       7,    38,    39,     0,     2,     0,     1,     0,     5,     3,
        0,     0,     9,     0,    13,     0,    11,     0,     0,     0,
-       0,     8,    12,    25,     4,    17,     0,    10,    42,    53,
-       0,     0,     0,    21,    24,    30,     0,    29,    31,    28,
-      27,    26,     0,     0,    16,    19,    18,     6,     0,     0,
-       0,     0,     0,     0,     0,     0,    56,     0,    23,    37,
-       0,     0,    34,     0,    14,    15,     0,     0,     0,     0,
-       0,    79,    78,     0,    80,    70,    71,     0,     0,     0,
-       0,    22,     0,    35,    32,    33,    20,     0,     0,     0,
-       0,     0,     0,     0,    83,     0,     0,     0,     0,    68,
-      72,    73,    66,    57,    67,    62,    38,    43,     0,     0,
-       0,     0,     0,    54,    41,    69,     0,    82,     0,    74,
-      75,    76,    77,     0,     0,    36,     0,    48,    50,    49,
-      51,    52,     0,    81,     0,     0,     0,    44,    55,    84,
-      58,    63,    47,     0,     0,     0,    45,     0,     0,    46,
-       0,     0,    59,    64,     0,     0,    60,    65
+       0,     8,    12,    24,     4,    17,     0,    10,    41,    52,
+       0,     0,     0,     0,    23,    29,     0,    28,    30,    27,
+      26,    25,     0,     0,    16,    19,    18,     6,     0,     0,
+       0,     0,     0,     0,     0,     0,    55,    21,    22,    36,
+       0,     0,    33,     0,    14,    15,     0,     0,     0,     0,
+       0,    78,    77,     0,    79,    69,    70,     0,     0,     0,
+       0,     0,    34,    31,    32,    20,     0,     0,     0,     0,
+       0,     0,     0,    82,     0,     0,     0,     0,    67,    71,
+      72,    65,    56,    66,    61,    37,    42,     0,     0,     0,
+       0,     0,    53,    40,    68,     0,    81,     0,    73,    74,
+      75,    76,     0,     0,    35,     0,    47,    49,    48,    50,
+      51,     0,    80,     0,     0,     0,    43,    54,    83,    57,
+      62,    46,     0,     0,     0,    44,     0,     0,    45,     0,
+       0,    58,    63,     0,     0,    59,    64
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,   -19,  -123,
-     115,  -123,  -123,  -122,  -123,   112,   -16,   -43,    97,  -123,
-    -123,     0,  -123,  -123,  -123,  -123,  -123,  -123,   -65,  -123,
-    -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,  -123,
-    -123,    80,     1,   -48,  -123,  -123
+    -122,  -122,  -122,  -122,  -122,  -122,  -122,  -122,   -19,  -122,
+     118,  -122,  -122,  -121,   112,   -14,   -54,    98,  -122,  -122,
+       0,  -122,  -122,  -122,  -122,  -122,  -122,   -65,  -122,  -122,
+    -122,  -122,  -122,  -122,  -122,  -122,  -122,  -122,  -122,  -122,
+      83,   -44,   -48,  -122,  -122
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
       -1,     3,     7,    11,     4,    10,    15,    21,    16,    26,
-      43,    44,    45,    24,    57,    33,    34,    35,    60,    61,
-      62,    36,    37,    38,    48,   126,   142,   146,    87,    39,
-      49,   132,    40,    79,   123,   143,   154,    80,   124,   144,
-     155,   103,    41,    88,    74,   118
+      43,    44,    45,    24,    33,    34,    35,    60,    61,    62,
+      36,    37,    38,    48,   125,   141,   145,    86,    39,    49,
+     131,    40,    79,   122,   142,   153,    80,   123,   143,   154,
+     102,    41,    87,    74,   117
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -636,66 +636,66 @@ static const yytype_int16 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       5,    27,    89,    73,   137,     1,    77,    78,     2,    46,
-     138,     6,    17,    97,    98,    95,    96,    97,    98,     8,
-      17,    91,    93,   149,   108,     9,    82,     1,    46,    14,
-       2,     1,   156,   157,     2,    83,   102,   102,   109,   110,
-     111,   112,    28,    51,    52,    53,    12,   119,   120,   121,
-     122,    31,    29,    30,    13,    31,    32,    42,   135,   136,
-     127,   128,   129,   130,   131,     1,    54,    55,     2,    69,
-      95,    96,    97,    98,     1,    18,    28,     2,    70,    20,
-     104,   104,    92,    19,    71,    99,    29,    30,    72,    31,
-      32,    70,    95,    96,    97,    98,    22,    71,    23,   134,
-      25,    72,    95,    96,    97,    98,    47,   100,    95,    96,
-      97,    98,    63,    95,    96,    97,    98,   101,    17,    70,
-      50,    56,    64,   115,   117,    71,    59,    66,    67,    72,
-      95,    96,    97,    98,    68,    75,    76,    81,    84,    90,
-      86,    94,   106,   107,   113,   116,    58,   133,   125,   114,
-     145,   139,   140,   141,   150,   152,   151,   153,    85,    65,
-     105,   147,     0,   148
+       5,    27,    88,    73,   136,    81,    77,    78,    96,    97,
+     137,    46,    17,     6,    82,    94,    95,    96,    97,     8,
+      17,    90,    92,   148,   107,   101,   101,    51,    52,    53,
+      46,     1,   155,   156,     2,   103,   103,     9,   108,   109,
+     110,   111,     1,    12,    13,     2,   118,   119,   120,   121,
+      54,    55,    18,     1,    19,    14,     2,   134,   135,   126,
+     127,   128,   129,   130,    28,     1,    31,     1,     2,    20,
+       2,    22,    23,    69,    29,    30,    28,    31,    32,    42,
+      47,    25,    70,    50,    91,    57,    29,    30,    71,    31,
+      32,    56,    72,    70,    94,    95,    96,    97,   133,    71,
+      59,    63,    66,    72,    94,    95,    96,    97,    70,    98,
+      94,    95,    96,    97,    71,    64,    67,    17,    72,    99,
+      94,    95,    96,    97,    75,   100,    94,    95,    96,    97,
+      94,    95,    96,    97,    68,   114,    76,   116,    83,    85,
+      89,    93,   146,   105,   106,   112,    58,   113,   132,   124,
+     138,   115,   144,   139,   149,   140,   150,   151,   152,    84,
+       0,   147,    65,   104
 };
 
 static const yytype_int16 yycheck[] =
 {
-       0,    20,    67,    51,   126,     3,    54,    55,     6,    25,
-     132,     0,    12,     9,    10,     7,     8,     9,    10,    27,
-      20,    69,    70,   145,    16,    26,    11,     3,    44,    27,
-       6,     3,   154,   155,     6,    20,    79,    80,    30,    31,
-      32,    33,    14,    11,    12,    13,    17,    95,    96,    97,
-      98,    27,    24,    25,    17,    27,    28,    29,   123,   124,
-     108,   109,   110,   111,   112,     3,    34,    35,     6,     8,
-       7,     8,     9,    10,     3,    18,    14,     6,    17,    20,
-      79,    80,     8,    18,    23,    22,    24,    25,    27,    27,
-      28,    17,     7,     8,     9,    10,    27,    23,     4,   118,
-       4,    27,     7,     8,     9,    10,    22,    22,     7,     8,
-       9,    10,    23,     7,     8,     9,    10,    22,   118,    17,
-      17,    17,     5,    22,    18,    23,    27,    17,    17,    27,
-       7,     8,     9,    10,    27,    22,    22,     5,    22,    18,
-      22,    17,    23,    18,    18,    23,    34,    18,    20,    22,
-      15,    18,    22,    22,    12,    18,    13,    18,    61,    44,
-      80,    27,    -1,    27
+       0,    20,    67,    51,   125,    11,    54,    55,     9,    10,
+     131,    25,    12,     0,    20,     7,     8,     9,    10,    27,
+      20,    69,    70,   144,    16,    79,    80,    11,    12,    13,
+      44,     3,   153,   154,     6,    79,    80,    26,    30,    31,
+      32,    33,     3,    17,    17,     6,    94,    95,    96,    97,
+      34,    35,    18,     3,    18,    27,     6,   122,   123,   107,
+     108,   109,   110,   111,    14,     3,    27,     3,     6,    20,
+       6,    27,     4,     8,    24,    25,    14,    27,    28,    29,
+      22,     4,    17,    17,     8,     5,    24,    25,    23,    27,
+      28,    17,    27,    17,     7,     8,     9,    10,   117,    23,
+      27,    23,    17,    27,     7,     8,     9,    10,    17,    22,
+       7,     8,     9,    10,    23,     5,    17,   117,    27,    22,
+       7,     8,     9,    10,    22,    22,     7,     8,     9,    10,
+       7,     8,     9,    10,    27,    22,    22,    18,    22,    22,
+      18,    17,    27,    23,    18,    18,    34,    22,    18,    20,
+      18,    23,    15,    22,    12,    22,    13,    18,    18,    61,
+      -1,    27,    44,    80
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     6,    38,    41,    58,     0,    39,    27,    26,
-      42,    40,    17,    17,    27,    43,    45,    58,    18,    18,
+       0,     3,     6,    38,    41,    57,     0,    39,    27,    26,
+      42,    40,    17,    17,    27,    43,    45,    57,    18,    18,
       20,    44,    27,     4,    50,     4,    46,    45,    14,    24,
-      25,    27,    28,    52,    53,    54,    58,    59,    60,    66,
-      69,    79,    29,    47,    48,    49,    53,    22,    61,    67,
-      17,    11,    12,    13,    34,    35,    17,    51,    52,    27,
-      55,    56,    57,    23,     5,    47,    17,    17,    27,     8,
-      17,    23,    27,    80,    81,    22,    22,    80,    80,    70,
-      74,     5,    11,    20,    22,    55,    22,    65,    80,    65,
-      18,    80,     8,    80,    17,     7,     8,     9,    10,    22,
-      22,    22,    54,    78,    79,    78,    23,    18,    16,    30,
-      31,    32,    33,    18,    22,    22,    23,    18,    82,    80,
-      80,    80,    80,    71,    75,    20,    62,    80,    80,    80,
-      80,    80,    68,    18,    45,    65,    65,    50,    50,    18,
-      22,    22,    63,    72,    76,    15,    64,    27,    27,    50,
-      12,    13,    18,    18,    73,    77,    50,    50
+      25,    27,    28,    51,    52,    53,    57,    58,    59,    65,
+      68,    78,    29,    47,    48,    49,    52,    22,    60,    66,
+      17,    11,    12,    13,    34,    35,    17,     5,    51,    27,
+      54,    55,    56,    23,     5,    47,    17,    17,    27,     8,
+      17,    23,    27,    79,    80,    22,    22,    79,    79,    69,
+      73,    11,    20,    22,    54,    22,    64,    79,    64,    18,
+      79,     8,    79,    17,     7,     8,     9,    10,    22,    22,
+      22,    53,    77,    78,    77,    23,    18,    16,    30,    31,
+      32,    33,    18,    22,    22,    23,    18,    81,    79,    79,
+      79,    79,    70,    74,    20,    61,    79,    79,    79,    79,
+      79,    67,    18,    45,    64,    64,    50,    50,    18,    22,
+      22,    62,    71,    75,    15,    63,    27,    27,    50,    12,
+      13,    18,    18,    72,    76,    50,    50
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -703,13 +703,13 @@ static const yytype_uint8 yyr1[] =
 {
        0,    37,    39,    40,    38,    42,    41,    41,    43,    43,
       44,    44,    45,    45,    46,    47,    47,    47,    48,    48,
-      49,    51,    50,    52,    52,    52,    53,    53,    53,    53,
-      53,    53,    54,    55,    55,    56,    56,    57,    57,    58,
-      58,    59,    61,    62,    63,    60,    64,    64,    65,    65,
-      65,    65,    65,    67,    68,    66,    70,    71,    72,    73,
-      69,    74,    75,    76,    77,    69,    78,    78,    79,    79,
-      79,    79,    79,    79,    80,    80,    80,    80,    80,    80,
-      80,    80,    80,    82,    81
+      49,    50,    51,    51,    51,    52,    52,    52,    52,    52,
+      52,    53,    54,    54,    55,    55,    56,    56,    57,    57,
+      58,    60,    61,    62,    59,    63,    63,    64,    64,    64,
+      64,    64,    66,    67,    65,    69,    70,    71,    72,    68,
+      73,    74,    75,    76,    68,    77,    77,    78,    78,    78,
+      78,    78,    78,    79,    79,    79,    79,    79,    79,    79,
+      79,    79,    81,    80
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -717,13 +717,13 @@ static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     0,     7,     0,     8,     0,     2,     0,
        2,     0,     2,     1,     3,     2,     1,     0,     1,     1,
-       3,     0,     4,     2,     1,     0,     1,     1,     1,     1,
-       1,     1,     3,     2,     1,     2,     4,     1,     3,     1,
-       1,     5,     0,     0,     0,     9,     2,     0,     3,     3,
-       3,     3,     3,     0,     0,     7,     0,     0,     0,     0,
-      13,     0,     0,     0,     0,    13,     1,     1,     4,     5,
-       3,     3,     4,     4,     3,     3,     3,     3,     1,     1,
-       1,     4,     3,     0,     5
+       3,     3,     2,     1,     0,     1,     1,     1,     1,     1,
+       1,     3,     2,     1,     2,     4,     1,     3,     1,     1,
+       5,     0,     0,     0,     9,     2,     0,     3,     3,     3,
+       3,     3,     0,     0,     7,     0,     0,     0,     0,    13,
+       0,     0,     0,     0,    13,     1,     1,     4,     5,     3,
+       3,     4,     4,     3,     3,     3,     3,     1,     1,     1,
+       4,     3,     0,     5
 };
 
 
@@ -1402,7 +1402,7 @@ yyreduce:
         case 2:
 #line 68 "rule.y" /* yacc.c:1646  */
     { 
-			//edit_instruction(2,"JMP",get_latest_inst(),0);
+			//edit_instruction(4,"JMP",get_latest_inst(),0);
 		}
 #line 1408 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1410,7 +1410,7 @@ yyreduce:
   case 3:
 #line 70 "rule.y" /* yacc.c:1646  */
     { 
-			//delete_symbol();print_table();
+		//	delete_symbol();print_table();
 
 		}
 #line 1417 "y.tab.c" /* yacc.c:1646  */
@@ -1425,36 +1425,61 @@ yyreduce:
   case 5:
 #line 76 "rule.y" /* yacc.c:1646  */
     {
+			int z=get_last_index();
+			queue_instruction("AFC",1,z);
+			queue_instruction("ADD",15,1); // we store it in register 15
 			add_symbol((yyvsp[0].str), type, 0, get_curr_prof()); 
 			int a= get_last_index();
 			int b=2 + get_latest_inst(); // we add 2 as we added 2 new instructions that should not be repeated , returns -1 so we have to add 3
-			queue_instruction("AFC",1,b); 
-			queue_instruction("STORE",a,1); 
+			queue_instruction("AFC",1,b);
+
+			queue_instruction("AFC",14,a);
+			queue_instruction("ADD",14,15); 
+			queue_instruction("STORE",14,1); 
+
 			queue_instruction("TMPJMP",1,1); 
 			//printf("Debug %s\n\n",$1);
 			
 			prof_increment();}
-#line 1438 "y.tab.c" /* yacc.c:1646  */
+#line 1445 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 12:
-#line 91 "rule.y" /* yacc.c:1646  */
-    {add_symbol((yyvsp[0].str), type, 0, get_curr_prof()); }
-#line 1444 "y.tab.c" /* yacc.c:1646  */
-    break;
+  case 6:
+#line 93 "rule.y" /* yacc.c:1646  */
+    {
 
-  case 13:
-#line 92 "rule.y" /* yacc.c:1646  */
-    {		int a= find_symbol((yyvsp[0].str), get_curr_prof());
-				add_symbol((yyvsp[0].str), type, 0, get_curr_prof()); 
-				int b= get_last_index();
-	 			queue_instruction("LOAD", 1, a);
-				queue_instruction("STORE", b, 1); }
+			queue_instruction("AFC",1,1);
+			queue_instruction("SUB",15,1);}
 #line 1454 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 12:
+#line 103 "rule.y" /* yacc.c:1646  */
+    {
+			add_symbol((yyvsp[0].str), type, 0, get_curr_prof()); }
+#line 1461 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 105 "rule.y" /* yacc.c:1646  */
+    {		
+
+			int a= find_symbol((yyvsp[0].str), get_curr_prof());
+			add_symbol((yyvsp[0].str), type, 0, get_curr_prof()); 
+			int b= get_last_index();
+
+			queue_instruction("AFC",14,a);
+			queue_instruction("ADD",14,15); 
+	 		queue_instruction("LOAD", 1, 14);
+
+			queue_instruction("AFC",14,b);
+			queue_instruction("ADD",14,15); 
+			queue_instruction("STORE", 14, 1); }
+#line 1479 "y.tab.c" /* yacc.c:1646  */
+    break;
+
   case 20:
-#line 108 "rule.y" /* yacc.c:1646  */
+#line 129 "rule.y" /* yacc.c:1646  */
     {  //we create a temp variable wich has the value of the return
 					print_table();
 					
@@ -1465,215 +1490,276 @@ yyreduce:
 					add_symbol("funcReturn", "int", 0, get_curr_prof());
 					int a= get_last_index();
 					queue_instruction("AFC",1,(yyvsp[-1].nb));
-					queue_instruction("STORE",a,1);
+
+					queue_instruction("AFC",14,a);
+					queue_instruction("ADD",14,15); 
+					queue_instruction("STORE",14,1);
+
 					queue_instruction("RET",1,1); 
 
 					/* if it is an expression we need to decrement the prof so that the expression gets saved to another depth and then make the delete all var function search to delete only those particular variables*/
 		}
-#line 1474 "y.tab.c" /* yacc.c:1646  */
+#line 1503 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 21:
-#line 124 "rule.y" /* yacc.c:1646  */
-    {printf("Debug mode\n\n");}
-#line 1480 "y.tab.c" /* yacc.c:1646  */
+  case 34:
+#line 169 "rule.y" /* yacc.c:1646  */
+    {add_symbol((yyvsp[-1].str), type, 0,get_curr_prof());}
+#line 1509 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 144 "rule.y" /* yacc.c:1646  */
-    {add_symbol((yyvsp[-1].str), type, 0,get_curr_prof());}
-#line 1486 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 36:
-#line 145 "rule.y" /* yacc.c:1646  */
+#line 170 "rule.y" /* yacc.c:1646  */
     {
 		    add_symbol((yyvsp[-3].str), type, 0, get_curr_prof());
 		// we could change add symbol to return the address
 		    int a = find_symbol((yyvsp[-3].str), get_curr_prof());
 		    queue_instruction("AFC", 1, (yyvsp[-1].nb));
-		    queue_instruction("STORE", a, 1); 
+
+		    queue_instruction("AFC",14,a);
+		    queue_instruction("ADD",14,15); 
+
+		    queue_instruction("STORE", 14, 1); 
 }
-#line 1498 "y.tab.c" /* yacc.c:1646  */
+#line 1525 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 36:
+#line 184 "rule.y" /* yacc.c:1646  */
+    {add_symbol((yyvsp[0].str), type, 0, get_curr_prof());}
+#line 1531 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 155 "rule.y" /* yacc.c:1646  */
-    {add_symbol((yyvsp[0].str), type, 0, get_curr_prof());}
-#line 1504 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 38:
-#line 156 "rule.y" /* yacc.c:1646  */
+#line 185 "rule.y" /* yacc.c:1646  */
     {
 				 add_symbol((yyvsp[-2].str), type, 0, get_curr_prof());
 		// we could change add symbol to return the address
 				 int a = find_symbol((yyvsp[-2].str), get_curr_prof());
 				 queue_instruction("AFC", 1, (yyvsp[0].nb));
-				 queue_instruction("STORE", a, 1); 
+		
+				 queue_instruction("AFC",14,a);
+				 queue_instruction("ADD",14,15); 
+
+				 queue_instruction("STORE", 14, 1); 
 }
-#line 1516 "y.tab.c" /* yacc.c:1646  */
+#line 1547 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 38:
+#line 198 "rule.y" /* yacc.c:1646  */
+    { type = "int"; }
+#line 1553 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 165 "rule.y" /* yacc.c:1646  */
-    { type = "int"; }
-#line 1522 "y.tab.c" /* yacc.c:1646  */
+#line 199 "rule.y" /* yacc.c:1646  */
+    { type = "const"; }
+#line 1559 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 166 "rule.y" /* yacc.c:1646  */
-    { type = "const"; }
-#line 1528 "y.tab.c" /* yacc.c:1646  */
+#line 202 "rule.y" /* yacc.c:1646  */
+    {printf("Print not supported\n");}
+#line 1565 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 169 "rule.y" /* yacc.c:1646  */
-    {printf("Print not supported\n");}
-#line 1534 "y.tab.c" /* yacc.c:1646  */
+#line 207 "rule.y" /* yacc.c:1646  */
+    {prof_increment();}
+#line 1571 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 174 "rule.y" /* yacc.c:1646  */
-    {prof_increment();}
-#line 1540 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 43:
-#line 174 "rule.y" /* yacc.c:1646  */
+#line 207 "rule.y" /* yacc.c:1646  */
     {
 		int a = get_last_index(); //condition-index
-		queue_instruction("LOAD", 10, a);
+
+		queue_instruction("AFC",14,a);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("LOAD", 10, 14);
+
 		queue_instruction("TMP", 1, 1);
 		(yyvsp[-4].nb) = get_latest_inst();
 		delete_symbol();
 		
 	}
-#line 1553 "y.tab.c" /* yacc.c:1646  */
+#line 1588 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 44:
-#line 181 "rule.y" /* yacc.c:1646  */
+  case 43:
+#line 218 "rule.y" /* yacc.c:1646  */
     {
-		edit_instruction((yyvsp[-6].nb), "JMPC" , get_latest_inst(), 10);
-		queue_instruction("AFC", 11, -1);
-		queue_instruction("MUL", 10, 11);
 		queue_instruction("TMP", 1, 1);
+		edit_instruction((yyvsp[-6].nb), "JMPC" , get_latest_inst(), 10);
+		//queue_instruction("AFC", 11, -1);
+		//queue_instruction("MUL", 10, 11);
+		//queue_instruction("TMP", 1, 1);
 		(yyvsp[-6].nb) = get_latest_inst();
 		
 	}
-#line 1566 "y.tab.c" /* yacc.c:1646  */
+#line 1602 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 45:
-#line 188 "rule.y" /* yacc.c:1646  */
+  case 44:
+#line 226 "rule.y" /* yacc.c:1646  */
     {	
-		edit_instruction((yyvsp[-8].nb), "JMPC" , get_latest_inst(), 10);
+		//edit_instruction($1, "JMPC" , get_latest_inst(), 10);
+		edit_instruction((yyvsp[-8].nb), "JMP" , get_latest_inst(), 10);
 		delete_all_var(get_curr_prof());
 		prof_decrement();
 				
 }
-#line 1577 "y.tab.c" /* yacc.c:1646  */
+#line 1614 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 48:
-#line 204 "rule.y" /* yacc.c:1646  */
+  case 47:
+#line 243 "rule.y" /* yacc.c:1646  */
     {
 
 		printf("we are in condition after finding it at depth %d \n\n", get_curr_prof());
 		int a = get_last_index();
 		int b = a-1;
-		queue_instruction("LOAD", 1, a);
-		queue_instruction("LOAD", 2, b);
+		
+		queue_instruction("AFC",14,a);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("LOAD", 1, 14);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("LOAD", 2, 14);
+
 		queue_instruction("EQU", 2, 1);
-		queue_instruction("STORE", b, 2);
+	
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("STORE", 14, 2);
 		delete_symbol();
 	}
-#line 1593 "y.tab.c" /* yacc.c:1646  */
+#line 1640 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 48:
+#line 264 "rule.y" /* yacc.c:1646  */
+    {
+		int a = get_last_index();
+		int b = a-1;
+
+		queue_instruction("AFC",14,a);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("LOAD", 1, 14);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("LOAD", 2, 14);
+		queue_instruction("INF", 2, 1);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("STORE", 14, 2);
+		delete_symbol();
+	}
+#line 1663 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 215 "rule.y" /* yacc.c:1646  */
+#line 282 "rule.y" /* yacc.c:1646  */
     {
 		int a = get_last_index();
 		int b = a-1;
-		queue_instruction("LOAD", 1, a);
-		queue_instruction("LOAD", 2, b);
-		queue_instruction("INF", 2, 1);
-		queue_instruction("STORE", b, 2);
+
+		queue_instruction("AFC",14,a);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("LOAD", 1, 14);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15); 
+		queue_instruction("LOAD", 2, 14);
+		queue_instruction("SUP", 2, 1);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15);
+		queue_instruction("STORE", 14, 2);
 		delete_symbol();
 	}
-#line 1607 "y.tab.c" /* yacc.c:1646  */
+#line 1686 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 224 "rule.y" /* yacc.c:1646  */
+#line 300 "rule.y" /* yacc.c:1646  */
     {
 		int a = get_last_index();
 		int b = a-1;
-		queue_instruction("LOAD", 1, a);
-		queue_instruction("LOAD", 2, b);
-		queue_instruction("SUP", 2, 1);
-		queue_instruction("STORE", b, 2);
+		queue_instruction("AFC",14,a);
+		queue_instruction("ADD",14,15);
+		queue_instruction("LOAD", 1, 14);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15);
+		queue_instruction("LOAD", 2, 14);
+		queue_instruction("INFE", 2, 1);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15);
+		queue_instruction("STORE", 14, 2);
 		delete_symbol();
 	}
-#line 1621 "y.tab.c" /* yacc.c:1646  */
+#line 1708 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 233 "rule.y" /* yacc.c:1646  */
-    {
-		int a = get_last_index();
-		int b = a-1;
-		queue_instruction("LOAD", 1, a);
-		queue_instruction("LOAD", 2, b);
-		queue_instruction("INFE", 2, 1);
-		queue_instruction("STORE", b, 2);
-		delete_symbol();
-	}
-#line 1635 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 52:
-#line 242 "rule.y" /* yacc.c:1646  */
+#line 317 "rule.y" /* yacc.c:1646  */
     {
 		int a = get_last_index(); // right arg
 		int b = a-1;			// left arg
-		queue_instruction("LOAD", 1, a);
-		queue_instruction("LOAD", 2, b);
+		queue_instruction("AFC",14,a);
+		queue_instruction("ADD",14,15);
+		queue_instruction("LOAD", 1, 14);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15);
+		queue_instruction("LOAD", 2, 14);
+
 		queue_instruction("SUPE", 2, 1);
-		queue_instruction("STORE", b, 2);
+
+		queue_instruction("AFC",14,b);
+		queue_instruction("ADD",14,15);
+		queue_instruction("STORE", 14, 2);
 		delete_symbol();
 	}
-#line 1649 "y.tab.c" /* yacc.c:1646  */
+#line 1731 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 53:
-#line 256 "rule.y" /* yacc.c:1646  */
+  case 52:
+#line 340 "rule.y" /* yacc.c:1646  */
     {
 	prof_increment();
 	(yyvsp[0].nb) = get_latest_inst(); /* Hop to here to retry condition */
 	//printf("$1 in while is : : %d\n", $1);
 	}
-#line 1659 "y.tab.c" /* yacc.c:1646  */
+#line 1741 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 54:
-#line 260 "rule.y" /* yacc.c:1646  */
+  case 53:
+#line 344 "rule.y" /* yacc.c:1646  */
     {
 
 	int a = get_last_index(); //condition-index after all conditions
-	queue_instruction("LOAD", 10, a); // add in place of 10 , 5+ prof
+
+	queue_instruction("AFC",14,a);
+	queue_instruction("ADD",14,15);
+	queue_instruction("LOAD", 10, 14); // add in place of 10 , 5+ prof
+
 	queue_instruction("TMP", 1, 1); //we add the unedited JMPC
 	(yyvsp[-2].nb) = get_latest_inst();         
 	delete_symbol();
 
 	}
-#line 1673 "y.tab.c" /* yacc.c:1646  */
+#line 1759 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 55:
-#line 268 "rule.y" /* yacc.c:1646  */
+  case 54:
+#line 356 "rule.y" /* yacc.c:1646  */
     {
 		queue_instruction("JMP", (yyvsp[-6].nb), 1);
 		edit_instruction((yyvsp[-4].nb), "JMPC" , get_latest_inst(), 10);
@@ -1682,49 +1768,54 @@ yyreduce:
 		prof_decrement();
 
 	}
-#line 1686 "y.tab.c" /* yacc.c:1646  */
+#line 1772 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 55:
+#line 367 "rule.y" /* yacc.c:1646  */
+    {
+			prof_increment();}
+#line 1779 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 279 "rule.y" /* yacc.c:1646  */
+#line 369 "rule.y" /* yacc.c:1646  */
     {
-			prof_increment();}
-#line 1693 "y.tab.c" /* yacc.c:1646  */
+		    	(yyvsp[-3].nb) = get_latest_inst();}
+#line 1786 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 281 "rule.y" /* yacc.c:1646  */
+#line 372 "rule.y" /* yacc.c:1646  */
     {
-		    	(yyvsp[-3].nb) = get_latest_inst();}
-#line 1700 "y.tab.c" /* yacc.c:1646  */
+	   		int a = get_last_index(); //condition-index after all conditions
+			queue_instruction("AFC",14,a);
+			queue_instruction("ADD",14,15);
+			queue_instruction("LOAD", 10, 14);}
+#line 1796 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 284 "rule.y" /* yacc.c:1646  */
-    {
-	   		int a = get_last_index(); //condition-index after all conditions
-			queue_instruction("LOAD", 10, a);}
-#line 1708 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 59:
-#line 288 "rule.y" /* yacc.c:1646  */
+#line 378 "rule.y" /* yacc.c:1646  */
     {
 			(yyvsp[-9].nb)= find_symbol((yyvsp[-2].str), get_curr_prof());
 			queue_instruction("TMP", 1, 1); //we add the unedited JMPC 
 			(yyvsp[-4].nb) = get_latest_inst();         
 			delete_symbol();}
-#line 1718 "y.tab.c" /* yacc.c:1646  */
+#line 1806 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 60:
-#line 293 "rule.y" /* yacc.c:1646  */
+  case 59:
+#line 383 "rule.y" /* yacc.c:1646  */
     {	
 			//we add here the code for incrementing but targeting the variable that has to be targeted
-			queue_instruction("LOAD", 1, (yyvsp[-11].nb));
+			queue_instruction("AFC",14,(yyvsp[-11].nb));
+			queue_instruction("ADD",14,15);
+			queue_instruction("LOAD", 1, 14);
+
 			queue_instruction("AFC", 2, 1);
 			queue_instruction("ADD", 1, 2);
-			queue_instruction("STORE", (yyvsp[-11].nb), 1);
+			queue_instruction("STORE", 14, 1); //$2
 			//we updated the value of the value incremented and now we can jump to the condition
 			queue_instruction("JMP", (yyvsp[-12].nb), 1);
 			edit_instruction((yyvsp[-6].nb), "JMPC" , get_latest_inst(), 10);
@@ -1732,49 +1823,56 @@ yyreduce:
 
 			delete_all_var(get_curr_prof());
 			prof_decrement();}
-#line 1736 "y.tab.c" /* yacc.c:1646  */
+#line 1827 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 60:
+#line 401 "rule.y" /* yacc.c:1646  */
+    {
+			prof_increment();}
+#line 1834 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 308 "rule.y" /* yacc.c:1646  */
+#line 403 "rule.y" /* yacc.c:1646  */
     {
-			prof_increment();}
-#line 1743 "y.tab.c" /* yacc.c:1646  */
+		        (yyvsp[-3].nb) = get_latest_inst();}
+#line 1841 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 310 "rule.y" /* yacc.c:1646  */
+#line 405 "rule.y" /* yacc.c:1646  */
     {
-		        (yyvsp[-3].nb) = get_latest_inst();}
-#line 1750 "y.tab.c" /* yacc.c:1646  */
+	   		int a = get_last_index(); //condition-index after all conditions
+
+			queue_instruction("AFC",14,a);
+			queue_instruction("ADD",14,15);
+			queue_instruction("LOAD", 10, 14);}
+#line 1852 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 312 "rule.y" /* yacc.c:1646  */
-    {
-	   		int a = get_last_index(); //condition-index after all conditions
-			queue_instruction("LOAD", 10, a);}
-#line 1758 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 64:
-#line 315 "rule.y" /* yacc.c:1646  */
+#line 411 "rule.y" /* yacc.c:1646  */
     {
 			(yyvsp[-9].nb)= find_symbol((yyvsp[-2].str), get_curr_prof());
 			queue_instruction("TMP", 1, 1); //we add the unedited JMPC 
 			(yyvsp[-4].nb) = get_latest_inst();         
 			delete_symbol();}
-#line 1768 "y.tab.c" /* yacc.c:1646  */
+#line 1862 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 65:
-#line 320 "rule.y" /* yacc.c:1646  */
+  case 64:
+#line 416 "rule.y" /* yacc.c:1646  */
     {
+	
+			queue_instruction("AFC",14,(yyvsp[-11].nb)); // we store in r14 value of $2
+			queue_instruction("ADD",14,15);
+			queue_instruction("LOAD", 1,14);
 
-			queue_instruction("LOAD", 1,(yyvsp[-11].nb));
 			queue_instruction("AFC", 2, 1);  // increment part
  			queue_instruction("SUB", 1, 2);
-			queue_instruction("STORE", (yyvsp[-11].nb), 1);
+
+			queue_instruction("STORE", 14, 1); // $2
 
 			queue_instruction("JMP", (yyvsp[-12].nb), 1);
 			edit_instruction((yyvsp[-6].nb), "JMPC" , get_latest_inst(), 10);
@@ -1782,186 +1880,267 @@ yyreduce:
 
 			delete_all_var(get_curr_prof());
 			prof_decrement(); }
-#line 1786 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 68:
-#line 349 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = find_symbol((yyvsp[-3].str), get_curr_prof());
-				 int b = get_last_index();
-				 queue_instruction("LOAD", 1, b);
-				 queue_instruction("STORE", a, 1);
-				 delete_symbol();}
-#line 1797 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 69:
-#line 356 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = find_symbol((yyvsp[-4].str), get_curr_prof());
-				 int b = get_last_index();
-				 queue_instruction("LOAD", 1, b);
-				 queue_instruction("AFC", 2, -1);
-				 queue_instruction("MUL", 1, 2);
-				 queue_instruction("STORE", a, 1);
-				 delete_symbol();}
-#line 1810 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 70:
-#line 365 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = find_symbol((yyvsp[-2].str), get_curr_prof());
-				 queue_instruction("LOAD", 1, a);
-				 queue_instruction("AFC", 2, 1);
-				 queue_instruction("ADD", 1, 2);
-				 queue_instruction("STORE", a, 1);}
-#line 1821 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 71:
-#line 372 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = find_symbol((yyvsp[-2].str), get_curr_prof());
-				 queue_instruction("LOAD", 1, a);
-				 queue_instruction("AFC", 2, 1);
-				 queue_instruction("SUB", 1, 2);
-				 queue_instruction("STORE", a, 1);}
-#line 1832 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 72:
-#line 379 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = find_symbol((yyvsp[-3].str), get_curr_prof());
-				 int b = get_last_index();
-				 queue_instruction("LOAD", 1, a);
-				 queue_instruction("LOAD", 2, b);
-				 queue_instruction("SUB", 1, 2);
-				 queue_instruction("STORE", a, 1);
-				 delete_symbol();}
-#line 1845 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 73:
-#line 388 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = find_symbol((yyvsp[-3].str), get_curr_prof());
-				 int b = get_last_index();
-				 queue_instruction("LOAD", 1, a);
-				 queue_instruction("LOAD", 2, b);
-			   	 queue_instruction("ADD", 1, 2);
-				 queue_instruction("STORE", a, 1);
-				 delete_symbol();}
-#line 1858 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 74:
-#line 400 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = get_last_index();
-				 int b = a-1;
-				 queue_instruction("LOAD", 1, a);
-				 queue_instruction("LOAD", 2, b);
-				 queue_instruction("ADD", 1, 2);
-			     queue_instruction("STORE", b, 1);
-				 delete_symbol(); }
-#line 1871 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 75:
-#line 409 "rule.y" /* yacc.c:1646  */
-    {
-				 int a = get_last_index();
-			 	 int b = a-1;
-				 queue_instruction("LOAD", 1, a);
-			 	 queue_instruction("LOAD", 2, b);
-				 queue_instruction("SUB", 1, 2);
-				 queue_instruction("STORE", b, 1);
-			 	 delete_symbol(); }
 #line 1884 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 76:
-#line 418 "rule.y" /* yacc.c:1646  */
+  case 67:
+#line 449 "rule.y" /* yacc.c:1646  */
     {
-				 int a = get_last_index();
-				 int b = a-1;
-				 queue_instruction("LOAD", 1, a);
-			 	 queue_instruction("LOAD", 2, b);
-				 queue_instruction("DIV", 1, 2);
-				 queue_instruction("STORE", b, 1);
-				 delete_symbol(); }
-#line 1897 "y.tab.c" /* yacc.c:1646  */
+				 int a = find_symbol((yyvsp[-3].str), get_curr_prof());
+				 int b = get_last_index();
+
+				 queue_instruction("AFC",14,b);
+				 queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+
+				 queue_instruction("AFC",14,a);
+				 queue_instruction("ADD",14,15);
+				 queue_instruction("STORE", 14, 1);
+				 delete_symbol();}
+#line 1901 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 77:
-#line 427 "rule.y" /* yacc.c:1646  */
+  case 68:
+#line 462 "rule.y" /* yacc.c:1646  */
     {
-		 		 int a = get_last_index();
-				 int b = a-1;
-				 queue_instruction("LOAD", 1, a);
-				 queue_instruction("LOAD", 2, b);
+				 int a = find_symbol((yyvsp[-4].str), get_curr_prof());
+				 int b = get_last_index();
+
+				queue_instruction("AFC",14,b);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+				 queue_instruction("AFC", 2, -1);
 				 queue_instruction("MUL", 1, 2);
-				 queue_instruction("STORE", b, 1);
-				 delete_symbol(); }
-#line 1910 "y.tab.c" /* yacc.c:1646  */
+
+			 	 queue_instruction("AFC",14,a);
+			 	 queue_instruction("ADD",14,15);
+				 queue_instruction("STORE", 14, 1);
+				 delete_symbol();}
+#line 1920 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 78:
-#line 436 "rule.y" /* yacc.c:1646  */
+  case 69:
+#line 477 "rule.y" /* yacc.c:1646  */
     {
-				add_temporary_symbol();
-	 			queue_instruction("LOAD", 1, find_symbol((yyvsp[0].str), get_curr_prof()));
-				queue_instruction("STORE", get_last_index(), 1); }
-#line 1919 "y.tab.c" /* yacc.c:1646  */
-    break;
+				 int a = find_symbol((yyvsp[-2].str), get_curr_prof());
 
-  case 79:
-#line 441 "rule.y" /* yacc.c:1646  */
-    {
-				add_temporary_symbol();
-				queue_instruction("AFC", 1, (yyvsp[0].nb));
-				queue_instruction("STORE", get_last_index(), 1); }
-#line 1928 "y.tab.c" /* yacc.c:1646  */
-    break;
+				 queue_instruction("AFC",14,a);
+			 	 queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
 
-  case 80:
-#line 445 "rule.y" /* yacc.c:1646  */
-    {
-				//we always have the result in the last var ? 
-			 }
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("ADD", 1, 2);
+
+				 queue_instruction("STORE", 14, 1);}
 #line 1936 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 81:
-#line 449 "rule.y" /* yacc.c:1646  */
+  case 70:
+#line 489 "rule.y" /* yacc.c:1646  */
+    {
+				 int a = find_symbol((yyvsp[-2].str), get_curr_prof());
+				 queue_instruction("AFC",14,a);
+				 queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+				 queue_instruction("AFC", 2, 1);
+				 queue_instruction("SUB", 1, 2);
+				 queue_instruction("STORE", 14, 1);}
+#line 1949 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 71:
+#line 498 "rule.y" /* yacc.c:1646  */
+    {
+				 int a = find_symbol((yyvsp[-3].str), get_curr_prof());
+				 int b = get_last_index();
+
+				 queue_instruction("AFC",14,a);
+				 queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+
+				 queue_instruction("AFC",14,b);
+				 queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 2, 14);
+
+				 queue_instruction("SUB", 1, 2);
+
+				 queue_instruction("AFC",14,a);
+				 queue_instruction("ADD",14,15);
+				 queue_instruction("STORE", 14, 1);
+				 delete_symbol();}
+#line 1972 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 72:
+#line 517 "rule.y" /* yacc.c:1646  */
+    {
+				 int a = find_symbol((yyvsp[-3].str), get_curr_prof());
+				 int b = get_last_index();
+
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+
+				queue_instruction("AFC",14,b);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 2, 14);
+
+			   	 queue_instruction("ADD", 1, 2);
+
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("STORE", 14, 1);
+				 delete_symbol();}
+#line 1995 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 73:
+#line 539 "rule.y" /* yacc.c:1646  */
+    {
+				 int a = get_last_index();
+				 int b = a-1;
+
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+
+				queue_instruction("AFC",14,b);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 2, 14);
+
+				 queue_instruction("ADD", 1, 2);
+			     queue_instruction("STORE", 14, 1);
+				 delete_symbol(); }
+#line 2015 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 74:
+#line 555 "rule.y" /* yacc.c:1646  */
+    {
+				 int a = get_last_index();
+			 	 int b = a-1;
+
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+
+				queue_instruction("AFC",14,b);
+				queue_instruction("ADD",14,15);
+			 	 queue_instruction("LOAD", 2, 14);
+
+				 queue_instruction("SUB", 1, 2);
+				 queue_instruction("STORE", 14, 1);
+			 	 delete_symbol(); }
+#line 2035 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 75:
+#line 571 "rule.y" /* yacc.c:1646  */
+    {
+				 int a = get_last_index();
+				 int b = a-1;
+
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+
+				queue_instruction("AFC",14,b);
+				queue_instruction("ADD",14,15);
+			 	 queue_instruction("LOAD", 2, 14);
+
+				 queue_instruction("DIV", 1, 2);
+				 queue_instruction("STORE", 14, 1);
+				 delete_symbol(); }
+#line 2055 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 76:
+#line 587 "rule.y" /* yacc.c:1646  */
+    {
+		 		 int a = get_last_index();
+				 int b = a-1;
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 1, 14);
+
+				queue_instruction("AFC",14,b);
+				queue_instruction("ADD",14,15);
+				 queue_instruction("LOAD", 2, 14);
+
+				 queue_instruction("MUL", 1, 2);
+				 queue_instruction("STORE", 14, 1);
+				 delete_symbol(); }
+#line 2074 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 77:
+#line 602 "rule.y" /* yacc.c:1646  */
     {
 				add_temporary_symbol();
+				int a=find_symbol((yyvsp[0].str), get_curr_prof());
+				int b=get_last_index();
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+	 			queue_instruction("LOAD", 1, 14);
+
+				queue_instruction("AFC",14,b);
+				queue_instruction("ADD",14,15);
+				queue_instruction("STORE", 14, 1); }
+#line 2090 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 78:
+#line 614 "rule.y" /* yacc.c:1646  */
+    {
+				add_temporary_symbol();
+				int a=get_last_index();
+				queue_instruction("AFC", 1, (yyvsp[0].nb));
+
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				queue_instruction("STORE",14, 1); }
+#line 2103 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 79:
+#line 622 "rule.y" /* yacc.c:1646  */
+    {
+				//we always have the result in the last var ? 
+			 }
+#line 2111 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 80:
+#line 626 "rule.y" /* yacc.c:1646  */
+    {
+				add_temporary_symbol();
+				int a= get_last_index();
 				queue_instruction("AFC", 1, (yyvsp[-1].nb));
 				queue_instruction("AFC", 2, -1);
 				queue_instruction("MUL", 1, 2);
-				queue_instruction("STORE", get_last_index(), 1); }
-#line 1947 "y.tab.c" /* yacc.c:1646  */
+
+				queue_instruction("AFC",14,a);
+				queue_instruction("ADD",14,15);
+				queue_instruction("STORE", 14, 1); }
+#line 2126 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 82:
+#line 643 "rule.y" /* yacc.c:1646  */
+    {/*connected*/}
+#line 2132 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 462 "rule.y" /* yacc.c:1646  */
-    {/*connected*/}
-#line 1953 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 84:
-#line 462 "rule.y" /* yacc.c:1646  */
+#line 643 "rule.y" /* yacc.c:1646  */
     {
 	
 		queue_instruction("CALL",find_symbol((yyvsp[-4].str),0),0);}
-#line 1961 "y.tab.c" /* yacc.c:1646  */
+#line 2140 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1965 "y.tab.c" /* yacc.c:1646  */
+#line 2144 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2189,7 +2368,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 466 "rule.y" /* yacc.c:1906  */
+#line 647 "rule.y" /* yacc.c:1906  */
 
 
 
@@ -2209,7 +2388,13 @@ int main() {
 
 //exit(-1);
 	yyparse();
+
+//	printALllInst();
+//	printf("\n\n");
+
 	execute_all_instructions();
+
+printAllInst();
 	print_table();
 
 	for(int i=0; i<=get_last_index(); i++){

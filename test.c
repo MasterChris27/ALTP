@@ -1,18 +1,21 @@
 
+int add(int a,int b){
+
+int z;
+z=a+b;
+string 10;
+};
+
+
 
 main() {
 
-int a=1;
-int b;
+int a=3;
+int b=5;
+int c=1;
+int z;
 
-if(a==1){
-if (a == 1) {
-	b=3;
-} else {
-b = 3333333;
-}
-} else {
-	b = 4;
-}
+z=3*a;
 
+c=b+c;
 }
