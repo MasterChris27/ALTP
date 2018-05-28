@@ -56,8 +56,15 @@ main return tMAIN;
 				return tVAR;
 					  };
 
-[a-zA-Z][_a-zA-Z0-9]+[_][(] {  
-						yylval.str = strdup(yytext);
-				return tFUNCNAME;
-					  };
+
+
+
+
+
+
+
+
+
+
+
 

@@ -76,10 +76,9 @@ extern int yydebug;
     tLESS = 286,
     tLESSEQUAL = 287,
     tMOREEQUAL = 288,
-    tMINUSEQUAL = 287,
-    tPLUSEQUAL = 288,
-    tRETURN = 290,
-    tFUNCNAME = 289
+    tMINUSEQUAL = 289,
+    tPLUSEQUAL = 290,
+    tRETURN = 291
   };
 #endif
 
@@ -88,12 +87,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 16 "rule.y" /* yacc.c:1909  */
+#line 15 "rule.y" /* yacc.c:1909  */
 
 	int nb;
 	char* str;
 
-#line 93 "rule.tab.h" /* yacc.c:1909  */
+#line 96 "rule.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -7,8 +7,9 @@ int b;
 
 if(a==1){
 b=3;}
-int i=0; 
-for(i=0;i<b;i++){
-	a=a+i;
+ 
+for(int i=1;i<b;i++){
+	a=a*i;
 }
+
 }

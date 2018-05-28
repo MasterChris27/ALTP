@@ -2,1282 +2,1830 @@ Terminaux inutilisés dans la grammaire
 
    tTAB
    tDOLLAR
-   tSTRING
+   tRETURN
 
 
-État 16 conflits: 1 réduction/réduction
+La règle est inutile dans l'analyseur à cause de conflits
+
+   60 $@14: %empty
+
+
+État 34 conflits: 1 réduction/réduction
+État 44 conflits: 1 réduction/réduction
+État 56 conflits: 3 réduction/réduction
 
 
 Grammaire
 
     0 $accept: Main $end
 
-    1 Main: tMAIN tPO tPC Body
+    1 $@1: %empty
 
-    2 Body: tACO Instruction tACC
+    2 $@2: %empty
 
-    3 Instruction: Instructions Instruction
-    4            | Instructions
-    5            | %empty
+    3 Main: DeclFunction $@1 tMAIN $@2 tPO tPC Body
 
-    6 Instructions: Calcul
-    7             | For
-    8             | While
-    9             | Print
-   10             | Declaration
-   11             | If
+    4 $@3: %empty
 
-   12 Declaration: vartype Declarations tFINSTR
+    5 DeclFunction: vartype tVAR $@3 tPO Params tPC FuncBody tFINSTR
+    6             | %empty
 
-   13 Declarations: Multideclaration Declarations
-   14             | Lastdeclaration
+    7 Params: Param NextParam
+    8       | %empty
 
-   15 Multideclaration: tVAR tVIRGULE
+    9 NextParam: tVIRGULE Param
+   10          | %empty
 
-   16 Lastdeclaration: tVAR
+   11 Param: vartype tVAR
+   12      | tVAR
 
-   17 vartype: tINT
-   18        | tCONST
+   13 FuncBody: tACO FuncInstr tACC
 
-   19 Print: tPRINTF tPO tVAR tPC tFINSTR
+   14 FuncInstr: FuncInstrs FuncInstr
+   15          | FuncInstrs
+   16          | %empty
 
-   20 $@1: %empty
+   17 FuncInstrs: Instructions
+   18           | RetVal
 
-   21 $@2: %empty
+   19 RetVal: tSTRING tINTNR tFINSTR
 
-   22 If: tIF tPO Condition tPC $@1 Body $@2 Else
+   20 $@4: %empty
 
-   23 Else: tELSE Body
-   24     | %empty
+   21 Body: tACO Instruction $@4 tACC
 
-   25 Condition: Expression tCHECKEQ Expression
-   26          | Expression tLESS Expression
-   27          | Expression tCHECKHIGHER Expression
-   28          | Expression tLESSEQUAL Expression
-   29          | Expression tMOREEQUAL Expression
+   22 Instruction: Instructions Instruction
+   23            | Instructions
+   24            | %empty
 
-   30 $@3: %empty
+   25 Instructions: Calcul
+   26             | For
+   27             | While
+   28             | Print
+   29             | Declaration
+   30             | If
 
-   31 $@4: %empty
+   31 Declaration: vartype Declarations tFINSTR
 
-   32 While: tWHILE tPO $@3 Condition tPC $@4 Body
+   32 Declarations: Multideclaration Declarations
+   33             | Lastdeclaration
 
-   33 $@5: %empty
+   34 Multideclaration: tVAR tVIRGULE
+   35                 | tVAR tEQUAL tINTNR tVIRGULE
 
-   34 $@6: %empty
+   36 Lastdeclaration: tVAR
+   37                | tVAR tEQUAL tINTNR
 
-   35 $@7: %empty
+   38 vartype: tINT
+   39        | tCONST
 
-   36 $@8: %empty
+   40 Print: tPRINTF tPO tVAR tPC tFINSTR
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   41 $@5: %empty
 
-   38 increment: %empty
-   39          | tVAR tPLUSPLUS
-   40          | tVAR tMINUSMINUS
+   42 $@6: %empty
 
-   41 Calcul: tVAR tEQUAL Expression tFINSTR
-   42       | tVAR tEQUAL tSUBTRACT Expression tFINSTR
-   43       | tVAR tPLUSPLUS tFINSTR
-   44       | tVAR tMINUSMINUS tFINSTR
-   45       | tVAR tSUBTRACT tEQUAL Expression tFINSTR
-   46       | tVAR tADD tEQUAL Expression
+   43 $@7: %empty
 
-   47 Expression: Expression tADD Expression
-   48           | Expression tSUBTRACT Expression
-   49           | Expression tDIVIDE Expression
-   50           | Expression tMULTIPLY Expression
-   51           | tVAR
-   52           | tINTNR
-   53           | tPO tSUBTRACT tINTNR tPC
-   54           | tPO Expression tPC
+   44 If: tIF $@5 tPO Condition tPC $@6 Body $@7 Else
+
+   45 Else: tELSE Body
+   46     | %empty
+
+   47 Condition: Expression tCHECKEQ Expression
+   48          | Expression tLESS Expression
+   49          | Expression tCHECKHIGHER Expression
+   50          | Expression tLESSEQUAL Expression
+   51          | Expression tMOREEQUAL Expression
+
+   52 $@8: %empty
+
+   53 $@9: %empty
+
+   54 While: tWHILE $@8 tPO Condition tPC $@9 Body
+
+   55 $@10: %empty
+
+   56 $@11: %empty
+
+   57 $@12: %empty
+
+   58 $@13: %empty
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body
+
+   60 $@14: %empty
+
+   61 $@15: %empty
+
+   62 $@16: %empty
+
+   63 $@17: %empty
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body
+
+   65 DeclCalc: Declaration
+   66         | Calcul
+
+   67 Calcul: tVAR tEQUAL Expression tFINSTR
+   68       | tVAR tEQUAL tSUBTRACT Expression tFINSTR
+   69       | tVAR tPLUSPLUS tFINSTR
+   70       | tVAR tMINUSMINUS tFINSTR
+   71       | tVAR tMINUSEQUAL Expression tFINSTR
+   72       | tVAR tPLUSEQUAL Expression tFINSTR
+
+   73 Expression: Expression tADD Expression
+   74           | Expression tSUBTRACT Expression
+   75           | Expression tDIVIDE Expression
+   76           | Expression tMULTIPLY Expression
+   77           | tVAR
+   78           | tINTNR
+   79           | Function
+   80           | tPO tSUBTRACT tINTNR tPC
+   81           | tPO Expression tPC
+
+   82 $@18: %empty
+
+   83 Function: tVAR tPO $@18 Param tPC
 
 
 Terminaux, suivis des règles où ils apparaissent
 
 $end (0) 0
 error (256)
-tINT (258) 17 37
-tACO (259) 2
-tACC (260) 2
-tCONST (261) 18
-tADD (262) 46 47
-tSUBTRACT (263) 42 45 48 53
-tDIVIDE (264) 49
-tMULTIPLY (265) 50
-tEQUAL (266) 37 41 42 45 46
-tPLUSPLUS (267) 39 43
-tMINUSMINUS (268) 40 44
-tIF (269) 22
-tELSE (270) 23
-tCHECKEQ (271) 25
-tPO (272) 1 19 22 32 37 53 54
-tPC (273) 1 19 22 32 37 53 54
+tINT (258) 38
+tACO (259) 13 21
+tACC (260) 13 21
+tCONST (261) 39
+tADD (262) 73
+tSUBTRACT (263) 68 74 80
+tDIVIDE (264) 75
+tMULTIPLY (265) 76
+tEQUAL (266) 35 37 67 68
+tPLUSPLUS (267) 59 69
+tMINUSMINUS (268) 64 70
+tIF (269) 44
+tELSE (270) 45
+tCHECKEQ (271) 47
+tPO (272) 3 5 40 44 54 59 64 80 81 83
+tPC (273) 3 5 40 44 54 59 64 80 81 83
 tTAB (274)
-tVIRGULE (275) 15
+tVIRGULE (275) 9 34 35
 tDOLLAR (276)
-tFINSTR (277) 12 19 37 41 42 43 44 45
-tINTNR (278) 37 52 53
-tWHILE (279) 32
-tPRINTF (280) 19
-tMAIN (281) 1
-tVAR (282) 15 16 19 37 39 40 41 42 43 44 45 46 51
-tFOR (283) 37
-tSTRING (284)
-tCHECKHIGHER (285) 27
-tLESS (286) 26
-tLESSEQUAL (287) 28
-tMOREEQUAL (288) 29
+tFINSTR (277) 5 19 31 40 59 64 67 68 69 70 71 72
+tINTNR (278) 19 35 37 78 80
+tWHILE (279) 54
+tPRINTF (280) 40
+tMAIN (281) 3
+tVAR (282) 5 11 12 34 35 36 37 40 59 64 67 68 69 70 71 72 77 83
+tFOR (283) 59 64
+tSTRING (284) 19
+tCHECKHIGHER (285) 49
+tLESS (286) 48
+tLESSEQUAL (287) 50
+tMOREEQUAL (288) 51
+tMINUSEQUAL (289) 71
+tPLUSEQUAL (290) 72
+tRETURN (291)
 
 
 Non-terminaux, suivis des règles où ils apparaissent
 
-$accept (34)
+$accept (37)
     à gauche: 0
-Main (35)
-    à gauche: 1, à droite: 0
-Body (36)
-    à gauche: 2, à droite: 1 22 23 32 37
-Instruction (37)
-    à gauche: 3 4 5, à droite: 2 3
-Instructions (38)
-    à gauche: 6 7 8 9 10 11, à droite: 3 4
-Declaration (39)
-    à gauche: 12, à droite: 10
-Declarations (40)
-    à gauche: 13 14, à droite: 12 13
-Multideclaration (41)
-    à gauche: 15, à droite: 13
-Lastdeclaration (42)
-    à gauche: 16, à droite: 14
-vartype (43)
-    à gauche: 17 18, à droite: 12
-Print (44)
-    à gauche: 19, à droite: 9
-If (45)
-    à gauche: 22, à droite: 11
-$@1 (46)
-    à gauche: 20, à droite: 22
-$@2 (47)
-    à gauche: 21, à droite: 22
-Else (48)
-    à gauche: 23 24, à droite: 22
-Condition (49)
-    à gauche: 25 26 27 28 29, à droite: 22 32 37
-While (50)
-    à gauche: 32, à droite: 8
-$@3 (51)
-    à gauche: 30, à droite: 32
-$@4 (52)
-    à gauche: 31, à droite: 32
-For (53)
-    à gauche: 37, à droite: 7
-$@5 (54)
-    à gauche: 33, à droite: 37
-$@6 (55)
-    à gauche: 34, à droite: 37
-$@7 (56)
-    à gauche: 35, à droite: 37
-$@8 (57)
-    à gauche: 36, à droite: 37
-increment (58)
-    à gauche: 38 39 40, à droite: 37
-Calcul (59)
-    à gauche: 41 42 43 44 45 46, à droite: 6
-Expression (60)
-    à gauche: 47 48 49 50 51 52 53 54, à droite: 25 26 27 28 29 41
-    42 45 46 47 48 49 50 54
+Main (38)
+    à gauche: 3, à droite: 0
+$@1 (39)
+    à gauche: 1, à droite: 3
+$@2 (40)
+    à gauche: 2, à droite: 3
+DeclFunction (41)
+    à gauche: 5 6, à droite: 3
+$@3 (42)
+    à gauche: 4, à droite: 5
+Params (43)
+    à gauche: 7 8, à droite: 5
+NextParam (44)
+    à gauche: 9 10, à droite: 7
+Param (45)
+    à gauche: 11 12, à droite: 7 9 83
+FuncBody (46)
+    à gauche: 13, à droite: 5
+FuncInstr (47)
+    à gauche: 14 15 16, à droite: 13 14
+FuncInstrs (48)
+    à gauche: 17 18, à droite: 14 15
+RetVal (49)
+    à gauche: 19, à droite: 18
+Body (50)
+    à gauche: 21, à droite: 3 44 45 54 59 64
+$@4 (51)
+    à gauche: 20, à droite: 21
+Instruction (52)
+    à gauche: 22 23 24, à droite: 21 22
+Instructions (53)
+    à gauche: 25 26 27 28 29 30, à droite: 17 22 23
+Declaration (54)
+    à gauche: 31, à droite: 29 65
+Declarations (55)
+    à gauche: 32 33, à droite: 31 32
+Multideclaration (56)
+    à gauche: 34 35, à droite: 32
+Lastdeclaration (57)
+    à gauche: 36 37, à droite: 33
+vartype (58)
+    à gauche: 38 39, à droite: 5 11 31
+Print (59)
+    à gauche: 40, à droite: 28
+If (60)
+    à gauche: 44, à droite: 30
+$@5 (61)
+    à gauche: 41, à droite: 44
+$@6 (62)
+    à gauche: 42, à droite: 44
+$@7 (63)
+    à gauche: 43, à droite: 44
+Else (64)
+    à gauche: 45 46, à droite: 44
+Condition (65)
+    à gauche: 47 48 49 50 51, à droite: 44 54 59 64
+While (66)
+    à gauche: 54, à droite: 27
+$@8 (67)
+    à gauche: 52, à droite: 54
+$@9 (68)
+    à gauche: 53, à droite: 54
+For (69)
+    à gauche: 59 64, à droite: 26
+$@10 (70)
+    à gauche: 55, à droite: 59
+$@11 (71)
+    à gauche: 56, à droite: 59
+$@12 (72)
+    à gauche: 57, à droite: 59
+$@13 (73)
+    à gauche: 58, à droite: 59
+$@14 (74)
+    à gauche: 60, à droite: 64
+$@15 (75)
+    à gauche: 61, à droite: 64
+$@16 (76)
+    à gauche: 62, à droite: 64
+$@17 (77)
+    à gauche: 63, à droite: 64
+DeclCalc (78)
+    à gauche: 65 66, à droite: 59 64
+Calcul (79)
+    à gauche: 67 68 69 70 71 72, à droite: 25 66
+Expression (80)
+    à gauche: 73 74 75 76 77 78 79 80 81, à droite: 47 48 49 50 51
+    67 68 71 72 73 74 75 76 81
+Function (81)
+    à gauche: 83, à droite: 79
+$@18 (82)
+    à gauche: 82, à droite: 83
 
 
 État 0
 
     0 $accept: . Main $end
 
-    tMAIN  décalage et aller à l'état 1
+    tINT    décalage et aller à l'état 1
+    tCONST  décalage et aller à l'état 2
 
-    Main  aller à l'état 2
+    $défaut  réduction par utilisation de la règle 6 (DeclFunction)
+
+    Main          aller à l'état 3
+    DeclFunction  aller à l'état 4
+    vartype       aller à l'état 5
 
 
 État 1
 
-    1 Main: tMAIN . tPO tPC Body
+   38 vartype: tINT .
 
-    tPO  décalage et aller à l'état 3
+    $défaut  réduction par utilisation de la règle 38 (vartype)
 
 
 État 2
 
-    0 $accept: Main . $end
+   39 vartype: tCONST .
 
-    $end  décalage et aller à l'état 4
+    $défaut  réduction par utilisation de la règle 39 (vartype)
 
 
 État 3
 
-    1 Main: tMAIN tPO . tPC Body
+    0 $accept: Main . $end
 
-    tPC  décalage et aller à l'état 5
+    $end  décalage et aller à l'état 6
 
 
 État 4
+
+    3 Main: DeclFunction . $@1 tMAIN $@2 tPO tPC Body
+
+    $défaut  réduction par utilisation de la règle 1 ($@1)
+
+    $@1  aller à l'état 7
+
+
+État 5
+
+    5 DeclFunction: vartype . tVAR $@3 tPO Params tPC FuncBody tFINSTR
+
+    tVAR  décalage et aller à l'état 8
+
+
+État 6
 
     0 $accept: Main $end .
 
     $défaut  accepter
 
 
-État 5
-
-    1 Main: tMAIN tPO tPC . Body
-
-    tACO  décalage et aller à l'état 6
-
-    Body  aller à l'état 7
-
-
-État 6
-
-    2 Body: tACO . Instruction tACC
-
-    tINT     décalage et aller à l'état 8
-    tCONST   décalage et aller à l'état 9
-    tIF      décalage et aller à l'état 10
-    tWHILE   décalage et aller à l'état 11
-    tPRINTF  décalage et aller à l'état 12
-    tVAR     décalage et aller à l'état 13
-    tFOR     décalage et aller à l'état 14
-
-    $défaut  réduction par utilisation de la règle 5 (Instruction)
-
-    Instruction   aller à l'état 15
-    Instructions  aller à l'état 16
-    Declaration   aller à l'état 17
-    vartype       aller à l'état 18
-    Print         aller à l'état 19
-    If            aller à l'état 20
-    While         aller à l'état 21
-    For           aller à l'état 22
-    Calcul        aller à l'état 23
-
-
 État 7
 
-    1 Main: tMAIN tPO tPC Body .
+    3 Main: DeclFunction $@1 . tMAIN $@2 tPO tPC Body
 
-    $défaut  réduction par utilisation de la règle 1 (Main)
+    tMAIN  décalage et aller à l'état 9
 
 
 État 8
 
-   17 vartype: tINT .
+    5 DeclFunction: vartype tVAR . $@3 tPO Params tPC FuncBody tFINSTR
 
-    $défaut  réduction par utilisation de la règle 17 (vartype)
+    $défaut  réduction par utilisation de la règle 4 ($@3)
+
+    $@3  aller à l'état 10
 
 
 État 9
 
-   18 vartype: tCONST .
+    3 Main: DeclFunction $@1 tMAIN . $@2 tPO tPC Body
 
-    $défaut  réduction par utilisation de la règle 18 (vartype)
+    $défaut  réduction par utilisation de la règle 2 ($@2)
+
+    $@2  aller à l'état 11
 
 
 État 10
 
-   22 If: tIF . tPO Condition tPC $@1 Body $@2 Else
+    5 DeclFunction: vartype tVAR $@3 . tPO Params tPC FuncBody tFINSTR
 
-    tPO  décalage et aller à l'état 24
+    tPO  décalage et aller à l'état 12
 
 
 État 11
 
-   32 While: tWHILE . tPO $@3 Condition tPC $@4 Body
+    3 Main: DeclFunction $@1 tMAIN $@2 . tPO tPC Body
 
-    tPO  décalage et aller à l'état 25
+    tPO  décalage et aller à l'état 13
 
 
 État 12
 
-   19 Print: tPRINTF . tPO tVAR tPC tFINSTR
+    5 DeclFunction: vartype tVAR $@3 tPO . Params tPC FuncBody tFINSTR
 
-    tPO  décalage et aller à l'état 26
+    tINT    décalage et aller à l'état 1
+    tCONST  décalage et aller à l'état 2
+    tVAR    décalage et aller à l'état 14
+
+    $défaut  réduction par utilisation de la règle 8 (Params)
+
+    Params   aller à l'état 15
+    Param    aller à l'état 16
+    vartype  aller à l'état 17
 
 
 État 13
 
-   41 Calcul: tVAR . tEQUAL Expression tFINSTR
-   42       | tVAR . tEQUAL tSUBTRACT Expression tFINSTR
-   43       | tVAR . tPLUSPLUS tFINSTR
-   44       | tVAR . tMINUSMINUS tFINSTR
-   45       | tVAR . tSUBTRACT tEQUAL Expression tFINSTR
-   46       | tVAR . tADD tEQUAL Expression
+    3 Main: DeclFunction $@1 tMAIN $@2 tPO . tPC Body
 
-    tADD         décalage et aller à l'état 27
-    tSUBTRACT    décalage et aller à l'état 28
-    tEQUAL       décalage et aller à l'état 29
-    tPLUSPLUS    décalage et aller à l'état 30
-    tMINUSMINUS  décalage et aller à l'état 31
+    tPC  décalage et aller à l'état 18
 
 
 État 14
 
-   37 For: tFOR . tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   12 Param: tVAR .
 
-    tPO  décalage et aller à l'état 32
+    $défaut  réduction par utilisation de la règle 12 (Param)
 
 
 État 15
 
-    2 Body: tACO Instruction . tACC
+    5 DeclFunction: vartype tVAR $@3 tPO Params . tPC FuncBody tFINSTR
 
-    tACC  décalage et aller à l'état 33
+    tPC  décalage et aller à l'état 19
 
 
 État 16
 
-    3 Instruction: Instructions . Instruction
-    4            | Instructions .
+    7 Params: Param . NextParam
 
-    tINT     décalage et aller à l'état 8
-    tCONST   décalage et aller à l'état 9
-    tIF      décalage et aller à l'état 10
-    tWHILE   décalage et aller à l'état 11
-    tPRINTF  décalage et aller à l'état 12
-    tVAR     décalage et aller à l'état 13
-    tFOR     décalage et aller à l'état 14
+    tVIRGULE  décalage et aller à l'état 20
 
-    tACC      réduction par utilisation de la règle 4 (Instruction)
-    tACC      [réduction par utilisation de la règle 5 (Instruction)]
-    $défaut  réduction par utilisation de la règle 4 (Instruction)
+    $défaut  réduction par utilisation de la règle 10 (NextParam)
 
-    Instruction   aller à l'état 34
-    Instructions  aller à l'état 16
-    Declaration   aller à l'état 17
-    vartype       aller à l'état 18
-    Print         aller à l'état 19
-    If            aller à l'état 20
-    While         aller à l'état 21
-    For           aller à l'état 22
-    Calcul        aller à l'état 23
+    NextParam  aller à l'état 21
 
 
 État 17
 
-   10 Instructions: Declaration .
+   11 Param: vartype . tVAR
 
-    $défaut  réduction par utilisation de la règle 10 (Instructions)
+    tVAR  décalage et aller à l'état 22
 
 
 État 18
 
-   12 Declaration: vartype . Declarations tFINSTR
+    3 Main: DeclFunction $@1 tMAIN $@2 tPO tPC . Body
 
-    tVAR  décalage et aller à l'état 35
+    tACO  décalage et aller à l'état 23
 
-    Declarations      aller à l'état 36
-    Multideclaration  aller à l'état 37
-    Lastdeclaration   aller à l'état 38
+    Body  aller à l'état 24
 
 
 État 19
 
-    9 Instructions: Print .
+    5 DeclFunction: vartype tVAR $@3 tPO Params tPC . FuncBody tFINSTR
 
-    $défaut  réduction par utilisation de la règle 9 (Instructions)
+    tACO  décalage et aller à l'état 25
+
+    FuncBody  aller à l'état 26
 
 
 État 20
 
-   11 Instructions: If .
+    9 NextParam: tVIRGULE . Param
 
-    $défaut  réduction par utilisation de la règle 11 (Instructions)
+    tINT    décalage et aller à l'état 1
+    tCONST  décalage et aller à l'état 2
+    tVAR    décalage et aller à l'état 14
+
+    Param    aller à l'état 27
+    vartype  aller à l'état 17
 
 
 État 21
 
-    8 Instructions: While .
+    7 Params: Param NextParam .
 
-    $défaut  réduction par utilisation de la règle 8 (Instructions)
+    $défaut  réduction par utilisation de la règle 7 (Params)
 
 
 État 22
 
-    7 Instructions: For .
+   11 Param: vartype tVAR .
 
-    $défaut  réduction par utilisation de la règle 7 (Instructions)
+    $défaut  réduction par utilisation de la règle 11 (Param)
 
 
 État 23
 
-    6 Instructions: Calcul .
+   21 Body: tACO . Instruction $@4 tACC
 
-    $défaut  réduction par utilisation de la règle 6 (Instructions)
+    tINT     décalage et aller à l'état 1
+    tCONST   décalage et aller à l'état 2
+    tIF      décalage et aller à l'état 28
+    tWHILE   décalage et aller à l'état 29
+    tPRINTF  décalage et aller à l'état 30
+    tVAR     décalage et aller à l'état 31
+    tFOR     décalage et aller à l'état 32
+
+    $défaut  réduction par utilisation de la règle 24 (Instruction)
+
+    Instruction   aller à l'état 33
+    Instructions  aller à l'état 34
+    Declaration   aller à l'état 35
+    vartype       aller à l'état 36
+    Print         aller à l'état 37
+    If            aller à l'état 38
+    While         aller à l'état 39
+    For           aller à l'état 40
+    Calcul        aller à l'état 41
 
 
 État 24
 
-   22 If: tIF tPO . Condition tPC $@1 Body $@2 Else
+    3 Main: DeclFunction $@1 tMAIN $@2 tPO tPC Body .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Condition   aller à l'état 42
-    Expression  aller à l'état 43
+    $défaut  réduction par utilisation de la règle 3 (Main)
 
 
 État 25
 
-   32 While: tWHILE tPO . $@3 Condition tPC $@4 Body
+   13 FuncBody: tACO . FuncInstr tACC
 
-    $défaut  réduction par utilisation de la règle 30 ($@3)
+    tINT     décalage et aller à l'état 1
+    tCONST   décalage et aller à l'état 2
+    tIF      décalage et aller à l'état 28
+    tWHILE   décalage et aller à l'état 29
+    tPRINTF  décalage et aller à l'état 30
+    tVAR     décalage et aller à l'état 31
+    tFOR     décalage et aller à l'état 32
+    tSTRING  décalage et aller à l'état 42
 
-    $@3  aller à l'état 44
+    $défaut  réduction par utilisation de la règle 16 (FuncInstr)
+
+    FuncInstr     aller à l'état 43
+    FuncInstrs    aller à l'état 44
+    RetVal        aller à l'état 45
+    Instructions  aller à l'état 46
+    Declaration   aller à l'état 35
+    vartype       aller à l'état 36
+    Print         aller à l'état 37
+    If            aller à l'état 38
+    While         aller à l'état 39
+    For           aller à l'état 40
+    Calcul        aller à l'état 41
 
 
 État 26
 
-   19 Print: tPRINTF tPO . tVAR tPC tFINSTR
+    5 DeclFunction: vartype tVAR $@3 tPO Params tPC FuncBody . tFINSTR
 
-    tVAR  décalage et aller à l'état 45
+    tFINSTR  décalage et aller à l'état 47
 
 
 État 27
 
-   46 Calcul: tVAR tADD . tEQUAL Expression
+    9 NextParam: tVIRGULE Param .
 
-    tEQUAL  décalage et aller à l'état 46
+    $défaut  réduction par utilisation de la règle 9 (NextParam)
 
 
 État 28
 
-   45 Calcul: tVAR tSUBTRACT . tEQUAL Expression tFINSTR
+   44 If: tIF . $@5 tPO Condition tPC $@6 Body $@7 Else
 
-    tEQUAL  décalage et aller à l'état 47
+    $défaut  réduction par utilisation de la règle 41 ($@5)
+
+    $@5  aller à l'état 48
 
 
 État 29
 
-   41 Calcul: tVAR tEQUAL . Expression tFINSTR
-   42       | tVAR tEQUAL . tSUBTRACT Expression tFINSTR
+   54 While: tWHILE . $@8 tPO Condition tPC $@9 Body
 
-    tSUBTRACT  décalage et aller à l'état 48
-    tPO        décalage et aller à l'état 39
-    tINTNR     décalage et aller à l'état 40
-    tVAR       décalage et aller à l'état 41
+    $défaut  réduction par utilisation de la règle 52 ($@8)
 
-    Expression  aller à l'état 49
+    $@8  aller à l'état 49
 
 
 État 30
 
-   43 Calcul: tVAR tPLUSPLUS . tFINSTR
+   40 Print: tPRINTF . tPO tVAR tPC tFINSTR
 
-    tFINSTR  décalage et aller à l'état 50
+    tPO  décalage et aller à l'état 50
 
 
 État 31
 
-   44 Calcul: tVAR tMINUSMINUS . tFINSTR
+   67 Calcul: tVAR . tEQUAL Expression tFINSTR
+   68       | tVAR . tEQUAL tSUBTRACT Expression tFINSTR
+   69       | tVAR . tPLUSPLUS tFINSTR
+   70       | tVAR . tMINUSMINUS tFINSTR
+   71       | tVAR . tMINUSEQUAL Expression tFINSTR
+   72       | tVAR . tPLUSEQUAL Expression tFINSTR
 
-    tFINSTR  décalage et aller à l'état 51
+    tEQUAL       décalage et aller à l'état 51
+    tPLUSPLUS    décalage et aller à l'état 52
+    tMINUSMINUS  décalage et aller à l'état 53
+    tMINUSEQUAL  décalage et aller à l'état 54
+    tPLUSEQUAL   décalage et aller à l'état 55
 
 
 État 32
 
-   37 For: tFOR tPO . $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   59 For: tFOR . tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body
+   64    | tFOR . tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body
 
-    $défaut  réduction par utilisation de la règle 33 ($@5)
-
-    $@5  aller à l'état 52
+    tPO  décalage et aller à l'état 56
 
 
 État 33
 
-    2 Body: tACO Instruction tACC .
+   21 Body: tACO Instruction . $@4 tACC
 
-    $défaut  réduction par utilisation de la règle 2 (Body)
+    $défaut  réduction par utilisation de la règle 20 ($@4)
+
+    $@4  aller à l'état 57
 
 
 État 34
 
-    3 Instruction: Instructions Instruction .
+   22 Instruction: Instructions . Instruction
+   23            | Instructions .
 
-    $défaut  réduction par utilisation de la règle 3 (Instruction)
+    tINT     décalage et aller à l'état 1
+    tCONST   décalage et aller à l'état 2
+    tIF      décalage et aller à l'état 28
+    tWHILE   décalage et aller à l'état 29
+    tPRINTF  décalage et aller à l'état 30
+    tVAR     décalage et aller à l'état 31
+    tFOR     décalage et aller à l'état 32
+
+    tACC      réduction par utilisation de la règle 23 (Instruction)
+    tACC      [réduction par utilisation de la règle 24 (Instruction)]
+    $défaut  réduction par utilisation de la règle 23 (Instruction)
+
+    Instruction   aller à l'état 58
+    Instructions  aller à l'état 34
+    Declaration   aller à l'état 35
+    vartype       aller à l'état 36
+    Print         aller à l'état 37
+    If            aller à l'état 38
+    While         aller à l'état 39
+    For           aller à l'état 40
+    Calcul        aller à l'état 41
 
 
 État 35
 
-   15 Multideclaration: tVAR . tVIRGULE
-   16 Lastdeclaration: tVAR .
+   29 Instructions: Declaration .
 
-    tVIRGULE  décalage et aller à l'état 53
-
-    $défaut  réduction par utilisation de la règle 16 (Lastdeclaration)
+    $défaut  réduction par utilisation de la règle 29 (Instructions)
 
 
 État 36
 
-   12 Declaration: vartype Declarations . tFINSTR
+   31 Declaration: vartype . Declarations tFINSTR
 
-    tFINSTR  décalage et aller à l'état 54
+    tVAR  décalage et aller à l'état 59
+
+    Declarations      aller à l'état 60
+    Multideclaration  aller à l'état 61
+    Lastdeclaration   aller à l'état 62
 
 
 État 37
 
-   13 Declarations: Multideclaration . Declarations
+   28 Instructions: Print .
 
-    tVAR  décalage et aller à l'état 35
-
-    Declarations      aller à l'état 55
-    Multideclaration  aller à l'état 37
-    Lastdeclaration   aller à l'état 38
+    $défaut  réduction par utilisation de la règle 28 (Instructions)
 
 
 État 38
 
-   14 Declarations: Lastdeclaration .
+   30 Instructions: If .
 
-    $défaut  réduction par utilisation de la règle 14 (Declarations)
+    $défaut  réduction par utilisation de la règle 30 (Instructions)
 
 
 État 39
 
-   53 Expression: tPO . tSUBTRACT tINTNR tPC
-   54           | tPO . Expression tPC
+   27 Instructions: While .
 
-    tSUBTRACT  décalage et aller à l'état 56
-    tPO        décalage et aller à l'état 39
-    tINTNR     décalage et aller à l'état 40
-    tVAR       décalage et aller à l'état 41
-
-    Expression  aller à l'état 57
+    $défaut  réduction par utilisation de la règle 27 (Instructions)
 
 
 État 40
 
-   52 Expression: tINTNR .
+   26 Instructions: For .
 
-    $défaut  réduction par utilisation de la règle 52 (Expression)
+    $défaut  réduction par utilisation de la règle 26 (Instructions)
 
 
 État 41
 
-   51 Expression: tVAR .
+   25 Instructions: Calcul .
 
-    $défaut  réduction par utilisation de la règle 51 (Expression)
+    $défaut  réduction par utilisation de la règle 25 (Instructions)
 
 
 État 42
 
-   22 If: tIF tPO Condition . tPC $@1 Body $@2 Else
+   19 RetVal: tSTRING . tINTNR tFINSTR
 
-    tPC  décalage et aller à l'état 58
+    tINTNR  décalage et aller à l'état 63
 
 
 État 43
 
-   25 Condition: Expression . tCHECKEQ Expression
-   26          | Expression . tLESS Expression
-   27          | Expression . tCHECKHIGHER Expression
-   28          | Expression . tLESSEQUAL Expression
-   29          | Expression . tMOREEQUAL Expression
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   13 FuncBody: tACO FuncInstr . tACC
 
-    tADD          décalage et aller à l'état 59
-    tSUBTRACT     décalage et aller à l'état 60
-    tDIVIDE       décalage et aller à l'état 61
-    tMULTIPLY     décalage et aller à l'état 62
-    tCHECKEQ      décalage et aller à l'état 63
-    tCHECKHIGHER  décalage et aller à l'état 64
-    tLESS         décalage et aller à l'état 65
-    tLESSEQUAL    décalage et aller à l'état 66
-    tMOREEQUAL    décalage et aller à l'état 67
+    tACC  décalage et aller à l'état 64
 
 
 État 44
 
-   32 While: tWHILE tPO $@3 . Condition tPC $@4 Body
+   14 FuncInstr: FuncInstrs . FuncInstr
+   15          | FuncInstrs .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
+    tINT     décalage et aller à l'état 1
+    tCONST   décalage et aller à l'état 2
+    tIF      décalage et aller à l'état 28
+    tWHILE   décalage et aller à l'état 29
+    tPRINTF  décalage et aller à l'état 30
+    tVAR     décalage et aller à l'état 31
+    tFOR     décalage et aller à l'état 32
+    tSTRING  décalage et aller à l'état 42
 
-    Condition   aller à l'état 68
-    Expression  aller à l'état 43
+    tACC      réduction par utilisation de la règle 15 (FuncInstr)
+    tACC      [réduction par utilisation de la règle 16 (FuncInstr)]
+    $défaut  réduction par utilisation de la règle 15 (FuncInstr)
+
+    FuncInstr     aller à l'état 65
+    FuncInstrs    aller à l'état 44
+    RetVal        aller à l'état 45
+    Instructions  aller à l'état 46
+    Declaration   aller à l'état 35
+    vartype       aller à l'état 36
+    Print         aller à l'état 37
+    If            aller à l'état 38
+    While         aller à l'état 39
+    For           aller à l'état 40
+    Calcul        aller à l'état 41
 
 
 État 45
 
-   19 Print: tPRINTF tPO tVAR . tPC tFINSTR
+   18 FuncInstrs: RetVal .
 
-    tPC  décalage et aller à l'état 69
+    $défaut  réduction par utilisation de la règle 18 (FuncInstrs)
 
 
 État 46
 
-   46 Calcul: tVAR tADD tEQUAL . Expression
+   17 FuncInstrs: Instructions .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 70
+    $défaut  réduction par utilisation de la règle 17 (FuncInstrs)
 
 
 État 47
 
-   45 Calcul: tVAR tSUBTRACT tEQUAL . Expression tFINSTR
+    5 DeclFunction: vartype tVAR $@3 tPO Params tPC FuncBody tFINSTR .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 71
+    $défaut  réduction par utilisation de la règle 5 (DeclFunction)
 
 
 État 48
 
-   42 Calcul: tVAR tEQUAL tSUBTRACT . Expression tFINSTR
+   44 If: tIF $@5 . tPO Condition tPC $@6 Body $@7 Else
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 72
+    tPO  décalage et aller à l'état 66
 
 
 État 49
 
-   41 Calcul: tVAR tEQUAL Expression . tFINSTR
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   54 While: tWHILE $@8 . tPO Condition tPC $@9 Body
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-    tFINSTR    décalage et aller à l'état 73
+    tPO  décalage et aller à l'état 67
 
 
 État 50
 
-   43 Calcul: tVAR tPLUSPLUS tFINSTR .
+   40 Print: tPRINTF tPO . tVAR tPC tFINSTR
 
-    $défaut  réduction par utilisation de la règle 43 (Calcul)
+    tVAR  décalage et aller à l'état 68
 
 
 État 51
 
-   44 Calcul: tVAR tMINUSMINUS tFINSTR .
+   67 Calcul: tVAR tEQUAL . Expression tFINSTR
+   68       | tVAR tEQUAL . tSUBTRACT Expression tFINSTR
 
-    $défaut  réduction par utilisation de la règle 44 (Calcul)
+    tSUBTRACT  décalage et aller à l'état 69
+    tPO        décalage et aller à l'état 70
+    tINTNR     décalage et aller à l'état 71
+    tVAR       décalage et aller à l'état 72
+
+    Expression  aller à l'état 73
+    Function    aller à l'état 74
 
 
 État 52
 
-   37 For: tFOR tPO $@5 . tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   69 Calcul: tVAR tPLUSPLUS . tFINSTR
 
-    tINT  décalage et aller à l'état 74
+    tFINSTR  décalage et aller à l'état 75
 
 
 État 53
 
-   15 Multideclaration: tVAR tVIRGULE .
+   70 Calcul: tVAR tMINUSMINUS . tFINSTR
 
-    $défaut  réduction par utilisation de la règle 15 (Multideclaration)
+    tFINSTR  décalage et aller à l'état 76
 
 
 État 54
 
-   12 Declaration: vartype Declarations tFINSTR .
+   71 Calcul: tVAR tMINUSEQUAL . Expression tFINSTR
 
-    $défaut  réduction par utilisation de la règle 12 (Declaration)
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 77
+    Function    aller à l'état 74
 
 
 État 55
 
-   13 Declarations: Multideclaration Declarations .
+   72 Calcul: tVAR tPLUSEQUAL . Expression tFINSTR
 
-    $défaut  réduction par utilisation de la règle 13 (Declarations)
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 78
+    Function    aller à l'état 74
 
 
 État 56
 
-   53 Expression: tPO tSUBTRACT . tINTNR tPC
+   59 For: tFOR tPO . $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body
+   64    | tFOR tPO . $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body
 
-    tINTNR  décalage et aller à l'état 75
+    tINT      réduction par utilisation de la règle 55 ($@10)
+    tINT      [réduction par utilisation de la règle 60 ($@14)]
+    tCONST    réduction par utilisation de la règle 55 ($@10)
+    tCONST    [réduction par utilisation de la règle 60 ($@14)]
+    tVAR      réduction par utilisation de la règle 55 ($@10)
+    tVAR      [réduction par utilisation de la règle 60 ($@14)]
+    $défaut  réduction par utilisation de la règle 55 ($@10)
+
+    $@10  aller à l'état 79
+    $@14  aller à l'état 80
 
 
 État 57
 
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
-   54           | tPO Expression . tPC
+   21 Body: tACO Instruction $@4 . tACC
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-    tPC        décalage et aller à l'état 76
+    tACC  décalage et aller à l'état 81
 
 
 État 58
 
-   22 If: tIF tPO Condition tPC . $@1 Body $@2 Else
+   22 Instruction: Instructions Instruction .
 
-    $défaut  réduction par utilisation de la règle 20 ($@1)
-
-    $@1  aller à l'état 77
+    $défaut  réduction par utilisation de la règle 22 (Instruction)
 
 
 État 59
 
-   47 Expression: Expression tADD . Expression
+   34 Multideclaration: tVAR . tVIRGULE
+   35                 | tVAR . tEQUAL tINTNR tVIRGULE
+   36 Lastdeclaration: tVAR .
+   37                | tVAR . tEQUAL tINTNR
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
+    tEQUAL    décalage et aller à l'état 82
+    tVIRGULE  décalage et aller à l'état 83
 
-    Expression  aller à l'état 78
+    $défaut  réduction par utilisation de la règle 36 (Lastdeclaration)
 
 
 État 60
 
-   48 Expression: Expression tSUBTRACT . Expression
+   31 Declaration: vartype Declarations . tFINSTR
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 79
+    tFINSTR  décalage et aller à l'état 84
 
 
 État 61
 
-   49 Expression: Expression tDIVIDE . Expression
+   32 Declarations: Multideclaration . Declarations
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
+    tVAR  décalage et aller à l'état 59
 
-    Expression  aller à l'état 80
+    Declarations      aller à l'état 85
+    Multideclaration  aller à l'état 61
+    Lastdeclaration   aller à l'état 62
 
 
 État 62
 
-   50 Expression: Expression tMULTIPLY . Expression
+   33 Declarations: Lastdeclaration .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 81
+    $défaut  réduction par utilisation de la règle 33 (Declarations)
 
 
 État 63
 
-   25 Condition: Expression tCHECKEQ . Expression
+   19 RetVal: tSTRING tINTNR . tFINSTR
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 82
+    tFINSTR  décalage et aller à l'état 86
 
 
 État 64
 
-   27 Condition: Expression tCHECKHIGHER . Expression
+   13 FuncBody: tACO FuncInstr tACC .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 83
+    $défaut  réduction par utilisation de la règle 13 (FuncBody)
 
 
 État 65
 
-   26 Condition: Expression tLESS . Expression
+   14 FuncInstr: FuncInstrs FuncInstr .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Expression  aller à l'état 84
+    $défaut  réduction par utilisation de la règle 14 (FuncInstr)
 
 
 État 66
 
-   28 Condition: Expression tLESSEQUAL . Expression
+   44 If: tIF $@5 tPO . Condition tPC $@6 Body $@7 Else
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
 
-    Expression  aller à l'état 85
+    Condition   aller à l'état 87
+    Expression  aller à l'état 88
+    Function    aller à l'état 74
 
 
 État 67
 
-   29 Condition: Expression tMOREEQUAL . Expression
+   54 While: tWHILE $@8 tPO . Condition tPC $@9 Body
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
 
-    Expression  aller à l'état 86
+    Condition   aller à l'état 89
+    Expression  aller à l'état 88
+    Function    aller à l'état 74
 
 
 État 68
 
-   32 While: tWHILE tPO $@3 Condition . tPC $@4 Body
+   40 Print: tPRINTF tPO tVAR . tPC tFINSTR
 
-    tPC  décalage et aller à l'état 87
+    tPC  décalage et aller à l'état 90
 
 
 État 69
 
-   19 Print: tPRINTF tPO tVAR tPC . tFINSTR
+   68 Calcul: tVAR tEQUAL tSUBTRACT . Expression tFINSTR
 
-    tFINSTR  décalage et aller à l'état 88
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 91
+    Function    aller à l'état 74
 
 
 État 70
 
-   46 Calcul: tVAR tADD tEQUAL Expression .
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   80 Expression: tPO . tSUBTRACT tINTNR tPC
+   81           | tPO . Expression tPC
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
+    tSUBTRACT  décalage et aller à l'état 92
+    tPO        décalage et aller à l'état 70
+    tINTNR     décalage et aller à l'état 71
+    tVAR       décalage et aller à l'état 72
 
-    $défaut  réduction par utilisation de la règle 46 (Calcul)
+    Expression  aller à l'état 93
+    Function    aller à l'état 74
 
 
 État 71
 
-   45 Calcul: tVAR tSUBTRACT tEQUAL Expression . tFINSTR
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   78 Expression: tINTNR .
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-    tFINSTR    décalage et aller à l'état 89
+    $défaut  réduction par utilisation de la règle 78 (Expression)
 
 
 État 72
 
-   42 Calcul: tVAR tEQUAL tSUBTRACT Expression . tFINSTR
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   77 Expression: tVAR .
+   83 Function: tVAR . tPO $@18 Param tPC
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-    tFINSTR    décalage et aller à l'état 90
+    tPO  décalage et aller à l'état 94
+
+    $défaut  réduction par utilisation de la règle 77 (Expression)
 
 
 État 73
 
-   41 Calcul: tVAR tEQUAL Expression tFINSTR .
+   67 Calcul: tVAR tEQUAL Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    $défaut  réduction par utilisation de la règle 41 (Calcul)
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+    tFINSTR    décalage et aller à l'état 99
 
 
 État 74
 
-   37 For: tFOR tPO $@5 tINT . tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   79 Expression: Function .
 
-    tVAR  décalage et aller à l'état 91
+    $défaut  réduction par utilisation de la règle 79 (Expression)
 
 
 État 75
 
-   53 Expression: tPO tSUBTRACT tINTNR . tPC
+   69 Calcul: tVAR tPLUSPLUS tFINSTR .
 
-    tPC  décalage et aller à l'état 92
+    $défaut  réduction par utilisation de la règle 69 (Calcul)
 
 
 État 76
 
-   54 Expression: tPO Expression tPC .
+   70 Calcul: tVAR tMINUSMINUS tFINSTR .
 
-    $défaut  réduction par utilisation de la règle 54 (Expression)
+    $défaut  réduction par utilisation de la règle 70 (Calcul)
 
 
 État 77
 
-   22 If: tIF tPO Condition tPC $@1 . Body $@2 Else
+   71 Calcul: tVAR tMINUSEQUAL Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    tACO  décalage et aller à l'état 6
-
-    Body  aller à l'état 93
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+    tFINSTR    décalage et aller à l'état 100
 
 
 État 78
 
-   47 Expression: Expression . tADD Expression
-   47           | Expression tADD Expression .
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   72 Calcul: tVAR tPLUSEQUAL Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-
-    $défaut  réduction par utilisation de la règle 47 (Expression)
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+    tFINSTR    décalage et aller à l'état 101
 
 
 État 79
 
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   48           | Expression tSUBTRACT Expression .
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   59 For: tFOR tPO $@10 . DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body
 
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
+    tINT    décalage et aller à l'état 1
+    tCONST  décalage et aller à l'état 2
+    tVAR    décalage et aller à l'état 31
 
-    $défaut  réduction par utilisation de la règle 48 (Expression)
+    Declaration  aller à l'état 102
+    vartype      aller à l'état 36
+    DeclCalc     aller à l'état 103
+    Calcul       aller à l'état 104
 
 
 État 80
 
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   49           | Expression tDIVIDE Expression .
-   50           | Expression . tMULTIPLY Expression
+   64 For: tFOR tPO $@14 . DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body
 
-    $défaut  réduction par utilisation de la règle 49 (Expression)
+    tINT    décalage et aller à l'état 1
+    tCONST  décalage et aller à l'état 2
+    tVAR    décalage et aller à l'état 31
+
+    Declaration  aller à l'état 102
+    vartype      aller à l'état 36
+    DeclCalc     aller à l'état 105
+    Calcul       aller à l'état 104
 
 
 État 81
 
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
-   50           | Expression tMULTIPLY Expression .
+   21 Body: tACO Instruction $@4 tACC .
 
-    $défaut  réduction par utilisation de la règle 50 (Expression)
+    $défaut  réduction par utilisation de la règle 21 (Body)
 
 
 État 82
 
-   25 Condition: Expression tCHECKEQ Expression .
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   35 Multideclaration: tVAR tEQUAL . tINTNR tVIRGULE
+   37 Lastdeclaration: tVAR tEQUAL . tINTNR
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-
-    $défaut  réduction par utilisation de la règle 25 (Condition)
+    tINTNR  décalage et aller à l'état 106
 
 
 État 83
 
-   27 Condition: Expression tCHECKHIGHER Expression .
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   34 Multideclaration: tVAR tVIRGULE .
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-
-    $défaut  réduction par utilisation de la règle 27 (Condition)
+    $défaut  réduction par utilisation de la règle 34 (Multideclaration)
 
 
 État 84
 
-   26 Condition: Expression tLESS Expression .
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   31 Declaration: vartype Declarations tFINSTR .
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-
-    $défaut  réduction par utilisation de la règle 26 (Condition)
+    $défaut  réduction par utilisation de la règle 31 (Declaration)
 
 
 État 85
 
-   28 Condition: Expression tLESSEQUAL Expression .
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   32 Declarations: Multideclaration Declarations .
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-
-    $défaut  réduction par utilisation de la règle 28 (Condition)
+    $défaut  réduction par utilisation de la règle 32 (Declarations)
 
 
 État 86
 
-   29 Condition: Expression tMOREEQUAL Expression .
-   47 Expression: Expression . tADD Expression
-   48           | Expression . tSUBTRACT Expression
-   49           | Expression . tDIVIDE Expression
-   50           | Expression . tMULTIPLY Expression
+   19 RetVal: tSTRING tINTNR tFINSTR .
 
-    tADD       décalage et aller à l'état 59
-    tSUBTRACT  décalage et aller à l'état 60
-    tDIVIDE    décalage et aller à l'état 61
-    tMULTIPLY  décalage et aller à l'état 62
-
-    $défaut  réduction par utilisation de la règle 29 (Condition)
+    $défaut  réduction par utilisation de la règle 19 (RetVal)
 
 
 État 87
 
-   32 While: tWHILE tPO $@3 Condition tPC . $@4 Body
+   44 If: tIF $@5 tPO Condition . tPC $@6 Body $@7 Else
 
-    $défaut  réduction par utilisation de la règle 31 ($@4)
-
-    $@4  aller à l'état 94
+    tPC  décalage et aller à l'état 107
 
 
 État 88
 
-   19 Print: tPRINTF tPO tVAR tPC tFINSTR .
+   47 Condition: Expression . tCHECKEQ Expression
+   48          | Expression . tLESS Expression
+   49          | Expression . tCHECKHIGHER Expression
+   50          | Expression . tLESSEQUAL Expression
+   51          | Expression . tMOREEQUAL Expression
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    $défaut  réduction par utilisation de la règle 19 (Print)
+    tADD          décalage et aller à l'état 95
+    tSUBTRACT     décalage et aller à l'état 96
+    tDIVIDE       décalage et aller à l'état 97
+    tMULTIPLY     décalage et aller à l'état 98
+    tCHECKEQ      décalage et aller à l'état 108
+    tCHECKHIGHER  décalage et aller à l'état 109
+    tLESS         décalage et aller à l'état 110
+    tLESSEQUAL    décalage et aller à l'état 111
+    tMOREEQUAL    décalage et aller à l'état 112
 
 
 État 89
 
-   45 Calcul: tVAR tSUBTRACT tEQUAL Expression tFINSTR .
+   54 While: tWHILE $@8 tPO Condition . tPC $@9 Body
 
-    $défaut  réduction par utilisation de la règle 45 (Calcul)
+    tPC  décalage et aller à l'état 113
 
 
 État 90
 
-   42 Calcul: tVAR tEQUAL tSUBTRACT Expression tFINSTR .
+   40 Print: tPRINTF tPO tVAR tPC . tFINSTR
 
-    $défaut  réduction par utilisation de la règle 42 (Calcul)
+    tFINSTR  décalage et aller à l'état 114
 
 
 État 91
 
-   37 For: tFOR tPO $@5 tINT tVAR . $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   68 Calcul: tVAR tEQUAL tSUBTRACT Expression . tFINSTR
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
 
-    $défaut  réduction par utilisation de la règle 34 ($@6)
-
-    $@6  aller à l'état 95
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+    tFINSTR    décalage et aller à l'état 115
 
 
 État 92
 
-   53 Expression: tPO tSUBTRACT tINTNR tPC .
+   80 Expression: tPO tSUBTRACT . tINTNR tPC
 
-    $défaut  réduction par utilisation de la règle 53 (Expression)
+    tINTNR  décalage et aller à l'état 116
 
 
 État 93
 
-   22 If: tIF tPO Condition tPC $@1 Body . $@2 Else
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+   81           | tPO Expression . tPC
 
-    $défaut  réduction par utilisation de la règle 21 ($@2)
-
-    $@2  aller à l'état 96
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+    tPC        décalage et aller à l'état 117
 
 
 État 94
 
-   32 While: tWHILE tPO $@3 Condition tPC $@4 . Body
+   83 Function: tVAR tPO . $@18 Param tPC
 
-    tACO  décalage et aller à l'état 6
+    $défaut  réduction par utilisation de la règle 82 ($@18)
 
-    Body  aller à l'état 97
+    $@18  aller à l'état 118
 
 
 État 95
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 . tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   73 Expression: Expression tADD . Expression
 
-    tEQUAL  décalage et aller à l'état 98
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 119
+    Function    aller à l'état 74
 
 
 État 96
 
-   22 If: tIF tPO Condition tPC $@1 Body $@2 . Else
+   74 Expression: Expression tSUBTRACT . Expression
 
-    tELSE  décalage et aller à l'état 99
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
 
-    $défaut  réduction par utilisation de la règle 24 (Else)
-
-    Else  aller à l'état 100
+    Expression  aller à l'état 120
+    Function    aller à l'état 74
 
 
 État 97
 
-   32 While: tWHILE tPO $@3 Condition tPC $@4 Body .
+   75 Expression: Expression tDIVIDE . Expression
 
-    $défaut  réduction par utilisation de la règle 32 (While)
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 121
+    Function    aller à l'état 74
 
 
 État 98
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL . tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   76 Expression: Expression tMULTIPLY . Expression
 
-    tINTNR  décalage et aller à l'état 101
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 122
+    Function    aller à l'état 74
 
 
 État 99
 
-   23 Else: tELSE . Body
+   67 Calcul: tVAR tEQUAL Expression tFINSTR .
 
-    tACO  décalage et aller à l'état 6
-
-    Body  aller à l'état 102
+    $défaut  réduction par utilisation de la règle 67 (Calcul)
 
 
 État 100
 
-   22 If: tIF tPO Condition tPC $@1 Body $@2 Else .
+   71 Calcul: tVAR tMINUSEQUAL Expression tFINSTR .
 
-    $défaut  réduction par utilisation de la règle 22 (If)
+    $défaut  réduction par utilisation de la règle 71 (Calcul)
 
 
 État 101
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR . tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body
+   72 Calcul: tVAR tPLUSEQUAL Expression tFINSTR .
 
-    tFINSTR  décalage et aller à l'état 103
+    $défaut  réduction par utilisation de la règle 72 (Calcul)
 
 
 État 102
 
-   23 Else: tELSE Body .
+   65 DeclCalc: Declaration .
 
-    $défaut  réduction par utilisation de la règle 23 (Else)
+    $défaut  réduction par utilisation de la règle 65 (DeclCalc)
 
 
 État 103
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR . $@7 Condition tFINSTR $@8 increment tPC Body
+   59 For: tFOR tPO $@10 DeclCalc . $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body
 
-    $défaut  réduction par utilisation de la règle 35 ($@7)
+    $défaut  réduction par utilisation de la règle 56 ($@11)
 
-    $@7  aller à l'état 104
+    $@11  aller à l'état 123
 
 
 État 104
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 . Condition tFINSTR $@8 increment tPC Body
+   66 DeclCalc: Calcul .
 
-    tPO     décalage et aller à l'état 39
-    tINTNR  décalage et aller à l'état 40
-    tVAR    décalage et aller à l'état 41
-
-    Condition   aller à l'état 105
-    Expression  aller à l'état 43
+    $défaut  réduction par utilisation de la règle 66 (DeclCalc)
 
 
 État 105
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition . tFINSTR $@8 increment tPC Body
+   64 For: tFOR tPO $@14 DeclCalc . $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body
 
-    tFINSTR  décalage et aller à l'état 106
+    $défaut  réduction par utilisation de la règle 61 ($@15)
+
+    $@15  aller à l'état 124
 
 
 État 106
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR . $@8 increment tPC Body
+   35 Multideclaration: tVAR tEQUAL tINTNR . tVIRGULE
+   37 Lastdeclaration: tVAR tEQUAL tINTNR .
 
-    $défaut  réduction par utilisation de la règle 36 ($@8)
+    tVIRGULE  décalage et aller à l'état 125
 
-    $@8  aller à l'état 107
+    $défaut  réduction par utilisation de la règle 37 (Lastdeclaration)
 
 
 État 107
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 . increment tPC Body
+   44 If: tIF $@5 tPO Condition tPC . $@6 Body $@7 Else
 
-    tVAR  décalage et aller à l'état 108
+    $défaut  réduction par utilisation de la règle 42 ($@6)
 
-    $défaut  réduction par utilisation de la règle 38 (increment)
-
-    increment  aller à l'état 109
+    $@6  aller à l'état 126
 
 
 État 108
 
-   39 increment: tVAR . tPLUSPLUS
-   40          | tVAR . tMINUSMINUS
+   47 Condition: Expression tCHECKEQ . Expression
 
-    tPLUSPLUS    décalage et aller à l'état 110
-    tMINUSMINUS  décalage et aller à l'état 111
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 127
+    Function    aller à l'état 74
 
 
 État 109
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment . tPC Body
+   49 Condition: Expression tCHECKHIGHER . Expression
 
-    tPC  décalage et aller à l'état 112
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 128
+    Function    aller à l'état 74
 
 
 État 110
 
-   39 increment: tVAR tPLUSPLUS .
+   48 Condition: Expression tLESS . Expression
 
-    $défaut  réduction par utilisation de la règle 39 (increment)
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 129
+    Function    aller à l'état 74
 
 
 État 111
 
-   40 increment: tVAR tMINUSMINUS .
+   50 Condition: Expression tLESSEQUAL . Expression
 
-    $défaut  réduction par utilisation de la règle 40 (increment)
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Expression  aller à l'état 130
+    Function    aller à l'état 74
 
 
 État 112
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC . Body
+   51 Condition: Expression tMOREEQUAL . Expression
 
-    tACO  décalage et aller à l'état 6
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
 
-    Body  aller à l'état 113
+    Expression  aller à l'état 131
+    Function    aller à l'état 74
 
 
 État 113
 
-   37 For: tFOR tPO $@5 tINT tVAR $@6 tEQUAL tINTNR tFINSTR $@7 Condition tFINSTR $@8 increment tPC Body .
+   54 While: tWHILE $@8 tPO Condition tPC . $@9 Body
 
-    $défaut  réduction par utilisation de la règle 37 (For)
+    $défaut  réduction par utilisation de la règle 53 ($@9)
+
+    $@9  aller à l'état 132
+
+
+État 114
+
+   40 Print: tPRINTF tPO tVAR tPC tFINSTR .
+
+    $défaut  réduction par utilisation de la règle 40 (Print)
+
+
+État 115
+
+   68 Calcul: tVAR tEQUAL tSUBTRACT Expression tFINSTR .
+
+    $défaut  réduction par utilisation de la règle 68 (Calcul)
+
+
+État 116
+
+   80 Expression: tPO tSUBTRACT tINTNR . tPC
+
+    tPC  décalage et aller à l'état 133
+
+
+État 117
+
+   81 Expression: tPO Expression tPC .
+
+    $défaut  réduction par utilisation de la règle 81 (Expression)
+
+
+État 118
+
+   83 Function: tVAR tPO $@18 . Param tPC
+
+    tINT    décalage et aller à l'état 1
+    tCONST  décalage et aller à l'état 2
+    tVAR    décalage et aller à l'état 14
+
+    Param    aller à l'état 134
+    vartype  aller à l'état 17
+
+
+État 119
+
+   73 Expression: Expression . tADD Expression
+   73           | Expression tADD Expression .
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+
+    $défaut  réduction par utilisation de la règle 73 (Expression)
+
+
+État 120
+
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   74           | Expression tSUBTRACT Expression .
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+
+    $défaut  réduction par utilisation de la règle 74 (Expression)
+
+
+État 121
+
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   75           | Expression tDIVIDE Expression .
+   76           | Expression . tMULTIPLY Expression
+
+    $défaut  réduction par utilisation de la règle 75 (Expression)
+
+
+État 122
+
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+   76           | Expression tMULTIPLY Expression .
+
+    $défaut  réduction par utilisation de la règle 76 (Expression)
+
+
+État 123
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 . Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body
+
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Condition   aller à l'état 135
+    Expression  aller à l'état 88
+    Function    aller à l'état 74
+
+
+État 124
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 . Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body
+
+    tPO     décalage et aller à l'état 70
+    tINTNR  décalage et aller à l'état 71
+    tVAR    décalage et aller à l'état 72
+
+    Condition   aller à l'état 136
+    Expression  aller à l'état 88
+    Function    aller à l'état 74
+
+
+État 125
+
+   35 Multideclaration: tVAR tEQUAL tINTNR tVIRGULE .
+
+    $défaut  réduction par utilisation de la règle 35 (Multideclaration)
+
+
+État 126
+
+   44 If: tIF $@5 tPO Condition tPC $@6 . Body $@7 Else
+
+    tACO  décalage et aller à l'état 23
+
+    Body  aller à l'état 137
+
+
+État 127
+
+   47 Condition: Expression tCHECKEQ Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+
+    $défaut  réduction par utilisation de la règle 47 (Condition)
+
+
+État 128
+
+   49 Condition: Expression tCHECKHIGHER Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+
+    $défaut  réduction par utilisation de la règle 49 (Condition)
+
+
+État 129
+
+   48 Condition: Expression tLESS Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+
+    $défaut  réduction par utilisation de la règle 48 (Condition)
+
+
+État 130
+
+   50 Condition: Expression tLESSEQUAL Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+
+    $défaut  réduction par utilisation de la règle 50 (Condition)
+
+
+État 131
+
+   51 Condition: Expression tMOREEQUAL Expression .
+   73 Expression: Expression . tADD Expression
+   74           | Expression . tSUBTRACT Expression
+   75           | Expression . tDIVIDE Expression
+   76           | Expression . tMULTIPLY Expression
+
+    tADD       décalage et aller à l'état 95
+    tSUBTRACT  décalage et aller à l'état 96
+    tDIVIDE    décalage et aller à l'état 97
+    tMULTIPLY  décalage et aller à l'état 98
+
+    $défaut  réduction par utilisation de la règle 51 (Condition)
+
+
+État 132
+
+   54 While: tWHILE $@8 tPO Condition tPC $@9 . Body
+
+    tACO  décalage et aller à l'état 23
+
+    Body  aller à l'état 138
+
+
+État 133
+
+   80 Expression: tPO tSUBTRACT tINTNR tPC .
+
+    $défaut  réduction par utilisation de la règle 80 (Expression)
+
+
+État 134
+
+   83 Function: tVAR tPO $@18 Param . tPC
+
+    tPC  décalage et aller à l'état 139
+
+
+État 135
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition . tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body
+
+    tFINSTR  décalage et aller à l'état 140
+
+
+État 136
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition . tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body
+
+    tFINSTR  décalage et aller à l'état 141
+
+
+État 137
+
+   44 If: tIF $@5 tPO Condition tPC $@6 Body . $@7 Else
+
+    $défaut  réduction par utilisation de la règle 43 ($@7)
+
+    $@7  aller à l'état 142
+
+
+État 138
+
+   54 While: tWHILE $@8 tPO Condition tPC $@9 Body .
+
+    $défaut  réduction par utilisation de la règle 54 (While)
+
+
+État 139
+
+   83 Function: tVAR tPO $@18 Param tPC .
+
+    $défaut  réduction par utilisation de la règle 83 (Function)
+
+
+État 140
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR . $@12 tVAR tPLUSPLUS tPC $@13 Body
+
+    $défaut  réduction par utilisation de la règle 57 ($@12)
+
+    $@12  aller à l'état 143
+
+
+État 141
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR . $@16 tVAR tMINUSMINUS tPC $@17 Body
+
+    $défaut  réduction par utilisation de la règle 62 ($@16)
+
+    $@16  aller à l'état 144
+
+
+État 142
+
+   44 If: tIF $@5 tPO Condition tPC $@6 Body $@7 . Else
+
+    tELSE  décalage et aller à l'état 145
+
+    $défaut  réduction par utilisation de la règle 46 (Else)
+
+    Else  aller à l'état 146
+
+
+État 143
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 . tVAR tPLUSPLUS tPC $@13 Body
+
+    tVAR  décalage et aller à l'état 147
+
+
+État 144
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 . tVAR tMINUSMINUS tPC $@17 Body
+
+    tVAR  décalage et aller à l'état 148
+
+
+État 145
+
+   45 Else: tELSE . Body
+
+    tACO  décalage et aller à l'état 23
+
+    Body  aller à l'état 149
+
+
+État 146
+
+   44 If: tIF $@5 tPO Condition tPC $@6 Body $@7 Else .
+
+    $défaut  réduction par utilisation de la règle 44 (If)
+
+
+État 147
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR . tPLUSPLUS tPC $@13 Body
+
+    tPLUSPLUS  décalage et aller à l'état 150
+
+
+État 148
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR . tMINUSMINUS tPC $@17 Body
+
+    tMINUSMINUS  décalage et aller à l'état 151
+
+
+État 149
+
+   45 Else: tELSE Body .
+
+    $défaut  réduction par utilisation de la règle 45 (Else)
+
+
+État 150
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS . tPC $@13 Body
+
+    tPC  décalage et aller à l'état 152
+
+
+État 151
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS . tPC $@17 Body
+
+    tPC  décalage et aller à l'état 153
+
+
+État 152
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC . $@13 Body
+
+    $défaut  réduction par utilisation de la règle 58 ($@13)
+
+    $@13  aller à l'état 154
+
+
+État 153
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC . $@17 Body
+
+    $défaut  réduction par utilisation de la règle 63 ($@17)
+
+    $@17  aller à l'état 155
+
+
+État 154
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 . Body
+
+    tACO  décalage et aller à l'état 23
+
+    Body  aller à l'état 156
+
+
+État 155
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 . Body
+
+    tACO  décalage et aller à l'état 23
+
+    Body  aller à l'état 157
+
+
+État 156
+
+   59 For: tFOR tPO $@10 DeclCalc $@11 Condition tFINSTR $@12 tVAR tPLUSPLUS tPC $@13 Body .
+
+    $défaut  réduction par utilisation de la règle 59 (For)
+
+
+État 157
+
+   64 For: tFOR tPO $@14 DeclCalc $@15 Condition tFINSTR $@16 tVAR tMINUSMINUS tPC $@17 Body .
+
+    $défaut  réduction par utilisation de la règle 64 (For)
