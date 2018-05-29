@@ -131,34 +131,23 @@ Param :	vartype tVAR {
 
 FuncBody : tACO FuncInstr  tACC;
 
+
+
+FuncInstrs: Calcul | For | While | Print | Declaration| If |RetVal; // the body of the functions don contain RetVal
+
 FuncInstr : FuncInstrs FuncInstr
 	    | FuncInstrs
 	    | ;
-FuncInstrs : Instructions| RetVal;  
+//FuncInstrs : Instructions| RetVal;  
 
 
 	// can add tRETURN to the function , used tSTRING in place of return
-RetVal : tSTRING tVAR tFINSTR {  //we create a temp variable wich has the value of the return
+RetVal : tRETURN tVAR tFINSTR {  //we create a temp variable wich has the value of the return
 //we store the return in the first variable that we created!
 					//print_table();
 				//delete_all_var(get_curr_prof());
 				//prof_decrement();
 				//we want to store the variable at a lower level so we can retrieve it afterwards in the Calcul !
-				/*	//print_table();
-					add_symbol("fRet", "int", 0, get_curr_prof());
-					int a= get_last_index();
-					queue_instruction("AFC",1,$2);
-
-					queue_instruction("AFC",14,a);
-				 queue_instruction("PRT",14,10);
-					
-					queue_instruction("AFC",2,1);
-					queue_instruction("ADD",15,2); 
-					
-
-					queue_instruction("STORE",15,1);
-*/
-
 
 					int a=find_func_symbol($2, 0);// we know the delta now
 					
@@ -206,7 +195,7 @@ Instructions:
      | While
      | Print
      | Declaration
-     | If ;
+     | If | RetVal;
 
 Declaration: vartype Declarations tFINSTR ;
 
