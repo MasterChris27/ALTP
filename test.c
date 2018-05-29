@@ -1,14 +1,15 @@
 
 int f(int x,int y){
 
-	int z=0;
-	int c=2;
-	z=x+y;
-	z=z+z;
-	if(c==2){
-		return z; 
+	int r=2;
+	int j=0;
+	j=x+y;
+	j=j+j;
+	if(r==2){
+		return j; 
+	}else{
+	return x;
 	}
-	return c;
 };
 
 	main() {
@@ -39,7 +40,6 @@ int f(int x,int y){
 		b++;
 		r++;
 	}
-	int c=10;
 	while(c>5){
 
 		for(i=0;i<5;i++){

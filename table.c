@@ -27,14 +27,11 @@ int add_symbol(char* name, char* type,  int initialise, int profondeur) {
   entry* tempTable = tab_symbols;
 
 
-//printf("\nVar- %s -is searching in table stored it-   %d next is  \n",name , tab_symbols);
-
-	//printf(tempTable->name);
 if(name!=NULL){   // if var is not temp
 	while(tempTable != NULL) {
     		if(strcmp(tempTable->name,name) == 0 ){    //case var name already exists
       			if(tempTable->profondeur == profondeur){		
-	    			printf("Error: Variable name in same profondeur already exists\n");
+	    			printf("Error: Variable name : -> %s <- in same profondeur :->%d<- already exists\n",tempTable->name,tempTable->profondeur);
 				return -1;
       			}else if(tempTable->profondeur < profondeur){
 				break;
@@ -55,7 +52,6 @@ if(name!=NULL){   // if var is not temp
 	while(new ==tab_symbols){
 		printf("\nERRROR var  created at same pointer\n");
   		new = malloc(sizeof(entry));
-		printf("\n\nentry new 1 %d - new  %d  and tab %d \n\n",new , new,tab_symbols);
 		}
   new->name = malloc(sizeof(name));
   new->type = malloc(sizeof(type));
@@ -275,7 +271,7 @@ add_symbol(NULL, "int", 0, get_curr_prof());
 int delete_symbol() {
 entry* tmp = tab_symbols;
 tab_symbols = tab_symbols->next;
-printf("\n\nCurrent %s -will be deleted and replaced by  %s  \n\n",tmp->name , tab_symbols->name);	
+//printf("\n\nCurrent %s -will be deleted and replaced by  %s  \n\n",tmp->name , tab_symbols->name);	
 free(tmp);
 global_id--;
 return 1;

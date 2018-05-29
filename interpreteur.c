@@ -72,8 +72,8 @@ void execute_all_instructions(){
 
 	for(currentInst; currentInst<indexInst; currentInst++){
 	
-	printf("currentInst: %d    ", currentInst);
-printInst(currentInst);
+	//printf("currentInst: %d    ", currentInst);
+	//printInst(currentInst);
 	instructionExecute(currentInst);
 	}
 
