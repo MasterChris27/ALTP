@@ -138,51 +138,27 @@ FuncInstrs : Instructions| RetVal;
 
 
 	// can add tRETURN to the function , used tSTRING in place of return
-RetVal : tSTRING tVAR tFINSTR {  //we create a temp variable wich has the value of the return
+RetVal : tSTRING Expression tFINSTR {  //we create a temp variable wich has the value of the return
 //we store the return in the first variable that we created!
 					//print_table();
 				//delete_all_var(get_curr_prof());
 				//prof_decrement();
 				//we want to store the variable at a lower level so we can retrieve it afterwards in the Calcul !
-				/*	//print_table();
-					add_symbol("fRet", "int", 0, get_curr_prof());
+					//print_table();
+				//	add_symbol("fRet", "int", 0, get_curr_prof());
 					int a= get_last_index();
-					queue_instruction("AFC",1,$2);
 
 					queue_instruction("AFC",14,a);
-				 queue_instruction("PRT",14,10);
+					queue_instruction("PRT",14,10);
+					queue_instruction("ADD",14,15); 
+					queue_instruction("LOAD",1,14);
+				//	queue_instruction("STORE",14,1);
 					
 					queue_instruction("AFC",2,1);
 					queue_instruction("ADD",15,2); 
 					
 
 					queue_instruction("STORE",15,1);
-*/
-
-
-					int a=find_func_symbol($2, 0);// we know the delta now
-					
-					queue_instruction("AFC",14,a);//we add the delta
-					queue_instruction("ADD",14,15); // we add the new ref
-
-
-					queue_instruction("LOAD",1,14);//we load the data in the first register
-
-					queue_instruction("AFC",14,1); //we set r14 to 1; so we have the first var from the function
-
-					queue_instruction("ADD",14,15); // we add the new ref to where to store the result
-					
-
-					queue_instruction("STORE",14,1); // we store it at the correct @adr
-
-
-
-
-
-
-
-
-
 
 
 				//print_table();
@@ -190,9 +166,7 @@ RetVal : tSTRING tVAR tFINSTR {  //we create a temp variable wich has the value 
 					//delete_symbol();  // there might be a problem with deleting the variable here
 
 					/* if it is an expression we need to decrement the prof so that the expression gets saved to another depth and then make the delete all var function search to delete only those particular variables*/
-};
-
-
+		};
 
 Body: tACO Instruction tACC; // add here the get_curr_prof()
 

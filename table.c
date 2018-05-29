@@ -193,6 +193,37 @@ int delete_all_var(int prof){
 
 }
  
+ int find_func_symbol(char* nameArg, int profondeur){ // prof should always be 0 as we always store them at lvl 0
+
+   entry* current = tab_symbols;
+
+		 
+ while(current != NULL){
+
+    if((current->name != NULL) && (strcmp(current->name,nameArg) == 0))
+	{
+		if((current->profondeur == 0)) { 
+			return current->id;	
+	 	}
+	} else
+	{
+	current = current->next;
+	}
+	
+  }
+printf("\n Error : Variable -> %s <- not declared on function level !\n",nameArg);
+  return -1;
+
+}
+
+
+
+
+
+
+
+
+
 
 
 

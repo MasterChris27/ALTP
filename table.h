@@ -46,6 +46,7 @@ int find_symbol(char* nameArg, int profondeur); // prof isnt taken into consider
 void add_temporary_symbol();
 
 int delete_symbol();
+ int find_func_symbol(char* nameArg, int profondeur);
 
 int delete_all_var(int prof);
 

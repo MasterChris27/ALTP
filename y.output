@@ -48,7 +48,7 @@ Grammar
    17 FuncInstrs: Instructions
    18           | RetVal
 
-   19 RetVal: tSTRING tINTNR tFINSTR
+   19 RetVal: tSTRING tVAR tFINSTR
 
    20 Body: tACO Instruction tACC
 
@@ -171,11 +171,11 @@ tTAB (274)
 tVIRGULE (275) 9 33 34
 tDOLLAR (276)
 tFINSTR (277) 4 19 30 39 58 63 66 67 68 69 70 71
-tINTNR (278) 19 34 36 77 79
+tINTNR (278) 34 36 77 79
 tWHILE (279) 53
 tPRINTF (280) 39
 tMAIN (281) 2
-tVAR (282) 4 11 12 33 34 35 36 39 58 63 66 67 68 69 70 71 76 82
+tVAR (282) 4 11 12 19 33 34 35 36 39 58 63 66 67 68 69 70 71 76 82
 tFOR (283) 58 63
 tSTRING (284) 19
 tCHECKHIGHER (285) 48
@@ -824,9 +824,9 @@ State 55
 
 State 56
 
-   19 RetVal: tSTRING . tINTNR tFINSTR
+   19 RetVal: tSTRING . tVAR tFINSTR
 
-    tINTNR  shift, and go to state 82
+    tVAR  shift, and go to state 82
 
 
 State 57
@@ -1096,7 +1096,7 @@ State 81
 
 State 82
 
-   19 RetVal: tSTRING tINTNR . tFINSTR
+   19 RetVal: tSTRING tVAR . tFINSTR
 
     tFINSTR  shift, and go to state 105
 
@@ -1318,7 +1318,7 @@ State 104
 
 State 105
 
-   19 RetVal: tSTRING tINTNR tFINSTR .
+   19 RetVal: tSTRING tVAR tFINSTR .
 
     $default  reduce using rule 19 (RetVal)
 
