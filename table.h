@@ -13,7 +13,18 @@ typedef struct entry {
   struct entry* next;
 } entry;
 
-entry* tab_symbols;
+entry* tab_symbols= NULL;
+
+
+typedef struct tabEntry {
+  int id;
+  char* name;
+  char* type;
+  int profondeur;
+} tabEntry;
+
+tabEntry* tabSymbolNew[128];
+
 
 ///features
 // add_symbol 	ok

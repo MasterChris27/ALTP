@@ -22,7 +22,13 @@ int global_prof=0;
 
 int add_symbol(char* name, char* type,  int initialise, int profondeur) { 
 
+
+
   entry* tempTable = tab_symbols;
+
+
+//printf("\nVar- %s -is searching in table stored it-   %d next is  \n",name , tab_symbols);
+
 	//printf(tempTable->name);
 if(name!=NULL){   // if var is not temp
 	while(tempTable != NULL) {
@@ -30,7 +36,9 @@ if(name!=NULL){   // if var is not temp
       			if(tempTable->profondeur == profondeur){		
 	    			printf("Error: Variable name in same profondeur already exists\n");
 				return -1;
-      			}		
+      			}else if(tempTable->profondeur < profondeur){
+				break;
+				}		
    		 }
 
    		tempTable = tempTable->next;
@@ -38,8 +46,17 @@ if(name!=NULL){   // if var is not temp
 
 		
 }
+
+//printf("\ndebug here <----- %s ----   %d next is  \n",name , tab_symbols);
+
   //if(check_sym(name,profondeur)) add the function here if going to implement one
-  entry* new = malloc(sizeof(entry));
+
+  	entry* new = malloc(sizeof(entry));
+	while(new ==tab_symbols){
+		printf("\nERRROR var  created at same pointer\n");
+  		new = malloc(sizeof(entry));
+		printf("\n\nentry new 1 %d - new  %d  and tab %d \n\n",new , new,tab_symbols);
+		}
   new->name = malloc(sizeof(name));
   new->type = malloc(sizeof(type));
   new->name = name;
@@ -47,14 +64,41 @@ if(name!=NULL){   // if var is not temp
   new->id = global_id;
   global_id++;
   new->initialise = initialise;
-  new->next = tab_symbols;
+  new->next = tab_symbols; 	
   new->profondeur = profondeur;
   tab_symbols = new;
+  //free(new)
+//printf("\nVar-- %s -will be stored at-   %d  so the tab is at %d \n\n",name , new,tab_symbols);
   //print_table();
   // add more here
 
   return 1;
 }
+
+/*
+int add_symbol(char* name, char* type,  int initialise, int profondeur) { 
+
+	int i=0;
+tabEntry* tabSymbolNew[128];
+
+	for(i=0;i<global_id;i++)
+
+ 
+  // add more here
+
+  return 1;
+}
+
+find_symbol(){}
+
+
+*/
+
+
+
+
+
+
 
 
 
@@ -142,7 +186,6 @@ int delete_all_var(int prof){
 			free(tmp);
 			global_id--;
 	 	}else{
-			tab_symbols = current;
 			return 0;
 			}
   }
@@ -153,14 +196,18 @@ int delete_all_var(int prof){
 
 
 
-
  int find_symbol(char* nameArg, int profondeur){
 
    entry* current = tab_symbols;
    int index = 0;
 
+		 
+//printf("\ndebug here <------ %s->id %d prof %d points to %d\n",current->name,global_id,current->profondeur,current);
+//printf("\ndebug here <------ asdasdasdna%d\n",current);
+	
  while(current != NULL){
 
+//printf("\ndebug here <------ asdasdasdna       %s            %S\n",current->name, current->next->name);
     if((current->name != NULL) && (strcmp(current->name,nameArg) == 0))
 	{
 		//if((current->profondeur != 0)) { // we should go as deep as possible
@@ -191,13 +238,20 @@ add_symbol(NULL, "int", 0, get_curr_prof());
 
 
 
+
+
+
 int delete_symbol() {
 entry* tmp = tab_symbols;
-tab_symbols = tab_symbols->next;	
+tab_symbols = tab_symbols->next;
+printf("\n\nCurrent %s -will be deleted and replaced by  %s  \n\n",tmp->name , tab_symbols->name);	
 free(tmp);
 global_id--;
 return 1;
 }
+
+
+
 
 //************************************ get_last_address() ok
 
@@ -213,8 +267,9 @@ else
 //************************************ print_table() ok 
 
 void print_table(){ //possibly add table as in param
+
   entry* temporaryTable = tab_symbols;
-  printf("| ID name type initialise profondeur|\n");
+  printf("| ID name type init prof|\n");
   while(temporaryTable != NULL){
     printf("\n| %d %s %s %d %d |\n", temporaryTable->id, temporaryTable->name, temporaryTable->type, temporaryTable->initialise, temporaryTable->profondeur);
     temporaryTable = temporaryTable->next;

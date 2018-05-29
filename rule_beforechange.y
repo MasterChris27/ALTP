@@ -65,7 +65,7 @@ char* type;
 
 // the hardcoded 2 is 1 time happening as it is for the first case of the function
 //might be a problem if we don have a function tough              same with the delete_symbol
-Main: DeclFunction tMAIN {prof_increment();} tPO tPC Body {} ;
+Main: DeclFunction tMAIN tPO tPC Body {} ;
 
 //adding type to the function
 DeclFunction :vartype tVAR {
@@ -83,48 +83,39 @@ DeclFunction :vartype tVAR {
 			queue_instruction("TMPJMP",1,1); 
 			//printf("Debug %s\n\n",$1);
 			
-			//prof_increment();// we increment the prof so that we never use the variable stored in lvl 0
-			}
+			prof_increment();}// we increment the prof so that we never use the variable stored in lvl 0
+
 
 	   	tPO Params tPC FuncBody tFINSTR {
 			edit_instruction(4,"JMP",get_latest_inst(),0);//works good until now
-		//	queue_instruction("AFC",15,0);
-		} // we put the context back to 0
+			queue_instruction("AFC",15,0);} // we put the context back to 0
 
 	      | ; // no function
 
 
 Params :{		
-		//	print_table();
-		//	int z=get_last_index();  //we increment it always so                that for the 2nd function the r15 will be 1+current index i think
-		//	queue_instruction("AFC",1,z); // as we store the function name 
-		//	queue_instruction("ADD",15,1); // we store it in register 15
-			queue_instruction("PRT",15,8); // we store it in register 15
+			prof_increment();	
+			int z=get_last_index();  //we increment it always so that for the 2nd function the r15 will be 1+current index i think
+			queue_instruction("AFC",1,z); // as we store the function name 
+			queue_instruction("ADD",15,1); // we store it in register 15
 			}
-	 Param NextParam 
-	| {add_temporary_symbol();}; // this will be our return value
-NextParam : tVIRGULE Param  | ;
+	 Param NextParam | ;
+NextParam : tVIRGULE Param | ;
 Param :	vartype tVAR { 
 			add_symbol($2, type, 0, get_curr_prof()); }
 	| tVAR  {		
-			//{printf("\n\n\n debDEEEEEEEf %d \n\n\n",get_curr_prof() );}	
+			prof_increment();
 			int a= find_symbol($1, get_curr_prof()); 
 			add_symbol($1, type, 0, get_curr_prof());
 
 			int b= get_last_index();
 
-			queue_instruction("AFC",2,a);
-	 		queue_instruction("LOAD", 1, 2);// we copy the value  in r1
+	 		queue_instruction("LOAD", 1, a);// we copy the value  in r1
 
 			queue_instruction("AFC",14,b);
-			queue_instruction("PRT",14,3);
 			//queue_instruction("ADD",14,15); 
 
-			queue_instruction("STORE", 14, 1); 
-			queue_instruction("PRT",14,8);
-			queue_instruction("PRT",14,9);
-			print_table();
-};
+			queue_instruction("STORE", 14, 1); };
 
 //adaugam variabilele scriem apoi instructiunile in functie de numele lor dupa care le stergem . 
 // Cand apelam functia acestea vor fi create in ultimul nivel dupa care vom folosi numele oferite in declararea parametrilor
@@ -137,10 +128,9 @@ FuncInstr : FuncInstrs FuncInstr
 FuncInstrs : Instructions| RetVal;  
 	// can add tRETURN to the function , used tSTRING in place of return
 RetVal : tSTRING tINTNR tFINSTR {  //we create a temp variable wich has the value of the return
-//we store the return in the first variable that we created!
 					//print_table();
 				//delete_all_var(get_curr_prof());
-				//prof_decrement();
+				prof_decrement();
 				//we want to store the variable at a lower level so we can retrieve it afterwards in the Calcul !
 					//print_table();
 					add_symbol("fRet", "int", 0, get_curr_prof());
@@ -148,20 +138,11 @@ RetVal : tSTRING tINTNR tFINSTR {  //we create a temp variable wich has the valu
 					queue_instruction("AFC",1,$2);
 
 					queue_instruction("AFC",14,a);
-				 queue_instruction("PRT",14,10);
 					queue_instruction("ADD",14,15); 
-					queue_instruction("STORE",14,1);
-					
-					queue_instruction("AFC",2,1);
-					queue_instruction("ADD",15,2); 
-					
+							queue_instruction("STORE",14,1);
 
-					queue_instruction("STORE",15,1);
-
-
-				//print_table();
 					queue_instruction("RET",1,1); 
-					//delete_symbol();  // there might be a problem with deleting the variable here
+					delete_symbol();  // there might be a problem with deleting the variable here
 
 					/* if it is an expression we need to decrement the prof so that the expression gets saved to another depth and then make the delete all var function search to delete only those particular variables*/
 		};
@@ -214,14 +195,12 @@ Lastdeclaration: tVAR {add_symbol($1, type, 0, get_curr_prof());}
 				 queue_instruction("AFC", 1, $3);
 		
 				 queue_instruction("AFC",14,a);
-				
-				 queue_instruction("PRT",14,8);
-				
 				 queue_instruction("ADD",14,15); 
-				 queue_instruction("PRT",14,8);
 
 				 queue_instruction("STORE", 14, 1); 
-	//queue_instruction("PRT",15,2);
+		queue_instruction("PRT",15,2);
+		queue_instruction("PRT",15,1);
+		queue_instruction("PRT",15,0);	
 
 };
 
@@ -481,28 +460,13 @@ DeclCalc : Declaration |Calcul;
 				 int a = find_symbol($1, get_curr_prof());
 				 int b = get_last_index();
 
-
-
-//		 queue_instruction("LOAD", 1, b);
-	//			 queue_instruction("STORE", a, 1);
-
-
 				 queue_instruction("AFC",14,b);
-				queue_instruction("PRT",14,7);
 				 queue_instruction("ADD",14,15);
-
 				 queue_instruction("LOAD", 1, 14);
-				queue_instruction("PRT",14,8);
 
 				 queue_instruction("AFC",14,a);
-				queue_instruction("PRT",14,9);
-
 				 queue_instruction("ADD",14,15);
-				queue_instruction("PRT",14,10);
-
 				 queue_instruction("STORE", 14, 1);
-printf("\n\n\n\n\n\n\n");
-print_table();
 				 delete_symbol();} 
 
 		| tVAR tEQUAL tSUBTRACT Expression tFINSTR {
@@ -667,13 +631,9 @@ Expression :
 				queue_instruction("AFC",14,a);
 				queue_instruction("ADD",14,15);
 				queue_instruction("STORE",14, 1); }
-		|Function {
-				
-				queue_instruction("AFC",15,0);
-//printf("a\n\n\n\n\n\n\n");
-		//	print_table();
-				delete_symbol();
-		//	print_table();
+		| Function {
+
+				//we always have the result in the last var ? 
 			 }
 
 		| tPO tSUBTRACT tINTNR tPC {
@@ -693,19 +653,10 @@ Expression :
 			;
 
 
-Function : tVAR tPO{
-				int z = get_last_index();
-				queue_instruction("AFC",15,z);
-				queue_instruction("PRT",15,z);
-			
-		prof_increment();
-		} 
-
-	Params tPC {
-		queue_instruction("PRT",15,9);
-		int a= get_latest_inst() +1;
-		int b=find_symbol($1,0);// we target the index from memory where the function is stored and we take fro there the indexInstr where we have to jump
-		queue_instruction("CALL",b,a);};
+Function : tVAR tPO{} Param tPC{
+	
+		queue_instruction("CALL",find_symbol($1,0),0);
+		prof_decrement();} ;
 
 %%
 
@@ -727,11 +678,11 @@ int main() {
 	yyparse();
 
 	printAllInst();
-	printf("\n\n         EXECUTING \n\n\n");
-	print_table();
+	printf("\n\n");
+//sprint_table();
 	execute_all_instructions();
 
-	print_table();
+	//print_table();
 
 	for(int i=0; i<=get_last_index(); i++){
 

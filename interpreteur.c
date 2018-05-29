@@ -26,6 +26,7 @@ void queue_instruction(char* operation, int a, int b){
 void printAllInst(){
 	int i=0;
 	while(i<indexInst){
+	printf("%d  -> ",i);
 	printInst(i);
 	i++;
 	//printf("main %d\n\n",i);
@@ -70,8 +71,9 @@ void printInst(int Index){
 void execute_all_instructions(){
 
 	for(currentInst; currentInst<indexInst; currentInst++){
-	printInst(currentInst);
-	printf("currentInst: %d\n", currentInst);
+	
+	printf("currentInst: %d    ", currentInst);
+printInst(currentInst);
 	instructionExecute(currentInst);
 	}
 
@@ -108,7 +110,7 @@ void instructionExecute(int i){
 
 
 
-	} else if(strcmp(instr[i].operation, "LOAD") == 0){ // LOAD X Y we load the val from Rx at @ stored in Ry
+	} else if(strcmp(instr[i].operation, "LOAD") == 0){ // LOAD X Y we load the Rx with the value at @ stored in Ry
 		//registers[instr[i].a] = memory[instr[i].b];
 
 		registers[instr[i].a] = memory[registers[instr[i].b]];//
@@ -176,13 +178,17 @@ void instructionExecute(int i){
 		}
 	} else if(strcmp(instr[i].operation, "CALL") == 0){	
 		
-			currentInst= instr[i].a; // jump at designated address
+			currentInst= memory[instr[i].a]; // jump at @ stored in variable with index A
 		        recursivity_register[recursivity_depth]=instr[i].b; // storing the return address
 			recursivity_depth++;
 	} else if(strcmp(instr[i].operation, "RET") == 0){	
 		
 			recursivity_depth--;
 			currentInst= recursivity_register[recursivity_depth]; // jump at designated address
+	} 
+	else if(strcmp(instr[i].operation, "PRT") == 0){	
+		
+	printf("\nValue of reg %d is %d  and memory %d is  %d \n\n", instr[i].a, registers[instr[i].a], instr[i].b, memory[instr[i].b]);
 	} 
 
 }

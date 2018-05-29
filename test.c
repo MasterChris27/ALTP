@@ -1,21 +1,36 @@
 
-int add(int a,int b){
-
-int z;
-z=a+b;
-string 10;
+int f(int x,int y){
+int z=3333;
+string 21;	
 };
-
-
 
 main() {
 
-int a=3;
-int b=5;
-int c=1;
-int z;
+int a=55;
+int b=22;
+int j=32;
+int c;
+j=f(a,b);
 
-z=3*a;
+int i=3;
 
-c=b+c;
+for(i=0;i<5;i++){
+
+	a=a+i;
+}
+
+if(b==22){
+i=10;
+}
+
+int r=0;
+while(r<5){
+
+b++;
+
+r++;
+}
+
+
+
 }
