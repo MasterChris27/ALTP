@@ -519,7 +519,7 @@ static const yytype_uint16 yyrline[] =
      359,   376,   399,   403,   399,   426,   428,   431,   437,   426,
      460,   462,   464,   470,   460,   494,   494,   508,   536,   551,
      563,   574,   593,   615,   631,   647,   663,   678,   690,   698,
-     707,   718,   724,   724
+     708,   719,   725,   725
 };
 #endif
 
@@ -2185,13 +2185,14 @@ print_table();
 //printf("a\n\n\n\n\n\n\n");
 		//	print_table();
 				delete_symbol();
+				prof_decrement();
 		//	print_table();
 			 }
-#line 2191 "y.tab.c" /* yacc.c:1646  */
+#line 2192 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 707 "rule.y" /* yacc.c:1646  */
+#line 708 "rule.y" /* yacc.c:1646  */
     {
 				add_temporary_symbol();
 				int a= get_last_index();
@@ -2202,11 +2203,11 @@ print_table();
 				queue_instruction("AFC",14,a);
 				queue_instruction("ADD",14,15);
 				queue_instruction("STORE", 14, 1); }
-#line 2206 "y.tab.c" /* yacc.c:1646  */
+#line 2207 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 724 "rule.y" /* yacc.c:1646  */
+#line 725 "rule.y" /* yacc.c:1646  */
     {
 				int z = get_last_index();
 				queue_instruction("AFC",15,z);
@@ -2214,21 +2215,21 @@ print_table();
 			
 		prof_increment();
 		}
-#line 2218 "y.tab.c" /* yacc.c:1646  */
+#line 2219 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 732 "rule.y" /* yacc.c:1646  */
+#line 733 "rule.y" /* yacc.c:1646  */
     {
 		queue_instruction("PRT",15,9);
 		int a= get_latest_inst() +1;
 		int b=find_symbol((yyvsp[-4].str),0);// we target the index from memory where the function is stored and we take fro there the indexInstr where we have to jump
 		queue_instruction("CALL",b,a);}
-#line 2228 "y.tab.c" /* yacc.c:1646  */
+#line 2229 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2232 "y.tab.c" /* yacc.c:1646  */
+#line 2233 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2456,7 +2457,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 738 "rule.y" /* yacc.c:1906  */
+#line 739 "rule.y" /* yacc.c:1906  */
 
 
 

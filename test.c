@@ -13,6 +13,7 @@ int b=22;
 int j=32;
 int c;
 
+int r=0;
 j=f(a,b);
 int i=3;
 
@@ -25,7 +26,6 @@ if(b==22){
 i=10;
 }
 
-int r=0;
 while(r<5){
 
 b++;

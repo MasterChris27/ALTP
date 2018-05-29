@@ -701,6 +701,7 @@ Expression :
 //printf("a\n\n\n\n\n\n\n");
 		//	print_table();
 				delete_symbol();
+				prof_decrement();
 		//	print_table();
 			 }
 
