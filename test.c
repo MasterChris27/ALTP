@@ -1,7 +1,7 @@
 
 int f(int x,int y){
 
-	int r=2;
+	int r=1;
 	int j=0;
 	j=x+y;
 	j=j+j;
@@ -20,7 +20,7 @@ int f(int x,int y){
 	int c;
 
 	int r=0;
-	j=f(a,b);
+	j=f(a,b) + f(a,c);
 	int i=3;
 
 	for(i=0;i<5;i++){
@@ -40,14 +40,14 @@ int f(int x,int y){
 		b++;
 		r++;
 	}
-	while(c>5){
+	while(c<5){
 
 		for(i=0;i<5;i++){
-			b=a+i;
+			b=b+i;
 		}
 	
 
-	c--;
+	c++;
 
 	}
 

@@ -632,7 +632,7 @@ Expression :
 				queue_instruction("ADD",14,15);
 				queue_instruction("STORE", 14, 1); }
 
-		| tPO Expression tPC  
+		| tPO Expression tPC
 
 
 			;
@@ -675,6 +675,7 @@ int main() {
 	printf("\n\n----------------------------------------------------------  \n\n");
 	printf("\n\n                   Starting execution           \n\n\n");
 	execute_all_instructions();
+	printHexInstr();
 
 	print_table();
 

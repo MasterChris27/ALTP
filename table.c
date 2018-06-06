@@ -178,7 +178,7 @@ int delete_all_var(int prof){
  while(current != NULL){
 		if((current->profondeur == prof)){
 			entry* tmp = tab_symbols;
-			current = current->next;	
+			current = current->next;	  // replace the current with tab_symbols because
 			free(tmp);
 			global_id--;
 	 	}else{

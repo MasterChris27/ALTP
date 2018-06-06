@@ -22,6 +22,97 @@ void queue_instruction(char* operation, int a, int b){
 }
 
 
+void printHexInstr(){
+
+FILE *f = fopen("HexInstr.txt", "w");
+if (f == NULL)
+{
+    printf("Error opening file!\n");
+    exit(1);
+}
+
+
+
+for(int i=0;i<=indexInst;i++){
+
+	if(strcmp(instr[i].operation, "ADD") == 0){
+		fprintf(f, "00%02x%04x\n",instr[i].a , instr[i].b);
+
+	} else if(strcmp(instr[i].operation, "SUB") == 0){
+		fprintf(f, "01%02x%04x\n",instr[i].a , instr[i].b);
+
+
+	} else if(strcmp(instr[i].operation, "MUL") == 0){
+		fprintf(f, "02%02x%04x\n",instr[i].a , instr[i].b);
+
+
+	} else if(strcmp(instr[i].operation, "DIV") == 0){
+		fprintf(f, "03%02x%04x\n",instr[i].a , instr[i].b);
+
+	
+
+	} else if(strcmp(instr[i].operation, "STORE") == 0){ 
+		fprintf(f, "04%02x%04x\n",instr[i].a , instr[i].b);
+	
+
+
+
+	} else if(strcmp(instr[i].operation, "LOAD") == 0){
+		fprintf(f, "05%02x%04x\n",instr[i].a , instr[i].b);
+
+
+	} else if(strcmp(instr[i].operation, "AFC") == 0){
+		fprintf(f, "06%02x%04x\n",instr[i].a , instr[i].b);
+
+
+
+	} else if(strcmp(instr[i].operation, "EQU") == 0){
+		fprintf(f, "07%02x%04x\n",instr[i].a , instr[i].b);
+
+
+
+	} else if(strcmp(instr[i].operation, "INF") == 0){
+		fprintf(f, "08%02x%04x\n",instr[i].a , instr[i].b);
+
+
+	} else if(strcmp(instr[i].operation, "INFE") == 0){
+		fprintf(f, "09%02x%04x\n",instr[i].a , instr[i].b);
+
+	//printf("result: %d\n", registers[instr[i].a]);
+	} else if(strcmp(instr[i].operation, "SUP") == 0){
+		fprintf(f, "0a%02x%04x\n",instr[i].a , instr[i].b);
+
+
+
+	} else if(strcmp(instr[i].operation, "SUPE") == 0){
+		fprintf(f, "0b%02x%04x\n",instr[i].a , instr[i].b);
+
+	} else if(strcmp(instr[i].operation, "JMPC") == 0){
+		fprintf(f, "0c%02x%04x\n",instr[i].a , instr[i].b);
+
+	} else if(strcmp(instr[i].operation, "CALL") == 0){	
+		fprintf(f, "0d%02x%04x\n",instr[i].a , instr[i].b);
+
+	} else if(strcmp(instr[i].operation, "RET") == 0){	
+		
+		fprintf(f, "0e%02x%04x\n",instr[i].a , instr[i].b);
+	
+	} else if(strcmp(instr[i].operation, "PRT") == 0){	
+		
+	
+		fprintf(f, "0f%02x%04x\n",instr[i].a , instr[i].b);
+	} 
+
+	}
+
+
+fclose(f);
+
+
+}
+
+
+
 
 void printAllInst(){
 	int i=0;
@@ -30,7 +121,7 @@ void printAllInst(){
 	printInst(i);
 	i++;
 	//printf("main %d\n\n",i);
-}	
+	}	
 
 }
 
@@ -185,6 +276,7 @@ void instructionExecute(int i){
 		
 			recursivity_depth--;
 			currentInst= recursivity_register[recursivity_depth]; // jump at designated address
+			
 	} 
 	else if(strcmp(instr[i].operation, "PRT") == 0){	
 		

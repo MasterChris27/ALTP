@@ -26,6 +26,8 @@ int get_memory_value(int tableIndex);
 
 int get_reg_index_depth(int i);
 
+void printHexInstr();
+
 int get_reg_val(int i);
 
 int get_latest_inst();
