@@ -1695,7 +1695,7 @@ yyreduce:
 
 	queue_instruction("AFC",14,a);
 	queue_instruction("ADD",14,15);
-	queue_instruction("LOAD", 10, 14); // add in place of 10 , 5+ prof
+	queue_instruction("LOAD", 10, 14); 
 
 	queue_instruction("TMP", 1, 1); //we add the unedited JMPC
 	(yyvsp[-2].nb) = get_latest_inst();         
@@ -2349,7 +2349,7 @@ int main() {
 	yyparse();
 
 	printf("\n\n                 Setting up instructions          \n\n\n");
-	//printAllInst();
+	printAllInst();
 	printf("\n\n                   Instructions ready          \n\n\n");
 	printf("\n\n----------------------------------------------------------  \n\n");
 	printf("\n\n                   Starting execution           \n\n\n");

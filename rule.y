@@ -29,8 +29,8 @@ char* type;
 %token tDIVIDE
 %token tMULTIPLY
 %token tEQUAL
-%token tPLUSPLUS   ///added, par ex i++
-%token tMINUSMINUS ///added, par ex i--
+%token tPLUSPLUS  
+%token tMINUSMINUS 
 %token tIF
 %token tELSE
 %token tCHECKEQ
@@ -338,7 +338,7 @@ While : tWHILE {
 
 	queue_instruction("AFC",14,a);
 	queue_instruction("ADD",14,15);
-	queue_instruction("LOAD", 10, 14); // add in place of 10 , 5+ prof
+	queue_instruction("LOAD", 10, 14); 
 
 	queue_instruction("TMP", 1, 1); //we add the unedited JMPC
 	$3 = get_latest_inst();         
@@ -670,7 +670,7 @@ int main() {
 	yyparse();
 
 	printf("\n\n                 Setting up instructions          \n\n\n");
-	//printAllInst();
+	printAllInst();
 	printf("\n\n                   Instructions ready          \n\n\n");
 	printf("\n\n----------------------------------------------------------  \n\n");
 	printf("\n\n                   Starting execution           \n\n\n");

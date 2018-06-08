@@ -1,32 +1,26 @@
 
 int f(int x,int y){
 
-	int r=1;
-	int j=0;
-	j=x+y;
-	j=j+j;
-	if(r==2){
-		return j; 
+	int r,j;
+	r=x;
+	j=y;
+	if(r==j){
+		return r; 
 	}else{
-	return x;
+		return j;
 	}
+
 };
 
-	main() {
+main() {
 
-	int a=55;
-	int b=22;
-	int j=32;
-	int c;
+	int b=10,c;
 
-	int r=0;
-	j=f(a,b) + f(a,c);
-	int i=3;
+	int a=5,i;  
 
-	for(i=0;i<5;i++){
-
-		a=a+i;
-	}
+	int r=1,d=0;	
+	int g=0;
+    int f1,f2;
 
 	if(b==22){
 		if(c==1){	
@@ -34,21 +28,33 @@ int f(int x,int y){
 		}else {
 			i=2;
 		}
+	 }
+
+
+	for(i=0;i<5;i++){
+
+		a=a+i;
 	}
 
 	while(r<5){
-		b++;
+		d++;
 		r++;
 	}
+
+
 	while(c<5){
 
 		for(i=0;i<5;i++){
-			b=b+i;
+			g=g+i;
 		}
 	
-
 	c++;
 
 	}
+
+	f1=f(a,b);
+    f2=f(c,i);
+
+
 
 }
