@@ -1,16 +1,14 @@
 
 	main() {
 
-	int a=55,d,f=2;
-	int b=22;
-	int j=32;
-	int c;
-
-	int r=0;
-	int i=3;
-
-	r=i+a;
-	c=b+j;
-	i=i+1;
+		
+	int a=2;
+	int b=3;
+	int r=0;	
+	if(a==b){
+		r=111;
+	}else {
+		r=222;
+		}
 
 }
