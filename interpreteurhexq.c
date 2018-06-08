@@ -4,7 +4,7 @@ Instruction instr[1024];
 int indexInst = 0;
 int currentInst=0;
 int reg_start=4;
-int registers[16];
+int registers[16];  /* R0 - R11 */
 int recursivity_register[8];
 int recursivity_depth=0;
 int memory[1024];

@@ -1,7 +1,7 @@
 
 	main() {
 
-	int a=55;
+	int a=55,d,f=2;
 	int b=22;
 	int j=32;
 	int c;
